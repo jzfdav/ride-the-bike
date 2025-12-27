@@ -147,7 +147,7 @@ export const useStore = create<BikeStore>()(
             // Selectors & Computed Logic
             getBatteryHealth: () => {
                 const { lastRideDate } = get();
-                if (!lastRideDate) return 0;
+                if (!lastRideDate) return 100;
 
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);

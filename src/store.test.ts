@@ -15,6 +15,10 @@ describe('RideTheBike Store', () => {
         });
     });
 
+    it('defaults to 100% battery health for new users', () => {
+        expect(useStore.getState().getBatteryHealth()).toBe(100);
+    });
+
     it('calculates battery health correctly (100% if rode today)', () => {
         const today = new Date().toISOString();
         useStore.setState({ lastRideDate: today });
