@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, CheckCircle2, Circle } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Circle, RotateCcw } from 'lucide-react';
 import { useStore } from '../store';
 
 export function ChecklistModule() {
-    const { checklist, toggleChecklistItem } = useStore();
+    const { checklist, toggleChecklistItem, resetChecklist } = useStore();
     const completedCount = checklist.filter(item => item.checked).length;
     const isFullyComplete = completedCount === checklist.length;
 
@@ -12,17 +12,28 @@ export function ChecklistModule() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className={`rounded-2xl p-6 border transition-colors duration-500 ${isFullyComplete
-                    ? 'bg-emerald-500/5 border-emerald-500/20'
-                    : 'bg-oled-gray-50/50 border-white/5'
+                ? 'bg-emerald-500/5 border-emerald-500/20'
+                : 'bg-oled-gray-50/50 border-white/5'
                 }`}
         >
             <div className="flex justify-between items-center mb-5">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <ShieldCheck className={`w-3.5 h-3.5 ${isFullyComplete ? 'text-emerald-500' : 'text-pulsar-blue'}`} /> Pre-Ride Safety
                 </span>
-                <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${isFullyComplete ? 'text-emerald-500' : 'text-white/20'}`}>
-                    {completedCount}/{checklist.length} READY
-                </span>
+                <div className="flex items-center gap-3">
+                    <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${isFullyComplete ? 'text-emerald-500' : 'text-white/20'}`}>
+                        {completedCount}/{checklist.length} READY
+                    </span>
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            resetChecklist();
+                        }}
+                        className="p-1 hover:bg-white/5 rounded-md transition-colors text-white/20 hover:text-white/40"
+                    >
+                        <RotateCcw className="w-3 h-3" />
+                    </button>
+                </div>
             </div>
 
             <div className="space-y-3">

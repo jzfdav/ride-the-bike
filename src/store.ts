@@ -84,6 +84,7 @@ export interface BikeStore {
     setTyrePressure: (front: number | null, rear: number | null) => void;
     updateWeather: (lat: number, lon: number) => Promise<void>;
     toggleChecklistItem: (id: string) => void;
+    resetChecklist: () => void;
     setShowLubeTracker: (val: boolean) => void;
 
     // Selectors/Computed
@@ -135,10 +136,10 @@ export const useStore = create<BikeStore>()(
                 label: null
             },
             checklist: [
-                { id: 'tyres', text: 'Tyre Pressure & Tread', checked: false },
-                { id: 'lights', text: 'Lights & Indicators', checked: false },
-                { id: 'oil', text: 'Oil & Fluid Levels', checked: false },
-                { id: 'stand', text: 'Side Stand Up', checked: false }
+                { id: 'gear', text: 'Helmet & Safety Gear', checked: false },
+                { id: 'fluids', text: 'Oil & Brake Fluid Levels', checked: false },
+                { id: 'chain', text: 'Chain Tension & Slack', checked: false },
+                { id: 'lights', text: 'Headlight & Indicators', checked: false }
             ],
 
             // Visibility State
@@ -251,6 +252,10 @@ export const useStore = create<BikeStore>()(
                 checklist: get().checklist.map(item =>
                     item.id === id ? { ...item, checked: !item.checked } : item
                 )
+            }),
+
+            resetChecklist: () => set({
+                checklist: get().checklist.map(item => ({ ...item, checked: false }))
             }),
 
             setShowLubeTracker: (val) => set({ showLubeTracker: val }),
