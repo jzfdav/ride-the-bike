@@ -17,6 +17,7 @@ import { WelcomeOverlay } from './components/WelcomeOverlay';
 import { MaintenanceModule } from './components/MaintenanceModule';
 import { FuelModule } from './components/FuelModule';
 import { BottomActions } from './components/BottomActions';
+import { SettingsModal } from './components/SettingsModal';
 
 function cn(...inputs: any[]) {
     return twMerge(clsx(inputs));
@@ -25,6 +26,8 @@ function cn(...inputs: any[]) {
 export function App() {
     const {
         currentOdo,
+        baseOdo,
+        targetOdo,
         lastRideDate,
         rides,
         hasSeenWelcome,
@@ -34,6 +37,7 @@ export function App() {
         getDaysRemaining
     } = useStore();
 
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [batteryHealth, setBatteryHealth] = useState(100);
 
     useEffect(() => {
@@ -44,20 +48,12 @@ export function App() {
         return () => clearInterval(interval);
     }, [getBatteryHealth, lastRideDate]);
 
-    const targetOdo = 13000;
-    const progress = Math.max(0, Math.min(100, ((currentOdo - 10000) / (targetOdo - 10000)) * 100));
+    const progress = Math.max(0, Math.min(100, ((currentOdo - baseOdo) / (targetOdo - baseOdo)) * 100));
     const daysRemaining = getDaysRemaining();
     const dailyTarget = daysRemaining > 0 ? (targetOdo - currentOdo) / daysRemaining : 0;
 
-    const handleSetServiceDate = () => {
-        const today = new Date().toISOString().split('T')[0];
-        const date = prompt('Service Date (YYYY-MM-DD):', today);
-        if (date) {
-            const service = new Date(date);
-            if (!isNaN(service.getTime())) {
-                setServiceDate(service.toISOString());
-            }
-        }
+    const handleSetSettings = () => {
+        setIsSettingsOpen(true);
     };
 
     const totalRidesThisWeek = rides.filter(ride => {
@@ -99,7 +95,7 @@ export function App() {
                     <motion.button
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        onClick={handleSetServiceDate}
+                        onClick={handleSetSettings}
                         className="p-2.5 bg-white/5 rounded-2xl border border-white/5 transition-all hover:bg-white/10 active:scale-95"
                     >
                         <Calendar className="w-5 h-5 text-oled-gray-400" />
@@ -165,10 +161,10 @@ export function App() {
                         className="bg-white/[0.03] rounded-3xl p-5 border border-white/5"
                     >
                         <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2 mb-3">
-                            <ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" /> Target
+                            <ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" /> Run-Rate
                         </span>
                         <div className="text-3xl font-bold tracking-tighter text-pulsar-blue text-glow-pulsar">
-                            {dailyTarget > 0 ? dailyTarget.toFixed(1) : '0'} <span className="text-sm font-medium opacity-40">km/day</span>
+                            {dailyTarget > 0 ? dailyTarget.toFixed(1) : '0'} <span className="text-sm font-medium opacity-40">km/d</span>
                         </div>
                     </motion.section>
                 </div>
@@ -223,6 +219,11 @@ export function App() {
             </div>
 
             <BottomActions />
+
+            <SettingsModal
+                isOpen={isSettingsOpen}
+                onClose={() => setIsSettingsOpen(false)}
+            />
         </div>
     );
 }

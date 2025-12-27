@@ -26,6 +26,8 @@ export interface FuelEntry {
 export interface BikeStore {
     // Core State
     currentOdo: number;
+    baseOdo: number;
+    targetOdo: number;
     serviceDate: string | null;
     lastRideDate: string | null;
     rides: Ride[];
@@ -42,6 +44,8 @@ export interface BikeStore {
 
     // Actions
     setCurrentOdo: (odo: number) => void;
+    setBaseOdo: (odo: number) => void;
+    setTargetOdo: (odo: number) => void;
     setServiceDate: (date: string | null) => void;
     setHasSeenWelcome: (val: boolean) => void;
     logRide: (distance: number) => void;
@@ -61,6 +65,8 @@ export const useStore = create<BikeStore>()(
         (set, get) => ({
             // Core State
             currentOdo: 10000,
+            baseOdo: 10000,
+            targetOdo: 13000,
             serviceDate: null,
             lastRideDate: null,
             rides: [],
@@ -77,6 +83,8 @@ export const useStore = create<BikeStore>()(
 
             // Core Actions
             setCurrentOdo: (odo) => set({ currentOdo: odo }),
+            setBaseOdo: (odo) => set({ baseOdo: odo }),
+            setTargetOdo: (odo) => set({ targetOdo: odo }),
             setServiceDate: (date) => set({ serviceDate: date }),
             setHasSeenWelcome: (val) => set({ hasSeenWelcome: val }),
 
@@ -152,8 +160,9 @@ export const useStore = create<BikeStore>()(
 
             getDaysRemaining: () => {
                 const { serviceDate } = get();
-                const startPoint = serviceDate ? new Date(serviceDate) : new Date();
+                if (!serviceDate) return 90;
 
+                const startPoint = new Date(serviceDate);
                 const targetDate = new Date(startPoint);
                 targetDate.setDate(targetDate.getDate() + 90);
 
