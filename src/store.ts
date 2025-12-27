@@ -172,13 +172,16 @@ export const useStore = create<BikeStore>()(
                 if (!serviceDate) return 90;
 
                 const startPoint = new Date(serviceDate);
+                startPoint.setHours(0, 0, 0, 0);
+
                 const targetDate = new Date(startPoint);
                 targetDate.setDate(targetDate.getDate() + 90);
+                targetDate.setHours(0, 0, 0, 0);
 
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
 
-                const remaining = Math.ceil((targetDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                const remaining = Math.round((targetDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
                 return Math.max(0, remaining);
             },
 

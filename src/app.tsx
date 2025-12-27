@@ -49,7 +49,11 @@ export function App() {
         return () => clearInterval(interval);
     }, [getBatteryHealth, lastRideDate]);
 
-    const progress = Math.max(0, Math.min(100, ((currentOdo - baseOdo) / (targetOdo - baseOdo)) * 100));
+    const denominator = targetOdo - baseOdo;
+    const progress = denominator > 0
+        ? Math.max(0, Math.min(100, ((currentOdo - baseOdo) / denominator) * 100))
+        : 100;
+
     const daysRemaining = getDaysRemaining();
     const dailyTarget = daysRemaining > 0 ? (targetOdo - currentOdo) / daysRemaining : 0;
 
