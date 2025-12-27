@@ -17,6 +17,8 @@ import { WelcomeOverlay } from './components/WelcomeOverlay';
 import { MaintenanceModule } from './components/MaintenanceModule';
 import { FuelModule } from './components/FuelModule';
 import { TyreModule } from './components/TyreModule';
+import { WeatherModule } from './components/WeatherModule';
+import { ChecklistModule } from './components/ChecklistModule';
 import { BottomActions } from './components/BottomActions';
 import { SettingsModal } from './components/SettingsModal';
 
@@ -37,7 +39,8 @@ export function App() {
         getBatteryHealth,
         getBatteryMessage,
         getDaysRemaining,
-        showLubeTracker
+        showLubeTracker,
+        updateWeather
     } = useStore();
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -47,6 +50,16 @@ export function App() {
     useEffect(() => {
         setBatteryHealth(getBatteryHealth());
         setBatteryMessage(getBatteryMessage());
+
+        // Fetch weather if available
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                updateWeather(pos.coords.latitude, pos.coords.longitude);
+            }, (err) => {
+                console.warn("Geolocation denied", err);
+            });
+        }
+
         const interval = setInterval(() => {
             setBatteryHealth(getBatteryHealth());
             setBatteryMessage(getBatteryMessage());
@@ -188,7 +201,9 @@ export function App() {
                 {/* Advanced Maintenance */}
                 {showLubeTracker && <MaintenanceModule />}
                 <FuelModule />
+                <WeatherModule />
                 <TyreModule />
+                <ChecklistModule />
 
                 {/* Recent History */}
                 {rides.length > 0 && (
