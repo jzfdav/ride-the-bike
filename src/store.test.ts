@@ -58,4 +58,13 @@ describe('RideTheBike Store', () => {
         expect(useStore.getState().rides.length).toBe(1);
         expect(useStore.getState().rides[0].distance).toBe(25.5);
     });
+
+    it('manages fuel bars correctly', () => {
+        useStore.getState().setFuelBars(5);
+        expect(useStore.getState().fuelBars).toBe(5);
+
+        // Refuel resets bars to 12
+        useStore.getState().logFuel(10, 500);
+        expect(useStore.getState().fuelBars).toBe(12);
+    });
 });

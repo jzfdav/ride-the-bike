@@ -4,7 +4,7 @@ import { Plus, Bike, Fuel, Droplets, X } from 'lucide-react';
 import { useStore } from '../store';
 import { clsx } from 'clsx';
 
-type FormType = 'ride' | 'fuel' | 'lube' | null;
+type FormType = 'ride' | 'fuel' | 'lube' | 'bars' | null;
 
 export function BottomActions() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ export function BottomActions() {
     const [val1, setVal1] = useState(''); // distance or liters
     const [val2, setVal2] = useState(''); // cost
 
-    const { logRide, logFuel, logLube, showLubeTracker } = useStore();
+    const { logRide, logFuel, logLube, fuelBars, setFuelBars, showLubeTracker } = useStore();
 
     const handleAction = (type: FormType) => {
         if (type === 'lube') {
@@ -30,7 +30,13 @@ export function BottomActions() {
         } else if (activeForm === 'fuel') {
             const l = parseFloat(val1);
             const c = parseFloat(val2);
-            if (l > 0 && c > 0) logFuel(l, c);
+            if (l > 0 && c > 0) {
+                logFuel(l, c);
+                setFuelBars(12); // Always reset to full on top-up
+            }
+        } else if (activeForm === 'bars') {
+            const b = parseInt(val1);
+            if (!isNaN(b)) setFuelBars(b);
         }
         closeForm();
     };
@@ -59,6 +65,7 @@ export function BottomActions() {
                             {[
                                 { id: 'ride' as const, label: 'Ride', icon: Bike, color: 'bg-pulsar-blue', show: true },
                                 { id: 'fuel' as const, label: 'Fuel', icon: Fuel, color: 'bg-amber-600', show: true },
+                                { id: 'bars' as const, label: 'Bars', icon: Fuel, color: 'bg-emerald-600', show: true },
                                 { id: 'lube' as const, label: 'Lube', icon: Droplets, color: 'bg-indigo-600', show: showLubeTracker }
                             ].filter(btn => btn.show).map((btn) => (
                                 <button
@@ -94,11 +101,13 @@ export function BottomActions() {
                                         value={val1}
                                         onChange={(e) => setVal1(e.target.value)}
                                         className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
-                                        placeholder={activeForm === 'ride' ? 'Distance' : 'Liters'}
+                                        placeholder={activeForm === 'ride' ? 'Distance' : activeForm === 'fuel' ? 'Liters' : 'Remaining Bars (0-12)'}
                                         autoFocus
+                                        min={0}
+                                        max={activeForm === 'bars' ? 12 : undefined}
                                     />
                                     <span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
-                                        {activeForm === 'ride' ? 'KM' : 'L'}
+                                        {activeForm === 'ride' ? 'KM' : activeForm === 'fuel' ? 'L' : '/12'}
                                     </span>
                                 </div>
 

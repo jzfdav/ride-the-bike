@@ -41,6 +41,7 @@ export interface BikeStore {
 
     // Fuel State
     fuelLog: FuelEntry[];
+    fuelBars: number; // 0-12 segments
 
     // Visibility State
     showLubeTracker: boolean;
@@ -55,6 +56,7 @@ export interface BikeStore {
     logLube: () => void;
     addServiceEntry: (entry: Omit<ServiceEntry, 'id' | 'date'>) => void;
     logFuel: (liters: number, cost: number) => void;
+    setFuelBars: (bars: number) => void;
     setShowLubeTracker: (val: boolean) => void;
 
     // Selectors/Computed
@@ -85,6 +87,7 @@ export const useStore = create<BikeStore>()(
 
             // Fuel State
             fuelLog: [],
+            fuelBars: 12,
 
             // Visibility State
             showLubeTracker: false,
@@ -140,8 +143,13 @@ export const useStore = create<BikeStore>()(
                     liters,
                     cost
                 };
-                set({ fuelLog: [entry, ...get().fuelLog].slice(0, 50) });
+                set({
+                    fuelLog: [entry, ...get().fuelLog].slice(0, 50),
+                    fuelBars: 12 // Reset to full on refuel
+                });
             },
+
+            setFuelBars: (bars) => set({ fuelBars: Math.max(0, Math.min(12, bars)) }),
 
             setShowLubeTracker: (val) => set({ showLubeTracker: val }),
 
