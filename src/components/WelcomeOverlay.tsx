@@ -42,7 +42,7 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 
             <div className="space-y-6 w-full max-w-[280px] mb-12">
                 {[
-                    { icon: Zap, text: "Battery health decays daily", color: "text-pulsar-blue" },
+                    { icon: Zap, text: "Battery health decays 5% daily", color: "text-pulsar-blue" },
                     { icon: ShieldCheck, text: "Track chain lube & service", color: "text-pulsar-blue" },
                     { icon: Target, text: "Reach your riding milestone", color: "text-pulsar-blue" }
                 ].map((item, i) => (

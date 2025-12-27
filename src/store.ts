@@ -59,6 +59,7 @@ export interface BikeStore {
 
     // Selectors/Computed
     getBatteryHealth: () => number;
+    getBatteryMessage: () => string;
     getChainHealth: () => number;
     getDaysRemaining: () => number;
     getAverageFE: () => string | number;
@@ -158,6 +159,20 @@ export const useStore = create<BikeStore>()(
 
                 const daysSince = Math.floor((today.getTime() - lastRide.getTime()) / (1000 * 60 * 60 * 24));
                 return Math.max(0, 100 - (daysSince * 5));
+            },
+
+            getBatteryMessage: () => {
+                const { lastRideDate } = get();
+                if (!lastRideDate) return "Optimal (New)";
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const lastRide = new Date(lastRideDate);
+                lastRide.setHours(0, 0, 0, 0);
+
+                const daysSince = Math.floor((today.getTime() - lastRide.getTime()) / (1000 * 60 * 60 * 24));
+                if (daysSince === 0) return "Optimal (Rode today)";
+                return `${daysSince} day${daysSince > 1 ? 's' : ''} idle`;
             },
 
             getChainHealth: () => {

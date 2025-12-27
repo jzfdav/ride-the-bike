@@ -34,20 +34,24 @@ export function App() {
         setHasSeenWelcome,
         setServiceDate,
         getBatteryHealth,
+        getBatteryMessage,
         getDaysRemaining,
         showLubeTracker
     } = useStore();
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [batteryHealth, setBatteryHealth] = useState(100);
+    const [batteryMessage, setBatteryMessage] = useState(getBatteryMessage());
 
     useEffect(() => {
         setBatteryHealth(getBatteryHealth());
+        setBatteryMessage(getBatteryMessage());
         const interval = setInterval(() => {
             setBatteryHealth(getBatteryHealth());
+            setBatteryMessage(getBatteryMessage());
         }, 60000);
         return () => clearInterval(interval);
-    }, [getBatteryHealth, lastRideDate]);
+    }, [getBatteryHealth, getBatteryMessage, lastRideDate]);
 
     const denominator = targetOdo - baseOdo;
     const progress = denominator > 0
@@ -156,6 +160,9 @@ export function App() {
                             batteryHealth > 50 ? "text-pulsar-blue text-glow-pulsar" : "text-warning-orange text-glow-warning"
                         )}>
                             {batteryHealth}%
+                        </div>
+                        <div className="text-[9px] text-white/20 font-bold mt-2 uppercase tracking-tight">
+                            {batteryMessage}
                         </div>
                     </motion.section>
 
