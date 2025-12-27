@@ -43,6 +43,13 @@ export interface BikeStore {
     fuelLog: FuelEntry[];
     fuelBars: number; // 0-12 segments
 
+    // Tyre State
+    tyrePressure: {
+        front: number | null;
+        rear: number | null;
+        lastUpdated: string | null;
+    };
+
     // Visibility State
     showLubeTracker: boolean;
 
@@ -57,6 +64,7 @@ export interface BikeStore {
     addServiceEntry: (entry: Omit<ServiceEntry, 'id' | 'date'>) => void;
     logFuel: (liters: number, cost: number) => void;
     setFuelBars: (bars: number) => void;
+    setTyrePressure: (front: number | null, rear: number | null) => void;
     setShowLubeTracker: (val: boolean) => void;
 
     // Selectors/Computed
@@ -88,6 +96,13 @@ export const useStore = create<BikeStore>()(
             // Fuel State
             fuelLog: [],
             fuelBars: 12,
+
+            // Tyre State
+            tyrePressure: {
+                front: null,
+                rear: null,
+                lastUpdated: null
+            },
 
             // Visibility State
             showLubeTracker: false,
@@ -150,6 +165,14 @@ export const useStore = create<BikeStore>()(
             },
 
             setFuelBars: (bars) => set({ fuelBars: Math.max(0, Math.min(12, bars)) }),
+
+            setTyrePressure: (front, rear) => set({
+                tyrePressure: {
+                    front,
+                    rear,
+                    lastUpdated: new Date().toISOString()
+                }
+            }),
 
             setShowLubeTracker: (val) => set({ showLubeTracker: val }),
 

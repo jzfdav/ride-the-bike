@@ -16,6 +16,7 @@ import { twMerge } from 'tailwind-merge';
 import { WelcomeOverlay } from './components/WelcomeOverlay';
 import { MaintenanceModule } from './components/MaintenanceModule';
 import { FuelModule } from './components/FuelModule';
+import { TyreModule } from './components/TyreModule';
 import { BottomActions } from './components/BottomActions';
 import { SettingsModal } from './components/SettingsModal';
 
@@ -187,6 +188,7 @@ export function App() {
                 {/* Advanced Maintenance */}
                 {showLubeTracker && <MaintenanceModule />}
                 <FuelModule />
+                <TyreModule />
 
                 {/* Recent History */}
                 {rides.length > 0 && (

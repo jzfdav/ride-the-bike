@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Bike, Fuel, Droplets, X } from 'lucide-react';
+import { Plus, Bike, Fuel, Droplets, X, CircleDot } from 'lucide-react';
 import { useStore } from '../store';
 import { clsx } from 'clsx';
 
-type FormType = 'ride' | 'fuel' | 'lube' | 'bars' | null;
+type FormType = 'ride' | 'fuel' | 'lube' | 'bars' | 'tyre' | null;
 
 export function BottomActions() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ export function BottomActions() {
     const [val1, setVal1] = useState(''); // distance or liters
     const [val2, setVal2] = useState(''); // cost
 
-    const { logRide, logFuel, logLube, fuelBars, setFuelBars, showLubeTracker } = useStore();
+    const { logRide, logFuel, logLube, fuelBars, setFuelBars, tyrePressure, setTyrePressure, showLubeTracker } = useStore();
 
     const handleAction = (type: FormType) => {
         if (type === 'lube') {
@@ -37,6 +37,10 @@ export function BottomActions() {
         } else if (activeForm === 'bars') {
             const b = parseInt(val1);
             if (!isNaN(b)) setFuelBars(b);
+        } else if (activeForm === 'tyre') {
+            const f = parseFloat(val1);
+            const r = parseFloat(val2);
+            if (!isNaN(f) && !isNaN(r)) setTyrePressure(f, r);
         }
         closeForm();
     };
@@ -57,15 +61,13 @@ export function BottomActions() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
-                            className={clsx(
-                                "absolute bottom-20 left-0 right-0 grid gap-3",
-                                showLubeTracker ? "grid-cols-3" : "grid-cols-2"
-                            )}
+                            className="absolute bottom-20 left-0 right-0 grid grid-cols-2 gap-3"
                         >
                             {[
                                 { id: 'ride' as const, label: 'Ride', icon: Bike, color: 'bg-pulsar-blue', show: true },
-                                { id: 'fuel' as const, label: 'Fuel', icon: Fuel, color: 'bg-amber-600', show: true },
-                                { id: 'bars' as const, label: 'Bars', icon: Fuel, color: 'bg-emerald-600', show: true },
+                                { id: 'fuel' as const, label: 'Refuel', icon: Fuel, color: 'bg-amber-600', show: true },
+                                { id: 'bars' as const, label: 'Fuel Bars', icon: Fuel, color: 'bg-emerald-600', show: true },
+                                { id: 'tyre' as const, label: 'Tyre PSI', icon: CircleDot, color: 'bg-rose-500', show: true },
                                 { id: 'lube' as const, label: 'Lube', icon: Droplets, color: 'bg-indigo-600', show: showLubeTracker }
                             ].filter(btn => btn.show).map((btn) => (
                                 <button
@@ -101,26 +103,33 @@ export function BottomActions() {
                                         value={val1}
                                         onChange={(e) => setVal1(e.target.value)}
                                         className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
-                                        placeholder={activeForm === 'ride' ? 'Distance' : activeForm === 'fuel' ? 'Liters' : 'Remaining Bars (0-12)'}
+                                        placeholder={
+                                            activeForm === 'ride' ? 'Distance' :
+                                                activeForm === 'fuel' ? 'Liters' :
+                                                    activeForm === 'bars' ? 'Remaining Bars (0-12)' :
+                                                        'Front PSI'
+                                        }
                                         autoFocus
                                         min={0}
                                         max={activeForm === 'bars' ? 12 : undefined}
                                     />
                                     <span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
-                                        {activeForm === 'ride' ? 'KM' : activeForm === 'fuel' ? 'L' : '/12'}
+                                        {activeForm === 'ride' ? 'KM' : activeForm === 'fuel' ? 'L' : activeForm === 'bars' ? '/12' : 'F'}
                                     </span>
                                 </div>
 
-                                {activeForm === 'fuel' && (
+                                {(activeForm === 'fuel' || activeForm === 'tyre') && (
                                     <div className="relative">
                                         <input
                                             type="number"
                                             value={val2}
                                             onChange={(e) => setVal2(e.target.value)}
                                             className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
-                                            placeholder="Total Cost"
+                                            placeholder={activeForm === 'fuel' ? 'Total Cost' : 'Rear PSI'}
                                         />
-                                        <span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">₹</span>
+                                        <span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
+                                            {activeForm === 'fuel' ? '₹' : 'R'}
+                                        </span>
                                     </div>
                                 )}
 
