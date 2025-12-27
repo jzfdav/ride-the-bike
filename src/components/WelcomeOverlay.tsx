@@ -37,14 +37,14 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
                 transition={{ delay: 0.5 }}
                 className="text-oled-gray-400 text-sm leading-relaxed mb-12 max-w-[280px]"
             >
-                Keep your machine alive. Gamify <span className="text-white font-semibold">mechanical sympathy</span> and reach your 13,000 km target through consistent, healthy riding.
+                Keep your machine alive. Gamify <span className="text-white font-semibold">mechanical sympathy</span> and reach your riding target through consistent, healthy riding.
             </motion.p>
 
             <div className="space-y-6 w-full max-w-[280px] mb-12">
                 {[
                     { icon: Zap, text: "Battery health decays daily", color: "text-pulsar-blue" },
                     { icon: ShieldCheck, text: "Track chain lube & service", color: "text-pulsar-blue" },
-                    { icon: Target, text: "Reach the 13k km milestone", color: "text-pulsar-blue" }
+                    { icon: Target, text: "Reach your riding milestone", color: "text-pulsar-blue" }
                 ].map((item, i) => (
                     <motion.div
                         key={i}
