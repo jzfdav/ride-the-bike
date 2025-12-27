@@ -3,7 +3,6 @@ import { useStore } from './store';
 
 describe('RideTheBike Store', () => {
     beforeEach(() => {
-        // Reset store before each test (manually since persist might interfere)
         useStore.setState({
             currentOdo: 10000,
             serviceDate: null,
@@ -42,11 +41,10 @@ describe('RideTheBike Store', () => {
     });
 
     it('calculates Fuel Economy accurately', () => {
-        useStore.getState().logFuel(10, 100); // 10 liters at 10k odo
+        useStore.getState().logFuel(10, 100);
         useStore.setState({ currentOdo: 10400 });
-        useStore.getState().logFuel(10, 100); // 10 liters at 10.4k odo
+        useStore.getState().logFuel(10, 100);
 
-        // Distance = 400km, Liters = 10 -> FE = 40.0
         expect(useStore.getState().getAverageFE()).toBe("40.0");
     });
 

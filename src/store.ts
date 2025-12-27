@@ -1,7 +1,62 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export const useStore = create(
+export interface Ride {
+    id: number;
+    date: string;
+    distance: number;
+    odometer: number;
+}
+
+export interface ServiceEntry {
+    id: number;
+    date: string;
+    type: string;
+    description: string;
+}
+
+export interface FuelEntry {
+    id: number;
+    date: string;
+    odo: number;
+    liters: number;
+    cost: number;
+}
+
+export interface BikeStore {
+    // Core State
+    currentOdo: number;
+    serviceDate: string | null;
+    lastRideDate: string | null;
+    rides: Ride[];
+
+    // Onboarding State
+    hasSeenWelcome: boolean;
+
+    // Maintenance State
+    lastLubeOdo: number;
+    serviceLog: ServiceEntry[];
+
+    // Fuel State
+    fuelLog: FuelEntry[];
+
+    // Actions
+    setCurrentOdo: (odo: number) => void;
+    setServiceDate: (date: string | null) => void;
+    setHasSeenWelcome: (val: boolean) => void;
+    logRide: (distance: number) => void;
+    logLube: () => void;
+    addServiceEntry: (entry: Omit<ServiceEntry, 'id' | 'date'>) => void;
+    logFuel: (liters: number, cost: number) => void;
+
+    // Selectors/Computed
+    getBatteryHealth: () => number;
+    getChainHealth: () => number;
+    getDaysRemaining: () => number;
+    getAverageFE: () => string | number;
+}
+
+export const useStore = create<BikeStore>()(
     persist(
         (set, get) => ({
             // Core State
@@ -18,7 +73,7 @@ export const useStore = create(
             serviceLog: [],
 
             // Fuel State
-            fuelLog: [], // { date, odo, liters, cost }
+            fuelLog: [],
 
             // Core Actions
             setCurrentOdo: (odo) => set({ currentOdo: odo }),
@@ -30,7 +85,7 @@ export const useStore = create(
                 const newOdo = state.currentOdo + distance;
                 const today = new Date().toISOString();
 
-                const newRide = {
+                const newRide: Ride = {
                     id: Date.now(),
                     date: today,
                     distance,
@@ -51,13 +106,18 @@ export const useStore = create(
 
             addServiceEntry: (entry) => {
                 set({
-                    serviceLog: [{ id: Date.now(), date: new Date().toISOString(), ...entry }, ...get().serviceLog]
+                    serviceLog: [{
+                        id: Date.now(),
+                        date: new Date().toISOString(),
+                        type: entry.type,
+                        description: entry.description
+                    }, ...get().serviceLog]
                 });
             },
 
             // Fuel Actions
             logFuel: (liters, cost) => {
-                const entry = {
+                const entry: FuelEntry = {
                     id: Date.now(),
                     date: new Date().toISOString(),
                     odo: get().currentOdo,
@@ -108,7 +168,6 @@ export const useStore = create(
                 const { fuelLog } = get();
                 if (fuelLog.length < 2) return 0;
 
-                // Simple FE calculation: distance between last two refuels / liters of the later refuel
                 const latest = fuelLog[0];
                 const previous = fuelLog[1];
                 const distance = latest.odo - previous.odo;

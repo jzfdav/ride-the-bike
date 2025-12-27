@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Droplets, Settings, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { Droplets, AlertTriangle } from 'lucide-react';
 import { useStore } from '../store';
 import { clsx } from 'clsx';
 

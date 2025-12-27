@@ -4,15 +4,17 @@ import { Plus, Bike, Fuel, Droplets, X } from 'lucide-react';
 import { useStore } from '../store';
 import { clsx } from 'clsx';
 
+type FormType = 'ride' | 'fuel' | 'lube' | null;
+
 export function BottomActions() {
     const [isOpen, setIsOpen] = useState(false);
-    const [activeForm, setActiveForm] = useState(null); // 'ride', 'fuel', 'lube'
+    const [activeForm, setActiveForm] = useState<FormType>(null);
     const [val1, setVal1] = useState(''); // distance or liters
     const [val2, setVal2] = useState(''); // cost
 
     const { logRide, logFuel, logLube } = useStore();
 
-    const handleAction = (type) => {
+    const handleAction = (type: FormType) => {
         if (type === 'lube') {
             logLube();
             setIsOpen(false);
@@ -52,9 +54,9 @@ export function BottomActions() {
                             className="absolute bottom-20 left-0 right-0 grid grid-cols-3 gap-3"
                         >
                             {[
-                                { id: 'ride', label: 'Ride', icon: Bike, color: 'bg-pulsar-blue' },
-                                { id: 'fuel', label: 'Fuel', icon: Fuel, color: 'bg-amber-600' },
-                                { id: 'lube', label: 'Lube', icon: Droplets, color: 'bg-indigo-600' }
+                                { id: 'ride' as const, label: 'Ride', icon: Bike, color: 'bg-pulsar-blue' },
+                                { id: 'fuel' as const, label: 'Fuel', icon: Fuel, color: 'bg-amber-600' },
+                                { id: 'lube' as const, label: 'Lube', icon: Droplets, color: 'bg-indigo-600' }
                             ].map((btn) => (
                                 <button
                                     key={btn.id}

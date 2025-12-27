@@ -23,7 +23,7 @@ export function FuelModule() {
 
             <div className="flex items-baseline gap-2">
                 <div className="text-3xl font-bold tracking-tighter text-glow-pulsar">
-                    {avgFE > 0 ? avgFE : "--.-"}
+                    {typeof avgFE === 'number' && avgFE > 0 ? avgFE : avgFE || "--.-"}
                 </div>
                 <div className="text-xs font-bold text-oled-gray-400 uppercase tracking-widest">
                     KM/L (AVG)

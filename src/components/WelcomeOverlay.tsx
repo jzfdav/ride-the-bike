@@ -1,7 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bike, ShieldCheck, Zap, Target, ArrowRight } from 'lucide-react';
 
-export function WelcomeOverlay({ onComplete }) {
+interface WelcomeOverlayProps {
+    onComplete: () => void;
+}
+
+export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
     return (
         <motion.div
             initial={{ opacity: 0 }}
