@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bike, ShieldCheck, Zap, Target, ArrowRight } from 'lucide-react';
+import { Bike, ShieldCheck, Zap, Target, ArrowRight, TrendingUp } from 'lucide-react';
 
 interface WelcomeOverlayProps {
     onComplete: () => void;
@@ -44,6 +44,7 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
                 {[
                     { icon: Zap, text: "Battery health decays 5% daily", color: "text-pulsar-blue" },
                     { icon: ShieldCheck, text: "Track chain lube & service", color: "text-pulsar-blue" },
+                    { icon: TrendingUp, text: "Daily 'Run-Rate' target", color: "text-pulsar-blue" },
                     { icon: Target, text: "Reach your riding milestone", color: "text-pulsar-blue" }
                 ].map((item, i) => (
                     <motion.div

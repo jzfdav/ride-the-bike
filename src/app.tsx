@@ -139,7 +139,7 @@ export function App() {
                         </div>
                         <div className="flex justify-between items-center text-[10px] font-black tracking-widest text-white/20">
                             <span>{progress.toFixed(1)}% SERVICE PROGRESS</span>
-                            <span className="text-pulsar-blue/60">{(13000 - currentOdo).toLocaleString()} KM TO GO</span>
+                            <span className="text-pulsar-blue/60">{(targetOdo - currentOdo).toLocaleString()} KM TO GO</span>
                         </div>
                     </div>
                 </motion.section>
@@ -177,6 +177,9 @@ export function App() {
                         </span>
                         <div className="text-3xl font-bold tracking-tighter text-pulsar-blue text-glow-pulsar">
                             {dailyTarget > 0 ? dailyTarget.toFixed(1) : '0'} <span className="text-sm font-medium opacity-40">km/d</span>
+                        </div>
+                        <div className="text-[9px] text-white/20 font-bold mt-2 uppercase tracking-tight">
+                            Daily Target for {daysRemaining} days
                         </div>
                     </motion.section>
                 </div>
