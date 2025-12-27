@@ -25,7 +25,7 @@ This document outlines the strict quality guardrails for the RideTheBike project
 ### 1. Code Health
 - **Dead Code**: Never leave unused imports, variables, or commented-out logic after a feature is completed.
 - **Hardcoded Constants**: Avoid repeating "10,000" or "13,000" everywhere. Use the store or a constants file.
-- **Type Bloat**: Avoid adding TypeScript syntax to `.jsx` files (keep it clean JSDoc or pure JS).
+- **Unsafe Types**: Avoid using `any` except where absolutely necessary. Use the defined interfaces in `store.ts` for all bike metrics.
 
 ### 2. UI/UX
 - **Cluttered Interface**: Do not overwhelm the user with all stats at once. Use a minimal, premium "Dashboard" aesthetic.
