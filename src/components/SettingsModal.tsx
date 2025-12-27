@@ -16,14 +16,14 @@ interface SettingsModalProps {
 
 export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     const {
-        serviceDate, setServiceDate,
+        serviceDueDate, setServiceDueDate,
         currentOdo, setCurrentOdo,
         baseOdo, setBaseOdo,
         targetOdo, setTargetOdo,
         showLubeTracker, setShowLubeTracker
     } = useStore();
 
-    const [tempDate, setTempDate] = useState(serviceDate ? serviceDate.split('T')[0] : new Date().toISOString().split('T')[0]);
+    const [tempDate, setTempDate] = useState(serviceDueDate ? serviceDueDate.split('T')[0] : new Date().toISOString().split('T')[0]);
     const [tempOdo, setTempOdo] = useState(currentOdo.toString());
     const [tempBase, setTempBase] = useState(baseOdo.toString());
     const [tempTarget, setTempTarget] = useState(targetOdo.toString());
@@ -32,7 +32,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     const handleSave = () => {
         const date = new Date(tempDate);
         if (!isNaN(date.getTime())) {
-            setServiceDate(date.toISOString());
+            setServiceDueDate(date.toISOString());
         }
 
         const odo = parseFloat(tempOdo);
@@ -81,7 +81,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                                 {/* Challenge Start Date */}
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-pulsar-blue flex items-center gap-2">
-                                        <Calendar className="w-3.5 h-3.5" /> Start Date (Last Service)
+                                        <Calendar className="w-3.5 h-3.5" /> Service Due Date (Deadline)
                                     </label>
                                     <input
                                         type="date"
@@ -89,7 +89,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                                         onChange={(e) => setTempDate(e.target.value)}
                                         className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors color-scheme-dark"
                                     />
-                                    <p className="text-[9px] text-oled-gray-400 font-medium">This starts your 90-day challenge window.</p>
+                                    <p className="text-[9px] text-oled-gray-400 font-medium">When is your bike due for its next service?</p>
                                 </div>
 
                                 {/* Starting Odometer */}

@@ -28,7 +28,7 @@ export interface BikeStore {
     currentOdo: number;
     baseOdo: number;
     targetOdo: number;
-    serviceDate: string | null;
+    serviceDueDate: string | null;
     lastRideDate: string | null;
     rides: Ride[];
 
@@ -74,7 +74,7 @@ export interface BikeStore {
     setCurrentOdo: (odo: number) => void;
     setBaseOdo: (odo: number) => void;
     setTargetOdo: (odo: number) => void;
-    setServiceDate: (date: string | null) => void;
+    setServiceDueDate: (date: string | null) => void;
     setHasSeenWelcome: (val: boolean) => void;
     logRide: (distance: number) => void;
     logLube: () => void;
@@ -101,7 +101,7 @@ export const useStore = create<BikeStore>()(
             currentOdo: 10000,
             baseOdo: 10000,
             targetOdo: 13000,
-            serviceDate: null,
+            serviceDueDate: null,
             lastRideDate: null,
             rides: [],
 
@@ -148,7 +148,7 @@ export const useStore = create<BikeStore>()(
             setCurrentOdo: (odo) => set({ currentOdo: odo }),
             setBaseOdo: (odo) => set({ baseOdo: odo }),
             setTargetOdo: (odo) => set({ targetOdo: odo }),
-            setServiceDate: (date) => set({ serviceDate: date }),
+            setServiceDueDate: (date) => set({ serviceDueDate: date }),
             setHasSeenWelcome: (val) => set({ hasSeenWelcome: val }),
 
             logRide: (distance) => {
@@ -293,20 +293,15 @@ export const useStore = create<BikeStore>()(
             },
 
             getDaysRemaining: () => {
-                const { serviceDate } = get();
-                if (!serviceDate) return 90;
-
-                const startPoint = new Date(serviceDate);
-                startPoint.setHours(0, 0, 0, 0);
-
-                const targetDate = new Date(startPoint);
-                targetDate.setDate(targetDate.getDate() + 90);
-                targetDate.setHours(0, 0, 0, 0);
+                const { serviceDueDate } = get();
+                if (!serviceDueDate) return 0;
 
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
+                const target = new Date(serviceDueDate);
+                target.setHours(0, 0, 0, 0);
 
-                const remaining = Math.round((targetDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                const remaining = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
                 return Math.max(0, remaining);
             },
 

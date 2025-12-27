@@ -35,7 +35,7 @@ export function App() {
         rides,
         hasSeenWelcome,
         setHasSeenWelcome,
-        setServiceDate,
+        setServiceDueDate,
         getBatteryHealth,
         getBatteryMessage,
         getDaysRemaining,

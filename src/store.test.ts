@@ -5,7 +5,7 @@ describe('RideTheBike Store', () => {
     beforeEach(() => {
         useStore.setState({
             currentOdo: 10000,
-            serviceDate: null,
+            serviceDueDate: null,
             lastRideDate: null,
             rides: [],
             hasSeenWelcome: false,
