@@ -42,6 +42,9 @@ export interface BikeStore {
     // Fuel State
     fuelLog: FuelEntry[];
 
+    // Visibility State
+    showLubeTracker: boolean;
+
     // Actions
     setCurrentOdo: (odo: number) => void;
     setBaseOdo: (odo: number) => void;
@@ -52,6 +55,7 @@ export interface BikeStore {
     logLube: () => void;
     addServiceEntry: (entry: Omit<ServiceEntry, 'id' | 'date'>) => void;
     logFuel: (liters: number, cost: number) => void;
+    setShowLubeTracker: (val: boolean) => void;
 
     // Selectors/Computed
     getBatteryHealth: () => number;
@@ -80,6 +84,9 @@ export const useStore = create<BikeStore>()(
 
             // Fuel State
             fuelLog: [],
+
+            // Visibility State
+            showLubeTracker: false,
 
             // Core Actions
             setCurrentOdo: (odo) => set({ currentOdo: odo }),
@@ -134,6 +141,8 @@ export const useStore = create<BikeStore>()(
                 };
                 set({ fuelLog: [entry, ...get().fuelLog].slice(0, 50) });
             },
+
+            setShowLubeTracker: (val) => set({ showLubeTracker: val }),
 
             // Selectors & Computed Logic
             getBatteryHealth: () => {

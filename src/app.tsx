@@ -34,7 +34,8 @@ export function App() {
         setHasSeenWelcome,
         setServiceDate,
         getBatteryHealth,
-        getDaysRemaining
+        getDaysRemaining,
+        showLubeTracker
     } = useStore();
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -170,7 +171,7 @@ export function App() {
                 </div>
 
                 {/* Advanced Maintenance */}
-                <MaintenanceModule />
+                {showLubeTracker && <MaintenanceModule />}
                 <FuelModule />
 
                 {/* Recent History */}

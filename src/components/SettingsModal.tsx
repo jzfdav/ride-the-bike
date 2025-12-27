@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, Activity, Save, Target } from 'lucide-react';
+import { X, Calendar, Activity, Save, Target, Droplets } from 'lucide-react';
 import { useStore } from '../store';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
 
 interface SettingsModalProps {
     isOpen: boolean;
@@ -13,13 +19,15 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         serviceDate, setServiceDate,
         currentOdo, setCurrentOdo,
         baseOdo, setBaseOdo,
-        targetOdo, setTargetOdo
+        targetOdo, setTargetOdo,
+        showLubeTracker, setShowLubeTracker
     } = useStore();
 
     const [tempDate, setTempDate] = useState(serviceDate ? serviceDate.split('T')[0] : new Date().toISOString().split('T')[0]);
     const [tempOdo, setTempOdo] = useState(currentOdo.toString());
     const [tempBase, setTempBase] = useState(baseOdo.toString());
     const [tempTarget, setTempTarget] = useState(targetOdo.toString());
+    const [tempShowLube, setTempShowLube] = useState(showLubeTracker);
 
     const handleSave = () => {
         const date = new Date(tempDate);
@@ -35,6 +43,8 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
         const target = parseFloat(tempTarget);
         if (!isNaN(target)) setTargetOdo(target);
+
+        setShowLubeTracker(tempShowLube);
 
         onClose();
     };
@@ -120,6 +130,33 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                                         className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors"
                                         placeholder="e.g. 10450"
                                     />
+                                </div>
+
+                                {/* Feature Toggles */}
+                                <div className="space-y-4 pt-2">
+                                    <div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
+                                        <div className="flex items-center gap-3">
+                                            <div className="p-2 bg-pulsar-blue/10 rounded-xl">
+                                                <Droplets className="w-5 h-5 text-pulsar-blue" />
+                                            </div>
+                                            <div>
+                                                <div className="text-xs font-bold text-white">Chain Lube Tracker</div>
+                                                <div className="text-[9px] text-oled-gray-400 font-medium">Toggle visibility on dashboard</div>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => setTempShowLube(!tempShowLube)}
+                                            className={cn(
+                                                "w-12 h-6 rounded-full transition-all duration-300 relative",
+                                                tempShowLube ? "bg-pulsar-blue" : "bg-white/10"
+                                            )}
+                                        >
+                                            <motion.div
+                                                animate={{ x: tempShowLube ? 26 : 4 }}
+                                                className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-lg"
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <button

@@ -12,7 +12,7 @@ export function BottomActions() {
     const [val1, setVal1] = useState(''); // distance or liters
     const [val2, setVal2] = useState(''); // cost
 
-    const { logRide, logFuel, logLube } = useStore();
+    const { logRide, logFuel, logLube, showLubeTracker } = useStore();
 
     const handleAction = (type: FormType) => {
         if (type === 'lube') {
@@ -51,13 +51,16 @@ export function BottomActions() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
-                            className="absolute bottom-20 left-0 right-0 grid grid-cols-3 gap-3"
+                            className={clsx(
+                                "absolute bottom-20 left-0 right-0 grid gap-3",
+                                showLubeTracker ? "grid-cols-3" : "grid-cols-2"
+                            )}
                         >
                             {[
-                                { id: 'ride' as const, label: 'Ride', icon: Bike, color: 'bg-pulsar-blue' },
-                                { id: 'fuel' as const, label: 'Fuel', icon: Fuel, color: 'bg-amber-600' },
-                                { id: 'lube' as const, label: 'Lube', icon: Droplets, color: 'bg-indigo-600' }
-                            ].map((btn) => (
+                                { id: 'ride' as const, label: 'Ride', icon: Bike, color: 'bg-pulsar-blue', show: true },
+                                { id: 'fuel' as const, label: 'Fuel', icon: Fuel, color: 'bg-amber-600', show: true },
+                                { id: 'lube' as const, label: 'Lube', icon: Droplets, color: 'bg-indigo-600', show: showLubeTracker }
+                            ].filter(btn => btn.show).map((btn) => (
                                 <button
                                     key={btn.id}
                                     onClick={() => handleAction(btn.id)}
