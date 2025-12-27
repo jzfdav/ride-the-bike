@@ -33,7 +33,7 @@ export default defineConfig({
       }
     })
   ],
-  base: './',
+  base: '/ride-the-bike/',
   build: {
     outDir: 'dist'
   },
