@@ -43,17 +43,6 @@ export interface BikeStore {
         lastUpdated: string | null;
     };
 
-    // Rider Insights
-    weather: {
-        temp: number | null;
-        code: number | null;
-        rainProb: number | null;
-        lastUpdated: string | null;
-    };
-    aqi: {
-        value: number | null;
-        label: string | null;
-    };
     checklist: {
         id: string;
         text: string;
@@ -77,7 +66,6 @@ export interface BikeStore {
     logFuel: (liters: number, cost: number) => void;
     setFuelBars: (bars: number) => void;
     setTyrePressure: (front: number | null, rear: number | null) => void;
-    updateWeather: (lat: number, lon: number) => Promise<void>;
     toggleChecklistItem: (id: string) => void;
     resetChecklist: () => void;
     setShowLubeTracker: (val: boolean) => void;
@@ -118,17 +106,6 @@ export const useStore = create<BikeStore>()(
                 lastUpdated: null
             },
 
-            // Rider Insights
-            weather: {
-                temp: null,
-                code: null,
-                rainProb: null,
-                lastUpdated: null
-            },
-            aqi: {
-                value: null,
-                label: null
-            },
             checklist: [
                 { id: 'gear', text: 'Helmet & Safety Gear', checked: false },
                 { id: 'fluids', text: 'Oil & Brake Fluid Levels', checked: false },
@@ -199,41 +176,6 @@ export const useStore = create<BikeStore>()(
                 }
             }),
 
-            updateWeather: async (lat, lon) => {
-                try {
-                    const [wRes, aRes] = await Promise.all([
-                        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&hourly=precipitation_probability&forecast_days=1`),
-                        fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=us_aqi`)
-                    ]);
-
-                    const wData = await wRes.json();
-                    const aData = await aRes.json();
-
-                    const currentHour = new Date().getHours();
-                    const rainProb = wData.hourly?.precipitation_probability?.[currentHour] || 0;
-
-                    const aqiVal = aData.current.us_aqi;
-                    let aqiLabel = "Good";
-                    if (aqiVal > 50) aqiLabel = "Fair";
-                    if (aqiVal > 100) aqiLabel = "Poor";
-                    if (aqiVal > 200) aqiLabel = "Dangerous";
-
-                    set({
-                        weather: {
-                            temp: Math.round(wData.current.temperature_2m),
-                            code: wData.current.weather_code,
-                            rainProb: rainProb,
-                            lastUpdated: new Date().toISOString()
-                        },
-                        aqi: {
-                            value: aqiVal,
-                            label: aqiLabel
-                        }
-                    });
-                } catch (e) {
-                    console.error("Failed to fetch rider insights", e);
-                }
-            },
 
             toggleChecklistItem: (id) => set({
                 checklist: get().checklist.map(item =>

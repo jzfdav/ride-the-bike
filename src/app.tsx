@@ -22,6 +22,7 @@ import { BottomActions } from './components/BottomActions';
 import { SettingsModal } from './components/SettingsModal';
 import { InfoTooltip } from './components/InfoTooltip';
 import { GlobalHelpModal } from './components/GlobalHelpModal';
+import { useRiderInsights } from './hooks/useRiderInsights';
 
 
 export function App() {
@@ -38,25 +39,17 @@ export function App() {
         getBatteryMessage,
         getDaysRemaining,
         showLubeTracker,
-        updateWeather
     } = useStore();
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [batteryHealth, setBatteryHealth] = useState(100);
     const [batteryMessage, setBatteryMessage] = useState(getBatteryMessage());
 
+    const { data: insights } = useRiderInsights();
+
     useEffect(() => {
         setBatteryHealth(getBatteryHealth());
         setBatteryMessage(getBatteryMessage());
-
-        // Fetch weather if available
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition((pos) => {
-                updateWeather(pos.coords.latitude, pos.coords.longitude);
-            }, (err) => {
-                console.warn("Geolocation denied", err);
-            });
-        }
 
         const interval = setInterval(() => {
             setBatteryHealth(getBatteryHealth());
