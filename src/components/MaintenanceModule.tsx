@@ -5,7 +5,11 @@ import { cn } from "../utils";
 import { InfoTooltip } from "./InfoTooltip";
 
 export function MaintenanceModule() {
-	const { currentOdo, lastLubeOdo, getChainHealth, logLube } = useStore();
+	const { currentOdo, lastLubeOdo, getChainHealth, logLube, showLubeTracker } =
+		useStore();
+
+	if (!showLubeTracker) return null;
+
 	const chainHealth = getChainHealth();
 	const kmSinceLube = currentOdo - lastLubeOdo;
 
