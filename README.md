@@ -1,5 +1,15 @@
 # RideTheBike
 
+[![Deploy to GitHub Pages](https://github.com/jzfdav/ride-the-bike/actions/workflows/deploy.yml/badge.svg)](https://github.com/jzfdav/ride-the-bike/actions/workflows/deploy.yml)
+[![Playwright Tests](https://github.com/jzfdav/ride-the-bike/actions/workflows/playwright.yml/badge.svg)](https://github.com/jzfdav/ride-the-bike/actions/workflows/playwright.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Biome](https://img.shields.io/badge/Biome-60A5FA?style=for-the-badge&logo=biome&logoColor=white)](https://biomejs.dev/)
+
 A gamified PWA to encourage frequent bike rides and maintain mechanical health.
 
 ## Intent
