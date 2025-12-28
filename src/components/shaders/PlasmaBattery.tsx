@@ -112,6 +112,10 @@ export function PlasmaBattery({
 		[],
 	);
 
+	// Scratch objects to avoid GC in useFrame
+	const scratchColor = useRef(new THREE.Color());
+	const scratchSecondary = useRef(new THREE.Color());
+
 	useFrame((state) => {
 		if (materialRef.current) {
 			materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
@@ -129,13 +133,23 @@ export function PlasmaBattery({
 				targetHex = "#ef4444"; // Critical (Red)
 			else if (level <= 50) targetHex = "#ff6b35"; // Warning (Orange)
 
+			// Update scratch colors (no allocation)
+			scratchColor.current.set(targetHex);
+
 			// Lerp current color to target color
-			const targetColor = new THREE.Color(targetHex);
-			materialRef.current.uniforms.uColorA.value.lerp(targetColor, 0.05);
+			materialRef.current.uniforms.uColorA.value.lerp(
+				scratchColor.current,
+				0.05,
+			);
 
 			// Secondary color is always a brighter/shifted version
-			const secondary = targetColor.clone().offsetHSL(0.1, 0, 0.1);
-			materialRef.current.uniforms.uColorB.value.lerp(secondary, 0.05);
+			scratchSecondary.current
+				.copy(scratchColor.current)
+				.offsetHSL(0.1, 0, 0.1);
+			materialRef.current.uniforms.uColorB.value.lerp(
+				scratchSecondary.current,
+				0.05,
+			);
 		}
 	});
 

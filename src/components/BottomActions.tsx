@@ -93,15 +93,16 @@ export function BottomActions() {
 				triggerSuccess(`Fuel Refilled!`);
 			}
 		} else if (activeForm === "bars") {
-			const b = parseInt(val1);
+			let b = parseInt(val1);
 			if (!isNaN(b)) {
+				b = Math.max(0, Math.min(12, b)); // Clamp 0-12
 				setFuelBars(b);
 				triggerSuccess(`Fuel Level Updated!`);
 			}
 		} else if (activeForm === "tyre") {
 			const f = parseFloat(val1);
 			const r = parseFloat(val2);
-			if (!isNaN(f) && !isNaN(r)) {
+			if (!isNaN(f) && !isNaN(r) && f >= 0 && r >= 0) {
 				setTyrePressure(f, r);
 				triggerSuccess(`Tyre Pressure Logged!`);
 			}
