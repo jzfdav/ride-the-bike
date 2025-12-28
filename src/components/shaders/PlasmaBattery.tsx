@@ -19,53 +19,71 @@ uniform vec3 uColorB;
 
 varying vec2 vUv;
 
-// Simple pseudo-random noise
-float random (in vec2 st) {
-    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-}
+// Simplex Noise (approx)
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
 
-// 2D Noise based on Morgan McGuire @morgan3d
-float noise (in vec2 st) {
-    vec2 i = floor(st);
-    vec2 f = fract(st);
-
-    // Four corners in 2D of a tile
-    float a = random(i);
-    float b = random(i + vec2(1.0, 0.0));
-    float c = random(i + vec2(0.0, 1.0));
-    float d = random(i + vec2(1.0, 1.0));
-
-    vec2 u = f * f * (3.0 - 2.0 * f);
-
-    return mix(a, b, u.x) +
-            (c - a)* u.y * (1.0 - u.x) +
-            (d - b) * u.x * u.y;
+float snoise(vec2 v) {
+  const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+                      0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+                     -0.577350269189626,  // -1.0 + 2.0 * C.x
+                      0.024390243902439); // 1.0 / 41.0
+  vec2 i  = floor(v + dot(v, C.yy) );
+  vec2 x0 = v - i + dot(i, C.xx);
+  vec2 i1;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+  i = mod289(i); // Avoid truncation effects in permutation
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+		+ i.x + vec3(0.0, i1.x, 1.0 ));
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m ;
+  m = m*m ;
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+  vec3 g;
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
 }
 
 void main() {
-  //Coordinate manipulation
   vec2 pos = vUv;
   
-  // Flow spread
-  float n = noise(pos * 5.0 + uTime * (0.5 + uCharging)); 
+  // physics: slosh effect on the surface
+  // Wave frequency increases with charging
+  float slosh = sin(pos.y * 10.0 + uTime * 3.0) * 0.02 * uCharging;
+  slosh += snoise(vec2(pos.y * 4.0, uTime)) * 0.03;
   
-  // Define liquid edge based on uLevel
-  // We want the fill to go from left to right (x axis) or bottom to top. 
-  // Let's do horizontal fill for a bar.
-  float edgeInfo = smoothstep(uLevel - 0.02, uLevel + 0.02, pos.x);
+  // Effective level with slosh
+  float effectiveLevel = uLevel + slosh;
   
-  // Liquid Color
-  vec3 liquid = mix(uColorA, uColorB, n + pos.x);
+  // Edge detection
+  // We fill x-axis: 0.0 is empty, 1.0 is full
+  float edge = smoothstep(effectiveLevel - 0.02, effectiveLevel + 0.02, pos.x);
   
-  // Empty space color (dimmed)
-  vec3 empty = vec3(0.05, 0.05, 0.05);
+  // Liquid internal turbulence
+  float n = snoise(pos * 8.0 + uTime * (0.2 + uCharging * 0.8));
   
-  // Apply level mask (invert edgeInfo because smoothstep returns 0..1, we want 1 where x < Level)
-  vec3 finalColor = mix(liquid, empty, edgeInfo);
+  vec3 liquid = mix(uColorA, uColorB, n * 0.5 + 0.5);
+  
+  // Darker background for empty space
+  vec3 empty = vec3(0.02, 0.02, 0.02);
+  
+  // Mix liquid and empty
+  // edge is 0 where x < effectiveLevel (liquid side if we invert logic or check step)
+  // standard smoothstep(edge, ...) -> 0 before edge, 1 after.
+  // We want liquid (0) then empty (1).
+  vec3 finalColor = mix(liquid, empty, edge);
 
-  // Add a glowing "surface" line at the fill level
-  float surfaceLine = 1.0 - smoothstep(0.0, 0.02, abs(pos.x - uLevel));
-  finalColor += surfaceLine * vec3(1.0, 1.0, 1.0);
+  // Surface glow line
+  float surfaceGlow = 1.0 - smoothstep(0.0, 0.03, abs(pos.x - effectiveLevel));
+  finalColor += surfaceGlow * vec3(1.0, 1.0, 1.0) * 0.8;
 
   gl_FragColor = vec4(finalColor, 1.0);
 }
@@ -105,10 +123,19 @@ export function PlasmaBattery({
 			);
 			materialRef.current.uniforms.uCharging.value = charging ? 1.0 : 0.0;
 
-			// Dynamic color shift based on health
-			const targetColor = level > 20 ? "#0052cc" : "#ff6b35";
-			// We can animate this later, for now just set it
-			materialRef.current.uniforms.uColorA.value.set(targetColor);
+			// Dynamic color shift based on health with smooth lerp target
+			let targetHex = "#0052cc"; // Normal
+			if (level <= 20)
+				targetHex = "#ef4444"; // Critical (Red)
+			else if (level <= 50) targetHex = "#ff6b35"; // Warning (Orange)
+
+			// Lerp current color to target color
+			const targetColor = new THREE.Color(targetHex);
+			materialRef.current.uniforms.uColorA.value.lerp(targetColor, 0.05);
+
+			// Secondary color is always a brighter/shifted version
+			const secondary = targetColor.clone().offsetHSL(0.1, 0, 0.1);
+			materialRef.current.uniforms.uColorB.value.lerp(secondary, 0.05);
 		}
 	});
 
