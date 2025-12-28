@@ -7,7 +7,7 @@ interface LiquidBatteryProps {
 }
 
 export function LiquidBattery({ health, className }: LiquidBatteryProps) {
-	const color = health > 50 ? "#00E5FF" : health > 20 ? "#FF9E00" : "#FF3D00";
+	const color = health > 50 ? "#0052cc" : health > 20 ? "#ff6b35" : "#ef4444";
 
 	return (
 		<div

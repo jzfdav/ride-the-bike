@@ -81,8 +81,8 @@ export function InsightsModule() {
 						<AreaChart data={burnDownData}>
 							<defs>
 								<linearGradient id="colorOdo" x1="0" y1="0" x2="0" y2="1">
-									<stop offset="5%" stopColor="#00E5FF" stopOpacity={0.3} />
-									<stop offset="95%" stopColor="#00E5FF" stopOpacity={0} />
+									<stop offset="5%" stopColor="#0052cc" stopOpacity={0.3} />
+									<stop offset="95%" stopColor="#0052cc" stopOpacity={0} />
 								</linearGradient>
 							</defs>
 							<CartesianGrid
@@ -105,12 +105,12 @@ export function InsightsModule() {
 									fontSize: "10px",
 									fontWeight: "bold",
 								}}
-								itemStyle={{ color: "#00E5FF" }}
+								itemStyle={{ color: "#0052cc" }}
 							/>
 							<Area
 								type="monotone"
 								dataKey="odo"
-								stroke="#00E5FF"
+								stroke="#0052cc"
 								strokeWidth={3}
 								fillOpacity={1}
 								fill="url(#colorOdo)"
@@ -148,12 +148,12 @@ export function InsightsModule() {
 							/>
 							<Bar
 								dataKey="fe"
-								fill="#FF9E00"
+								fill="#ff6b35"
 								radius={[4, 4, 0, 0]}
 								animationDuration={1500}
 								label={{
 									position: "top",
-									fill: "#FF9E00",
+									fill: "#ff6b35",
 									fontSize: 10,
 									fontWeight: "black",
 								}}

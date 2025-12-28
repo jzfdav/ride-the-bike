@@ -53,7 +53,7 @@ export function MainMetricCard({
 						initial={{ width: 0 }}
 						animate={{ width: `${progress}%` }}
 						transition={{ duration: 1, ease: "circOut" }}
-						className="bg-pulsar-blue h-full rounded-full shadow-[0_0_15px_rgba(0,163,255,0.5)]"
+						className="bg-pulsar-blue h-full rounded-full shadow-[0_0_15px_rgba(0,82,204,0.5)]"
 					/>
 				</div>
 				<div className="flex justify-between items-center text-[10px] font-black tracking-widest uppercase opacity-40">

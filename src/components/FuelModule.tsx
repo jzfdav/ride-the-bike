@@ -6,10 +6,38 @@ import { InfoTooltip } from "./InfoTooltip";
 
 export function FuelModule() {
 	const { getAverageFE, fuelLog, fuelBars, showFuelTracker } = useStore();
-
-	if (!showFuelTracker) return null;
-
 	const avgFE = getAverageFE();
+
+	return (
+		<FuelModuleUI
+			fuelBars={fuelBars}
+			avgFE={
+				typeof avgFE === "number" && avgFE > 0
+					? avgFE.toString()
+					: fuelLog.length > 0
+						? avgFE.toString()
+						: "--.-"
+			}
+			fuelLogCount={fuelLog.length}
+			isVisible={showFuelTracker}
+		/>
+	);
+}
+
+interface FuelModuleUIProps {
+	fuelBars: number;
+	avgFE: string;
+	fuelLogCount: number;
+	isVisible: boolean;
+}
+
+export function FuelModuleUI({
+	fuelBars,
+	avgFE,
+	fuelLogCount,
+	isVisible,
+}: FuelModuleUIProps) {
+	if (!isVisible) return null;
 
 	const isReserve = fuelBars <= 2;
 	const isLowFuel = fuelBars <= 1;
@@ -47,7 +75,7 @@ export function FuelModule() {
 			{/* Pulsar 12-Bar Gauge */}
 			<div className="flex items-end gap-1 mb-6 h-8">
 				{[...Array(12)].map((_, i) => {
-					const barIndex = 11 - i; // Left to right (0 to 11)
+					const barIndex = 11 - i;
 					const isActive = barIndex < fuelBars;
 					return (
 						<div
@@ -72,11 +100,7 @@ export function FuelModule() {
 					</div>
 					<div className="flex items-baseline gap-2">
 						<div className="text-2xl font-black tracking-tighter text-glow-pulsar">
-							{typeof avgFE === "number" && avgFE > 0
-								? avgFE
-								: fuelLog.length > 0
-									? avgFE
-									: "--.-"}
+							{avgFE}
 						</div>
 						<div className="text-[10px] font-black text-oled-gray-400">
 							KM/L
@@ -84,7 +108,7 @@ export function FuelModule() {
 					</div>
 				</div>
 
-				{fuelLog.length < 2 && fuelLog.length > 0 && (
+				{fuelLogCount < 2 && fuelLogCount > 0 && (
 					<div className="text-[8px] text-white/20 font-bold uppercase tracking-widest max-w-[100px] text-right mb-1 leading-tight">
 						Log one more refuel to see average
 					</div>

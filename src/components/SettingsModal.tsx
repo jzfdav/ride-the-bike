@@ -19,63 +19,94 @@ interface SettingsModalProps {
 }
 
 export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
-	const {
-		serviceDueDate,
-		setServiceDueDate,
-		currentOdo,
-		setCurrentOdo,
-		baseOdo,
-		setBaseOdo,
-		targetOdo,
-		setTargetOdo,
-		bikeModel,
-		setBikeModel,
-		showLubeTracker,
-		setShowLubeTracker,
-		showFuelTracker,
-		setShowFuelTracker,
-		showTyreTracker,
-		setShowTyreTracker,
-		showChecklist,
-		setShowChecklist,
-	} = useStore();
+	const store = useStore();
 
+	const handleSaveSettings = (data: {
+		serviceDueDate: string;
+		currentOdo: number;
+		baseOdo: number;
+		targetOdo: number;
+		bikeModel: string;
+		showLubeTracker: boolean;
+		showFuelTracker: boolean;
+		showTyreTracker: boolean;
+		showChecklist: boolean;
+	}) => {
+		store.setServiceDueDate(data.serviceDueDate);
+		store.setCurrentOdo(data.currentOdo);
+		store.setBaseOdo(data.baseOdo);
+		store.setTargetOdo(data.targetOdo);
+		store.setBikeModel(data.bikeModel);
+		store.setShowLubeTracker(data.showLubeTracker);
+		store.setShowFuelTracker(data.showFuelTracker);
+		store.setShowTyreTracker(data.showTyreTracker);
+		store.setShowChecklist(data.showChecklist);
+		onClose();
+	};
+
+	return (
+		<SettingsModalUI
+			isOpen={isOpen}
+			onClose={onClose}
+			onSave={handleSaveSettings}
+			initialData={{
+				serviceDueDate: store.serviceDueDate || "",
+				currentOdo: store.currentOdo,
+				baseOdo: store.baseOdo,
+				targetOdo: store.targetOdo,
+				bikeModel: store.bikeModel,
+				showLubeTracker: store.showLubeTracker,
+				showFuelTracker: store.showFuelTracker,
+				showTyreTracker: store.showTyreTracker,
+				showChecklist: store.showChecklist,
+			}}
+		/>
+	);
+}
+
+interface SettingsModalUIProps {
+	isOpen: boolean;
+	onClose: () => void;
+	onSave: (data: any) => void;
+	initialData: any;
+}
+
+export function SettingsModalUI({
+	isOpen,
+	onClose,
+	onSave,
+	initialData,
+}: SettingsModalUIProps) {
 	const [tempDate, setTempDate] = useState(
-		serviceDueDate
-			? serviceDueDate.split("T")[0]
+		initialData.serviceDueDate
+			? initialData.serviceDueDate.split("T")[0]
 			: new Date().toISOString().split("T")[0],
 	);
-	const [tempOdo, setTempOdo] = useState(currentOdo.toString());
-	const [tempBase, setTempBase] = useState(baseOdo.toString());
-	const [tempTarget, setTempTarget] = useState(targetOdo.toString());
-	const [tempModel, setTempModel] = useState(bikeModel);
-	const [tempShowLube, setTempShowLube] = useState(showLubeTracker);
-	const [tempShowFuel, setTempShowFuel] = useState(showFuelTracker);
-	const [tempShowTyre, setTempShowTyre] = useState(showTyreTracker);
-	const [tempShowChecklist, setTempShowChecklist] = useState(showChecklist);
+	const [tempOdo, setTempOdo] = useState(initialData.currentOdo.toString());
+	const [tempBase, setTempBase] = useState(initialData.baseOdo.toString());
+	const [tempTarget, setTempTarget] = useState(
+		initialData.targetOdo.toString(),
+	);
+	const [tempModel, setTempModel] = useState(initialData.bikeModel);
+	const [tempShowLube, setTempShowLube] = useState(initialData.showLubeTracker);
+	const [tempShowFuel, setTempShowFuel] = useState(initialData.showFuelTracker);
+	const [tempShowTyre, setTempShowTyre] = useState(initialData.showTyreTracker);
+	const [tempShowChecklist, setTempShowChecklist] = useState(
+		initialData.showChecklist,
+	);
 
 	const handleSave = () => {
-		const date = new Date(tempDate);
-		if (!isNaN(date.getTime())) {
-			setServiceDueDate(date.toISOString());
-		}
-
-		const odo = parseFloat(tempOdo);
-		if (!isNaN(odo)) setCurrentOdo(odo);
-
-		const base = parseFloat(tempBase);
-		if (!isNaN(base)) setBaseOdo(base);
-
-		const target = parseFloat(tempTarget);
-		if (!isNaN(target)) setTargetOdo(target);
-
-		setBikeModel(tempModel);
-		setShowLubeTracker(tempShowLube);
-		setShowFuelTracker(tempShowFuel);
-		setShowTyreTracker(tempShowTyre);
-		setShowChecklist(tempShowChecklist);
-
-		onClose();
+		onSave({
+			serviceDueDate: new Date(tempDate).toISOString(),
+			currentOdo: parseFloat(tempOdo),
+			baseOdo: parseFloat(tempBase),
+			targetOdo: parseFloat(tempTarget),
+			bikeModel: tempModel,
+			showLubeTracker: tempShowLube,
+			showFuelTracker: tempShowFuel,
+			showTyreTracker: tempShowTyre,
+			showChecklist: tempShowChecklist,
+		});
 	};
 
 	return (
