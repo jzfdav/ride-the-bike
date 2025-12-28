@@ -143,7 +143,7 @@ export function WeatherModule() {
 							</div>
 							<InfoTooltip
 								title="Air Quality"
-								content="Displays the US AQI index. Stay safe in high pollution zones."
+								content="Measures pollutants like PM2.5 and PM10 using the international EPA standard. Higher values indicate poorer air quality."
 							/>
 						</div>
 					</div>
@@ -152,7 +152,7 @@ export function WeatherModule() {
 						{aqi.value}
 					</div>
 					<div className="text-[9px] font-bold text-oled-gray-400 uppercase tracking-widest">
-						US AQI INDEX
+						AIR QUALITY INDEX
 					</div>
 
 					<div className="mt-3 overflow-hidden bg-white/5 rounded-full h-1 w-full">
