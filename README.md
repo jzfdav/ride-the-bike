@@ -14,7 +14,7 @@ A gamified PWA to encourage frequent bike rides and maintain mechanical health.
 
 ## Intent
 
-To reach 13,000 km in 3 months (from 10,000 km) by gamifying "mechanical sympathy." The app encourages frequent, short local rides to keep the machine "alive" and ready.
+To reach your next service milestone by gamifying "mechanical sympathy." The app encourages frequent, short local rides to keep the machine "alive" and ready.
 
 See `/docs/00-vision.md` for the full project vision.
 
