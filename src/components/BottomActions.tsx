@@ -10,7 +10,8 @@ export function BottomActions() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [activeForm, setActiveForm] = useState<FormType>(null);
 	const [val1, setVal1] = useState(""); // distance or liters
-	const [val2, setVal2] = useState(""); // cost
+	const [val2, setVal2] = useState(""); // cost or rear psi
+	const [val3, setVal3] = useState(""); // fuel price per litre
 
 	const [showSuccess, setShowSuccess] = useState<string | null>(null);
 	const {
@@ -20,6 +21,8 @@ export function BottomActions() {
 		setFuelBars,
 		setTyrePressure,
 		showLubeTracker,
+		lastFuelPrice,
+		setLastFuelPrice,
 	} = useStore();
 
 	const triggerSuccess = (msg: string) => {
@@ -34,7 +37,42 @@ export function BottomActions() {
 			setIsOpen(false);
 			return;
 		}
+		if (type === "fuel" && lastFuelPrice) {
+			setVal3(lastFuelPrice.toString());
+		}
 		setActiveForm(type);
+	};
+
+	const onFuelValChange = (
+		field: "liters" | "cost" | "price",
+		value: string,
+	) => {
+		const num = parseFloat(value);
+		const price =
+			field === "price" ? num : parseFloat(val3) || lastFuelPrice || 0;
+
+		if (field === "liters") {
+			setVal1(value);
+			if (!isNaN(price) && price > 0 && !isNaN(num)) {
+				setVal2((num * price).toFixed(2));
+			}
+		} else if (field === "cost") {
+			setVal2(value);
+			if (!isNaN(price) && price > 0 && !isNaN(num)) {
+				setVal1((num / price).toFixed(2));
+			}
+		} else if (field === "price") {
+			setVal3(value);
+			const liters = parseFloat(val1);
+			const cost = parseFloat(val2);
+			if (!isNaN(num) && num > 0) {
+				if (!isNaN(liters) && liters > 0) {
+					setVal2((liters * num).toFixed(2));
+				} else if (!isNaN(cost) && cost > 0) {
+					setVal1((cost / num).toFixed(2));
+				}
+			}
+		}
 	};
 
 	const handleSubmit = () => {
@@ -47,8 +85,10 @@ export function BottomActions() {
 		} else if (activeForm === "fuel") {
 			const l = parseFloat(val1);
 			const c = parseFloat(val2);
+			const p = parseFloat(val3);
 			if (l > 0 && c > 0) {
 				logFuel(l, c);
+				if (!isNaN(p)) setLastFuelPrice(p);
 				setFuelBars(12); // Always reset to full on top-up
 				triggerSuccess(`Fuel Refilled!`);
 			}
@@ -73,6 +113,7 @@ export function BottomActions() {
 		setActiveForm(null);
 		setVal1("");
 		setVal2("");
+		setVal3("");
 		setIsOpen(false);
 	};
 
@@ -160,11 +201,31 @@ export function BottomActions() {
 							</div>
 
 							<div className="space-y-4">
+								{activeForm === "fuel" && (
+									<div className="relative">
+										<input
+											type="number"
+											value={val3}
+											onChange={(e) => onFuelValChange("price", e.target.value)}
+											className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-amber-500 focus:outline-none focus:border-amber-500/50"
+											placeholder="Price per Litre"
+											min={0}
+										/>
+										<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
+											₹/L
+										</span>
+									</div>
+								)}
+
 								<div className="relative">
 									<input
 										type="number"
 										value={val1}
-										onChange={(e) => setVal1(e.target.value)}
+										onChange={(e) =>
+											activeForm === "fuel"
+												? onFuelValChange("liters", e.target.value)
+												: setVal1(e.target.value)
+										}
 										className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
 										placeholder={
 											activeForm === "ride"
@@ -195,7 +256,11 @@ export function BottomActions() {
 										<input
 											type="number"
 											value={val2}
-											onChange={(e) => setVal2(e.target.value)}
+											onChange={(e) =>
+												activeForm === "fuel"
+													? onFuelValChange("cost", e.target.value)
+													: setVal2(e.target.value)
+											}
 											className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
 											placeholder={
 												activeForm === "fuel" ? "Total Cost" : "Rear PSI"

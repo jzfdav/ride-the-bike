@@ -59,6 +59,7 @@ export const BikeStoreStateSchema = z.object({
 	showFuelTracker: z.boolean(),
 	showTyreTracker: z.boolean(),
 	showChecklist: z.boolean(),
+	lastFuelPrice: z.number().nullable(),
 	activeHelp: z
 		.object({
 			title: z.string(),
@@ -74,6 +75,7 @@ export interface BikeStoreActions {
 	setShowFuelTracker: (show: boolean) => void;
 	setShowTyreTracker: (show: boolean) => void;
 	setShowChecklist: (show: boolean) => void;
+	setLastFuelPrice: (price: number | null) => void;
 	setActiveHelp: (help: { title: string; content: string } | null) => void;
 	setCurrentOdo: (odo: number) => void;
 	setBaseOdo: (odo: number) => void;
@@ -130,6 +132,7 @@ export const useStore = create<BikeStore>()(
 			showFuelTracker: true,
 			showTyreTracker: true,
 			showChecklist: true,
+			lastFuelPrice: null,
 			activeHelp: null,
 
 			// Actions
@@ -251,6 +254,10 @@ export const useStore = create<BikeStore>()(
 			setShowChecklist: (show) =>
 				set((state) => {
 					state.showChecklist = show;
+				}),
+			setLastFuelPrice: (price) =>
+				set((state) => {
+					state.lastFuelPrice = price;
 				}),
 
 			// Selectors
