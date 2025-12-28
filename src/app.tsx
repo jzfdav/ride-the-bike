@@ -129,13 +129,6 @@ export function App() {
                     animate={{ opacity: 1, y: 0 }}
                     className="relative overflow-hidden bg-white/[0.03] rounded-[2rem] p-7 border border-white/5 backdrop-blur-md"
                 >
-                    <div className="absolute top-6 right-6 z-10">
-                        <InfoTooltip
-                            title="Service Progress"
-                            content="Shows your progress towards your next service goal. Based on your starting KM and Target KM set in settings."
-                        />
-                    </div>
-
                     <div className="flex justify-between items-start mb-6">
                         <div className="space-y-1.5">
                             <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2 mb-4">
@@ -145,6 +138,10 @@ export function App() {
                                 {Math.floor(currentOdo).toLocaleString()}<span className="text-2xl font-medium opacity-40 ml-1">km</span>
                             </div>
                         </div>
+                        <InfoTooltip
+                            title="Service Progress"
+                            content="Shows your progress towards your next service goal. Based on your starting KM and Target KM set in settings."
+                        />
                     </div>
 
                     <div className="space-y-3">
@@ -171,15 +168,15 @@ export function App() {
                         transition={{ delay: 0.1 }}
                         className="relative bg-white/[0.03] rounded-3xl p-5 border border-white/5"
                     >
-                        <div className="absolute top-4 right-4 z-10">
+                        <div className="flex justify-between items-center mb-3">
+                            <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2">
+                                <TrendingDown className="w-3.5 h-3.5 text-warning-orange" /> Battery
+                            </span>
                             <InfoTooltip
                                 title="Battery Health"
                                 content="Simulates battery drain. Loses 5% per day if you don't ride. Reset to 100% by logging any ride."
                             />
                         </div>
-                        <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2 mb-3">
-                            <TrendingDown className="w-3.5 h-3.5 text-warning-orange" /> Battery
-                        </span>
                         <div className={cn(
                             "text-3xl font-bold tracking-tighter",
                             batteryHealth > 50 ? "text-pulsar-blue text-glow-pulsar" : "text-warning-orange text-glow-warning"
@@ -197,15 +194,15 @@ export function App() {
                         transition={{ delay: 0.2 }}
                         className="relative bg-white/[0.03] rounded-3xl p-5 border border-white/5"
                     >
-                        <div className="absolute top-4 right-4 z-10">
+                        <div className="flex justify-between items-center mb-3">
+                            <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2">
+                                <ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" /> Run-Rate
+                            </span>
                             <InfoTooltip
                                 title="Daily Target"
                                 content="The average daily distance required to hit your target odometer by the service deadline."
                             />
                         </div>
-                        <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2 mb-3">
-                            <ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" /> Run-Rate
-                        </span>
                         <div className="text-3xl font-bold tracking-tighter text-pulsar-blue text-glow-pulsar">
                             {dailyTarget > 0 ? dailyTarget.toFixed(1) : '0'} <span className="text-sm font-medium opacity-40">km/d</span>
                         </div>
