@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { CircleDot, Clock } from 'lucide-react';
 import { useStore } from '../store';
 import { formatDistanceToNow } from 'date-fns';
+import { InfoTooltip } from './InfoTooltip';
 
 export function TyreModule() {
     const { tyrePressure } = useStore();
@@ -24,6 +25,10 @@ export function TyreModule() {
             <div className="flex justify-between items-center mb-6">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <CircleDot className="w-3.5 h-3.5 text-pulsar-blue" /> Tyre Pressure
+                    <InfoTooltip
+                        title="Tyre Pressure"
+                        content="Manual log of your PSI. Keep these within recommended limits for safety and efficiency."
+                    />
                 </span>
                 <div className="flex items-center gap-1.5 text-[9px] text-white/20 font-bold uppercase tracking-widest">
                     <Clock className="w-2.5 h-2.5" /> {getTimeAgo(tyrePressure.lastUpdated)}

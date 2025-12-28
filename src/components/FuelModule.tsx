@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { Fuel, TrendingUp, Info, AlertTriangle } from 'lucide-react';
+import { Fuel, TrendingUp, AlertTriangle } from 'lucide-react';
 import { useStore } from '../store';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { InfoTooltip } from './InfoTooltip';
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -24,6 +25,10 @@ export function FuelModule() {
             <div className="flex justify-between items-center mb-6">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <Fuel className="w-3.5 h-3.5 text-pulsar-blue" /> Fuel Level
+                    <InfoTooltip
+                        title="Fuel Tracking"
+                        content="12-bar gauge inspired by Pulsar 180. Avg Efficiency requires at least 2 refuel logs to calculate accurately."
+                    />
                 </span>
                 {isReserve && (
                     <div className={cn(

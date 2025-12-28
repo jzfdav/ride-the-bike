@@ -21,6 +21,7 @@ import { WeatherModule } from './components/WeatherModule';
 import { ChecklistModule } from './components/ChecklistModule';
 import { BottomActions } from './components/BottomActions';
 import { SettingsModal } from './components/SettingsModal';
+import { InfoTooltip } from './components/InfoTooltip';
 
 function cn(...inputs: any[]) {
     return twMerge(clsx(inputs));
@@ -133,8 +134,14 @@ export function App() {
                 >
                     <div className="flex justify-between items-start mb-6">
                         <div className="space-y-1.5">
-                            <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2">
-                                <Activity className="w-3.5 h-3.5" /> Odometer
+                            <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-2">
+                                    <Activity className="w-3.5 h-3.5 text-pulsar-blue" /> Odometer
+                                </div>
+                                <InfoTooltip
+                                    title="Service Progress"
+                                    content="Shows your progress towards your next service goal. Based on your starting KM and Target KM set in settings."
+                                />
                             </span>
                             <div className="text-5xl font-bold tracking-tighter text-pulsar-blue text-glow-pulsar">
                                 {Math.floor(currentOdo).toLocaleString()}<span className="text-2xl font-medium opacity-40 ml-1">km</span>
@@ -166,8 +173,14 @@ export function App() {
                         transition={{ delay: 0.1 }}
                         className="bg-white/[0.03] rounded-3xl p-5 border border-white/5"
                     >
-                        <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2 mb-3">
-                            <TrendingDown className="w-3.5 h-3.5 text-warning-orange" /> Battery
+                        <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                                <TrendingDown className="w-3.5 h-3.5 text-warning-orange" /> Battery
+                            </div>
+                            <InfoTooltip
+                                title="Battery Health"
+                                content="Simulates battery drain. Loses 5% per day if you don't ride. Reset to 100% by logging any ride."
+                            />
                         </span>
                         <div className={cn(
                             "text-3xl font-bold tracking-tighter",
@@ -186,8 +199,14 @@ export function App() {
                         transition={{ delay: 0.2 }}
                         className="bg-white/[0.03] rounded-3xl p-5 border border-white/5"
                     >
-                        <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2 mb-3">
-                            <ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" /> Run-Rate
+                        <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center justify-between mb-3">
+                            <div className="flex items-center gap-2">
+                                <ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" /> Run-Rate
+                            </div>
+                            <InfoTooltip
+                                title="Daily Target"
+                                content="The average daily distance required to hit your target odometer by the service deadline."
+                            />
                         </span>
                         <div className="text-3xl font-bold tracking-tighter text-pulsar-blue text-glow-pulsar">
                             {dailyTarget > 0 ? dailyTarget.toFixed(1) : '0'} <span className="text-sm font-medium opacity-40">km/d</span>

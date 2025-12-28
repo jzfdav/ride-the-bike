@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Cloud, Sun, CloudRain, Wind, AlertCircle } from 'lucide-react';
 import { useStore } from '../store';
+import { InfoTooltip } from './InfoTooltip';
 
 const getWeatherInfo = (code: number | null) => {
     if (code === null) return { text: 'Loading...', icon: Sun, color: 'text-pulsar-blue' };
@@ -38,6 +39,10 @@ export function WeatherModule() {
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                         <Wind className="w-3.5 h-3.5 text-pulsar-blue" /> Condition
                     </span>
+                    <InfoTooltip
+                        title="Weather Insight"
+                        content="Real-time condition & rain probability. Essential for deciding on gear."
+                    />
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -65,9 +70,13 @@ export function WeatherModule() {
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                         <AlertCircle className="w-3.5 h-3.5 text-pulsar-blue" /> Air Quality
                     </span>
+                    <InfoTooltip
+                        title="Air Quality"
+                        content="Displays the US AQI index. Stay safe in high pollution zones."
+                    />
                     <div className={`px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest ${aqi.label === 'Good' ? 'bg-emerald-500/20 text-emerald-500' :
-                            aqi.label === 'Fair' ? 'bg-amber-500/20 text-amber-500' :
-                                'bg-red-500/20 text-red-500 animate-pulse'
+                        aqi.label === 'Fair' ? 'bg-amber-500/20 text-amber-500' :
+                            'bg-red-500/20 text-red-500 animate-pulse'
                         }`}>
                         {aqi.label}
                     </div>
@@ -85,8 +94,8 @@ export function WeatherModule() {
                         initial={{ width: 0 }}
                         animate={{ width: `${Math.min(100, (aqi.value || 0) / 2)}%` }}
                         className={`h-full rounded-full ${aqi.label === 'Good' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]' :
-                                aqi.label === 'Fair' ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]' :
-                                    'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'
+                            aqi.label === 'Fair' ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]' :
+                                'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'
                             }`}
                     />
                 </div>

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, CheckCircle2, Circle, RotateCcw } from 'lucide-react';
 import { useStore } from '../store';
+import { InfoTooltip } from './InfoTooltip';
 
 export function ChecklistModule() {
     const { checklist, toggleChecklistItem, resetChecklist } = useStore();
@@ -19,6 +20,10 @@ export function ChecklistModule() {
             <div className="flex justify-between items-center mb-5">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <ShieldCheck className={`w-3.5 h-3.5 ${isFullyComplete ? 'text-emerald-500' : 'text-pulsar-blue'}`} /> Pre-Ride Safety
+                    <InfoTooltip
+                        title="Safety Checklist"
+                        content="Ensure all critical checks are performed before your ride. Reset daily for a safe start."
+                    />
                 </span>
                 <div className="flex items-center gap-3">
                     <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${isFullyComplete ? 'text-emerald-500' : 'text-white/20'}`}>

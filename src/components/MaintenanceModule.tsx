@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Droplets, AlertTriangle } from 'lucide-react';
 import { useStore } from '../store';
 import { clsx } from 'clsx';
+import { InfoTooltip } from './InfoTooltip';
 
 export function MaintenanceModule() {
     const { currentOdo, lastLubeOdo, getChainHealth, logLube } = useStore();
@@ -18,6 +19,10 @@ export function MaintenanceModule() {
                 <div className="flex justify-between items-center mb-4">
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
                         <Droplets className="w-3 h-3 text-pulsar-blue" /> Chain Lube
+                        <InfoTooltip
+                            title="Chain Maintenance"
+                            content="Tracks health based on mileage. Lube recommended every 500km for optimal performance."
+                        />
                     </span>
                     <span className={clsx(
                         "text-[10px] font-bold px-2 py-0.5 rounded-full border",
