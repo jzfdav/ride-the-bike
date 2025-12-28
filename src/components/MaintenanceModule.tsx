@@ -16,22 +16,22 @@ export function MaintenanceModule() {
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-oled-gray-50/50 rounded-2xl p-5 border border-white/5 backdrop-blur-sm relative"
             >
-                <div className="absolute top-5 right-5 z-10">
-                    <InfoTooltip
-                        title="Chain Maintenance"
-                        content="Tracks health based on mileage. Lube recommended every 500km for optimal performance."
-                    />
-                </div>
                 <div className="flex justify-between items-center mb-4">
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
                         <Droplets className="w-3 h-3 text-pulsar-blue" /> Chain Lube
                     </span>
-                    <span className={cn(
-                        "text-[10px] font-bold px-2 py-0.5 rounded-full border",
-                        chainHealth > 50 ? "border-pulsar-blue/30 text-pulsar-blue" : "border-warning-orange/30 text-warning-orange"
-                    )}>
-                        {kmSinceLube} KM SINCE
-                    </span>
+                    <div className="flex items-center gap-3">
+                        <span className={cn(
+                            "text-[10px] font-bold px-2 py-0.5 rounded-full border",
+                            chainHealth > 50 ? "border-pulsar-blue/30 text-pulsar-blue" : "border-warning-orange/30 text-warning-orange"
+                        )}>
+                            {kmSinceLube} KM SINCE
+                        </span>
+                        <InfoTooltip
+                            title="Chain Maintenance"
+                            content="Tracks health based on mileage. Lube recommended every 500km for optimal performance."
+                        />
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-[1fr,auto] gap-4 items-end">
