@@ -12,6 +12,7 @@ export function BottomActions() {
 	const [val1, setVal1] = useState(""); // distance or liters
 	const [val2, setVal2] = useState(""); // cost
 
+	const [showSuccess, setShowSuccess] = useState<string | null>(null);
 	const {
 		logRide,
 		logFuel,
@@ -21,9 +22,15 @@ export function BottomActions() {
 		showLubeTracker,
 	} = useStore();
 
+	const triggerSuccess = (msg: string) => {
+		setShowSuccess(msg);
+		setTimeout(() => setShowSuccess(null), 2000);
+	};
+
 	const handleAction = (type: FormType) => {
 		if (type === "lube") {
 			logLube();
+			triggerSuccess("Chain Lube Logged!");
 			setIsOpen(false);
 			return;
 		}
@@ -33,21 +40,31 @@ export function BottomActions() {
 	const handleSubmit = () => {
 		if (activeForm === "ride") {
 			const d = parseFloat(val1);
-			if (d > 0) logRide(d);
+			if (d > 0) {
+				logRide(d);
+				triggerSuccess(`${d} KM Ride Logged!`);
+			}
 		} else if (activeForm === "fuel") {
 			const l = parseFloat(val1);
 			const c = parseFloat(val2);
 			if (l > 0 && c > 0) {
 				logFuel(l, c);
 				setFuelBars(12); // Always reset to full on top-up
+				triggerSuccess(`Fuel Refilled!`);
 			}
 		} else if (activeForm === "bars") {
 			const b = parseInt(val1);
-			if (!isNaN(b)) setFuelBars(b);
+			if (!isNaN(b)) {
+				setFuelBars(b);
+				triggerSuccess(`Fuel Level Updated!`);
+			}
 		} else if (activeForm === "tyre") {
 			const f = parseFloat(val1);
 			const r = parseFloat(val2);
-			if (!isNaN(f) && !isNaN(r)) setTyrePressure(f, r);
+			if (!isNaN(f) && !isNaN(r)) {
+				setTyrePressure(f, r);
+				triggerSuccess(`Tyre Pressure Logged!`);
+			}
 		}
 		closeForm();
 	};
@@ -225,6 +242,26 @@ export function BottomActions() {
 						</motion.div>
 					</motion.button>
 				)}
+
+				{/* Success Toast Overlay */}
+				<AnimatePresence>
+					{showSuccess && (
+						<motion.div
+							initial={{ opacity: 0, y: 20, scale: 0.9 }}
+							animate={{ opacity: 1, y: 0, scale: 1 }}
+							exit={{ opacity: 0, y: 20, scale: 0.9 }}
+							className="absolute bottom-20 left-4 right-4 bg-emerald-500 text-white font-black text-[10px] uppercase tracking-[0.2em] py-4 px-6 rounded-2xl shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-3 z-50 overflow-hidden"
+						>
+							<motion.div
+								initial={{ x: -20 }}
+								animate={{ x: 0 }}
+								className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"
+							/>
+							{showSuccess}
+							<div className="absolute bottom-0 left-0 h-1 bg-white/20 animate-progress" />
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</div>
 		</div>
 	);

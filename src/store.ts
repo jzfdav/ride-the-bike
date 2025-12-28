@@ -56,6 +56,9 @@ export const BikeStoreStateSchema = z.object({
 		}),
 	),
 	showLubeTracker: z.boolean(),
+	showFuelTracker: z.boolean(),
+	showTyreTracker: z.boolean(),
+	showChecklist: z.boolean(),
 	activeHelp: z
 		.object({
 			title: z.string(),
@@ -67,6 +70,10 @@ export const BikeStoreStateSchema = z.object({
 export type BikeStoreState = z.infer<typeof BikeStoreStateSchema>;
 
 export interface BikeStoreActions {
+	setShowLubeTracker: (show: boolean) => void;
+	setShowFuelTracker: (show: boolean) => void;
+	setShowTyreTracker: (show: boolean) => void;
+	setShowChecklist: (show: boolean) => void;
 	setActiveHelp: (help: { title: string; content: string } | null) => void;
 	setCurrentOdo: (odo: number) => void;
 	setBaseOdo: (odo: number) => void;
@@ -81,7 +88,6 @@ export interface BikeStoreActions {
 	setTyrePressure: (front: number | null, rear: number | null) => void;
 	toggleChecklistItem: (id: string) => void;
 	resetChecklist: () => void;
-	setShowLubeTracker: (val: boolean) => void;
 }
 
 export interface BikeStoreSelectors {
@@ -120,7 +126,10 @@ export const useStore = create<BikeStore>()(
 				{ id: "chain", text: "Chain Tension & Slack", checked: false },
 				{ id: "lights", text: "Headlight & Indicators", checked: false },
 			],
-			showLubeTracker: false,
+			showLubeTracker: true,
+			showFuelTracker: true,
+			showTyreTracker: true,
+			showChecklist: true,
 			activeHelp: null,
 
 			// Actions
@@ -227,9 +236,21 @@ export const useStore = create<BikeStore>()(
 					}
 				}),
 
-			setShowLubeTracker: (val) =>
+			setShowLubeTracker: (show) =>
 				set((state) => {
-					state.showLubeTracker = val;
+					state.showLubeTracker = show;
+				}),
+			setShowFuelTracker: (show) =>
+				set((state) => {
+					state.showFuelTracker = show;
+				}),
+			setShowTyreTracker: (show) =>
+				set((state) => {
+					state.showTyreTracker = show;
+				}),
+			setShowChecklist: (show) =>
+				set((state) => {
+					state.showChecklist = show;
 				}),
 
 			// Selectors
@@ -300,13 +321,24 @@ export const useStore = create<BikeStore>()(
 				const { fuelLog } = get();
 				if (fuelLog.length < 2) return 0;
 
-				const latest = fuelLog[0];
-				const previous = fuelLog[1];
-				const distance = latest.odo - previous.odo;
+				let totalDistance = 0;
+				let totalLiters = 0;
 
-				if (distance <= 0 || latest.liters <= 0) return 0;
+				// Iterate from the second-to-last entry up to the first,
+				// comparing each entry with the one immediately after it (which is older)
+				for (let i = 0; i < fuelLog.length - 1; i++) {
+					const current = fuelLog[i]; // More recent entry
+					const prev = fuelLog[i + 1]; // Older entry
+					const diff = current.odo - prev.odo;
+					if (diff > 0 && current.liters > 0) {
+						// Ensure positive distance and liters
+						totalDistance += diff;
+						totalLiters += current.liters;
+					}
+				}
 
-				return (distance / latest.liters).toFixed(1);
+				if (totalLiters === 0 || totalDistance === 0) return 0;
+				return parseFloat((totalDistance / totalLiters).toFixed(2));
 			},
 		})),
 		{

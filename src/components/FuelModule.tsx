@@ -5,7 +5,10 @@ import { cn } from "../utils";
 import { InfoTooltip } from "./InfoTooltip";
 
 export function FuelModule() {
-	const { getAverageFE, fuelLog, fuelBars } = useStore();
+	const { getAverageFE, fuelLog, fuelBars, showFuelTracker } = useStore();
+
+	if (!showFuelTracker) return null;
+
 	const avgFE = getAverageFE();
 
 	const isReserve = fuelBars <= 2;

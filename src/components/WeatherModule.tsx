@@ -59,7 +59,18 @@ export function WeatherModule() {
 	}
 
 	if (isLoading) return null;
-	if (isError || !insights) return null;
+	if (isError || !insights) {
+		return (
+			<div className="bg-oled-gray-50/50 rounded-3xl p-6 border border-white/5 opacity-50">
+				<div className="flex items-center gap-2 text-[10px] text-white/20 font-bold uppercase tracking-widest">
+					<Cloud className="w-3.5 h-3.5" /> Weather Service Offline
+				</div>
+				<p className="text-[9px] text-white/10 mt-2 font-medium">
+					Stats will resume once connection is restored.
+				</p>
+			</div>
+		);
+	}
 
 	const { weather, aqi, location, lastUpdated } = insights;
 	const info = getWeatherInfo(weather.code);

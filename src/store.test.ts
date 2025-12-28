@@ -51,7 +51,7 @@ describe("RideTheBike Store", () => {
 		// Second entry (consumed 10L to cover 400km)
 		useStore.getState().logFuel(10, 100);
 
-		expect(useStore.getState().getAverageFE()).toBe("40.0");
+		expect(useStore.getState().getAverageFE()).toBe(40);
 	});
 
 	it("returns 0 FE if less than 2 entries exist", () => {

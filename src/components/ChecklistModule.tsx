@@ -4,7 +4,11 @@ import { useStore } from "../store";
 import { InfoTooltip } from "./InfoTooltip";
 
 export function ChecklistModule() {
-	const { checklist, toggleChecklistItem, resetChecklist } = useStore();
+	const { checklist, toggleChecklistItem, resetChecklist, showChecklist } =
+		useStore();
+
+	if (!showChecklist) return null;
+
 	const completedCount = checklist.filter((item) => item.checked).length;
 	const isFullyComplete = completedCount === checklist.length;
 

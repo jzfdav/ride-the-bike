@@ -32,7 +32,8 @@ export function InsightsModule() {
 		.slice(-5)
 		.map((f, i, arr) => {
 			const prev = arr[i - 1];
-			const fe = prev ? (f.odo - prev.odo) / f.liters : 0;
+			const diff = prev ? f.odo - prev.odo : 0;
+			const fe = diff > 0 && f.liters > 0 ? diff / f.liters : 0;
 			return {
 				name: new Date(f.date).toLocaleDateString([], {
 					month: "short",

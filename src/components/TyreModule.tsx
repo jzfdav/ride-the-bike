@@ -5,7 +5,9 @@ import { useStore } from "../store";
 import { InfoTooltip } from "./InfoTooltip";
 
 export function TyreModule() {
-	const { tyrePressure } = useStore();
+	const { tyrePressure, showTyreTracker } = useStore();
+
+	if (!showTyreTracker) return null;
 
 	const getTimeAgo = (date: string | null) => {
 		if (!date) return "Never";

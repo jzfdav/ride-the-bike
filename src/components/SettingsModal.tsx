@@ -1,6 +1,14 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
-import { Activity, Calendar, Droplets, Save, Target, X } from "lucide-react";
+import {
+	Activity,
+	Calendar,
+	Droplets,
+	Fuel,
+	Save,
+	Target,
+	X,
+} from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../store";
 import { cn } from "../utils";
@@ -24,6 +32,12 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 		setBikeModel,
 		showLubeTracker,
 		setShowLubeTracker,
+		showFuelTracker,
+		setShowFuelTracker,
+		showTyreTracker,
+		setShowTyreTracker,
+		showChecklist,
+		setShowChecklist,
 	} = useStore();
 
 	const [tempDate, setTempDate] = useState(
@@ -36,6 +50,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 	const [tempTarget, setTempTarget] = useState(targetOdo.toString());
 	const [tempModel, setTempModel] = useState(bikeModel);
 	const [tempShowLube, setTempShowLube] = useState(showLubeTracker);
+	const [tempShowFuel, setTempShowFuel] = useState(showFuelTracker);
+	const [tempShowTyre, setTempShowTyre] = useState(showTyreTracker);
+	const [tempShowChecklist, setTempShowChecklist] = useState(showChecklist);
 
 	const handleSave = () => {
 		const date = new Date(tempDate);
@@ -54,6 +71,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
 		setBikeModel(tempModel);
 		setShowLubeTracker(tempShowLube);
+		setShowFuelTracker(tempShowFuel);
+		setShowTyreTracker(tempShowTyre);
+		setShowChecklist(tempShowChecklist);
 
 		onClose();
 	};
@@ -174,6 +194,11 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
 										{/* Feature Toggles */}
 										<div className="space-y-4 pt-2">
+											<h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 px-1">
+												Dashboard Widgets
+											</h3>
+
+											{/* Lube Tracker */}
 											<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
 												<div className="flex items-center gap-3">
 													<div className="p-2 bg-pulsar-blue/10 rounded-xl">
@@ -181,10 +206,10 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 													</div>
 													<div>
 														<div className="text-xs font-bold text-white">
-															Chain Lube Tracker
+															Chain Lube
 														</div>
 														<div className="text-[9px] text-oled-gray-400 font-medium">
-															Toggle visibility on dashboard
+															Track maintenance intervals
 														</div>
 													</div>
 												</div>
@@ -198,6 +223,100 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 												>
 													<motion.div
 														animate={{ x: tempShowLube ? 26 : 4 }}
+														className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-lg"
+													/>
+												</button>
+											</div>
+
+											{/* Fuel Tracker */}
+											<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
+												<div className="flex items-center gap-3">
+													<div className="p-2 bg-amber-500/10 rounded-xl">
+														<Fuel className="w-5 h-5 text-amber-500" />
+													</div>
+													<div>
+														<div className="text-xs font-bold text-white">
+															Fuel & Efficiency
+														</div>
+														<div className="text-[9px] text-oled-gray-400 font-medium">
+															Gauge and KM/L trends
+														</div>
+													</div>
+												</div>
+												<button
+													type="button"
+													onClick={() => setTempShowFuel(!tempShowFuel)}
+													className={cn(
+														"w-12 h-6 rounded-full transition-all duration-300 relative",
+														tempShowFuel ? "bg-pulsar-blue" : "bg-white/10",
+													)}
+												>
+													<motion.div
+														animate={{ x: tempShowFuel ? 26 : 4 }}
+														className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-lg"
+													/>
+												</button>
+											</div>
+
+											{/* Tyre Tracker */}
+											<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
+												<div className="flex items-center gap-3">
+													<div className="p-2 bg-rose-500/10 rounded-xl">
+														<Activity className="w-5 h-5 text-rose-500" />
+													</div>
+													<div>
+														<div className="text-xs font-bold text-white">
+															Tyre Pressure
+														</div>
+														<div className="text-[9px] text-oled-gray-400 font-medium">
+															Monitor PSI levels
+														</div>
+													</div>
+												</div>
+												<button
+													type="button"
+													onClick={() => setTempShowTyre(!tempShowTyre)}
+													className={cn(
+														"w-12 h-6 rounded-full transition-all duration-300 relative",
+														tempShowTyre ? "bg-pulsar-blue" : "bg-white/10",
+													)}
+												>
+													<motion.div
+														animate={{ x: tempShowTyre ? 26 : 4 }}
+														className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-lg"
+													/>
+												</button>
+											</div>
+
+											{/* Checklist Tracker */}
+											<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
+												<div className="flex items-center gap-3">
+													<div className="p-2 bg-emerald-500/10 rounded-xl">
+														<Save className="w-5 h-5 text-emerald-500" />
+													</div>
+													<div>
+														<div className="text-xs font-bold text-white">
+															Safety Checklist
+														</div>
+														<div className="text-[9px] text-oled-gray-400 font-medium">
+															Pre-ride inspections
+														</div>
+													</div>
+												</div>
+												<button
+													type="button"
+													onClick={() =>
+														setTempShowChecklist(!tempShowChecklist)
+													}
+													className={cn(
+														"w-12 h-6 rounded-full transition-all duration-300 relative",
+														tempShowChecklist
+															? "bg-pulsar-blue"
+															: "bg-white/10",
+													)}
+												>
+													<motion.div
+														animate={{ x: tempShowChecklist ? 26 : 4 }}
 														className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-lg"
 													/>
 												</button>
