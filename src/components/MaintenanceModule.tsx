@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Droplets, AlertTriangle } from 'lucide-react';
 import { useStore } from '../store';
-import { clsx } from 'clsx';
+import { cn } from '../utils';
 import { InfoTooltip } from './InfoTooltip';
 
 export function MaintenanceModule() {
@@ -26,7 +26,7 @@ export function MaintenanceModule() {
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
                         <Droplets className="w-3 h-3 text-pulsar-blue" /> Chain Lube
                     </span>
-                    <span className={clsx(
+                    <span className={cn(
                         "text-[10px] font-bold px-2 py-0.5 rounded-full border",
                         chainHealth > 50 ? "border-pulsar-blue/30 text-pulsar-blue" : "border-warning-orange/30 text-warning-orange"
                     )}>
@@ -43,7 +43,7 @@ export function MaintenanceModule() {
                             <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${chainHealth}%` }}
-                                className={clsx(
+                                className={cn(
                                     "h-full rounded-full transition-colors",
                                     chainHealth > 50 ? "bg-pulsar-blue shadow-[0_0_10px_rgba(0,82,204,0.3)]" : "bg-warning-orange shadow-[0_0_10px_rgba(255,107,53,0.3)]"
                                 )}

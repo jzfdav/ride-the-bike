@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Activity, Save, Target, Droplets } from 'lucide-react';
 import { useStore } from '../store';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
+import { cn } from '../utils';
 
 interface SettingsModalProps {
     isOpen: boolean;

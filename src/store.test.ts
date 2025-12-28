@@ -10,7 +10,6 @@ describe('RideTheBike Store', () => {
             rides: [],
             hasSeenWelcome: false,
             lastLubeOdo: 10000,
-            serviceLog: [],
             fuelLog: []
         });
     });

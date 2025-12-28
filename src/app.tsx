@@ -10,8 +10,7 @@ import {
     TrendingDown
 } from 'lucide-react';
 import { useStore } from './store';
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { cn } from './utils';
 
 import { WelcomeOverlay } from './components/WelcomeOverlay';
 import { MaintenanceModule } from './components/MaintenanceModule';
@@ -22,10 +21,8 @@ import { ChecklistModule } from './components/ChecklistModule';
 import { BottomActions } from './components/BottomActions';
 import { SettingsModal } from './components/SettingsModal';
 import { InfoTooltip } from './components/InfoTooltip';
+import { GlobalHelpModal } from './components/GlobalHelpModal';
 
-function cn(...inputs: any[]) {
-    return twMerge(clsx(inputs));
-}
 
 export function App() {
     const {
@@ -276,6 +273,8 @@ export function App() {
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}
             />
+
+            <GlobalHelpModal />
         </div>
     );
 }

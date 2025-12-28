@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Bike, Fuel, Droplets, X, CircleDot } from 'lucide-react';
 import { useStore } from '../store';
-import { clsx } from 'clsx';
+import { cn } from '../utils';
 
 type FormType = 'ride' | 'fuel' | 'lube' | 'bars' | 'tyre' | null;
 
@@ -73,7 +73,10 @@ export function BottomActions() {
                                 <button
                                     key={btn.id}
                                     onClick={() => handleAction(btn.id)}
-                                    className={`${btn.color} p-4 rounded-2xl flex flex-col items-center gap-2 shadow-xl border border-white/10`}
+                                    className={cn(
+                                        btn.color,
+                                        "p-4 rounded-2xl flex flex-col items-center gap-2 shadow-xl border border-white/10"
+                                    )}
                                 >
                                     <btn.icon className="w-6 h-6 text-white" />
                                     <span className="text-[10px] font-bold uppercase tracking-wider text-white/90">{btn.label}</span>
@@ -148,7 +151,7 @@ export function BottomActions() {
                     <motion.button
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setIsOpen(!isOpen)}
-                        className={clsx(
+                        className={cn(
                             "w-full h-16 rounded-2xl flex items-center justify-center shadow-2xl border transition-all duration-300",
                             isOpen ? "bg-oled-gray-100 border-white/10" : "bg-pulsar-blue border-pulsar-blue shadow-pulsar-blue/20"
                         )}
@@ -157,7 +160,7 @@ export function BottomActions() {
                             animate={{ rotate: isOpen ? 45 : 0 }}
                             transition={{ type: "spring", damping: 10, stiffness: 200 }}
                         >
-                            <Plus className={clsx("w-8 h-8", isOpen ? "text-oled-gray-400" : "text-white")} />
+                            <Plus className={cn("w-8 h-8", isOpen ? "text-oled-gray-400" : "text-white")} />
                         </motion.div>
                     </motion.button>
                 )}

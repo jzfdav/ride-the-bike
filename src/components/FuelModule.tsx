@@ -1,13 +1,8 @@
 import { motion } from 'framer-motion';
 import { Fuel, TrendingUp, AlertTriangle } from 'lucide-react';
 import { useStore } from '../store';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '../utils';
 import { InfoTooltip } from './InfoTooltip';
-
-function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs));
-}
 
 export function FuelModule() {
     const { getAverageFE, fuelLog, fuelBars } = useStore();

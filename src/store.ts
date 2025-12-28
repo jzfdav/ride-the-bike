@@ -8,12 +8,6 @@ export interface Ride {
     odometer: number;
 }
 
-export interface ServiceEntry {
-    id: number;
-    date: string;
-    type: string;
-    description: string;
-}
 
 export interface FuelEntry {
     id: number;
@@ -37,7 +31,6 @@ export interface BikeStore {
 
     // Maintenance State
     lastLubeOdo: number;
-    serviceLog: ServiceEntry[];
 
     // Fuel State
     fuelLog: FuelEntry[];
@@ -69,6 +62,9 @@ export interface BikeStore {
 
     // Visibility State
     showLubeTracker: boolean;
+    // Help State
+    activeHelp: { title: string, content: string } | null;
+    setActiveHelp: (help: { title: string, content: string } | null) => void;
 
     // Actions
     setCurrentOdo: (odo: number) => void;
@@ -78,7 +74,6 @@ export interface BikeStore {
     setHasSeenWelcome: (val: boolean) => void;
     logRide: (distance: number) => void;
     logLube: () => void;
-    addServiceEntry: (entry: Omit<ServiceEntry, 'id' | 'date'>) => void;
     logFuel: (liters: number, cost: number) => void;
     setFuelBars: (bars: number) => void;
     setTyrePressure: (front: number | null, rear: number | null) => void;
@@ -111,7 +106,6 @@ export const useStore = create<BikeStore>()(
 
             // Maintenance State
             lastLubeOdo: 10000,
-            serviceLog: [],
 
             // Fuel State
             fuelLog: [],
@@ -144,6 +138,9 @@ export const useStore = create<BikeStore>()(
 
             // Visibility State
             showLubeTracker: false,
+            // Help State
+            activeHelp: null,
+            setActiveHelp: (help) => set({ activeHelp: help }),
 
             // Core Actions
             setCurrentOdo: (odo) => set({ currentOdo: odo }),
@@ -176,16 +173,6 @@ export const useStore = create<BikeStore>()(
                 set({ lastLubeOdo: get().currentOdo });
             },
 
-            addServiceEntry: (entry) => {
-                set({
-                    serviceLog: [{
-                        id: Date.now(),
-                        date: new Date().toISOString(),
-                        type: entry.type,
-                        description: entry.description
-                    }, ...get().serviceLog]
-                });
-            },
 
             // Fuel Actions
             logFuel: (liters, cost) => {
