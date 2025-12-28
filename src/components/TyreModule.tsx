@@ -22,18 +22,18 @@ export function TyreModule() {
             animate={{ opacity: 1, y: 0 }}
             className="relative bg-oled-gray-50/50 rounded-2xl p-6 border border-white/5 backdrop-blur-sm"
         >
-            <div className="absolute top-6 right-6 z-10">
-                <InfoTooltip
-                    title="Tyre Pressure"
-                    content="Manual log of your PSI. Keep these within recommended limits for safety and efficiency."
-                />
-            </div>
             <div className="flex justify-between items-center mb-6">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <CircleDot className="w-3.5 h-3.5 text-pulsar-blue" /> Tyre Pressure
                 </span>
-                <div className="flex items-center gap-1.5 text-[9px] text-white/20 font-bold uppercase tracking-widest">
-                    <Clock className="w-2.5 h-2.5" /> {getTimeAgo(tyrePressure.lastUpdated)}
+                <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1.5 text-[9px] text-white/20 font-bold uppercase tracking-widest">
+                        <Clock className="w-2.5 h-2.5" /> {getTimeAgo(tyrePressure.lastUpdated)}
+                    </div>
+                    <InfoTooltip
+                        title="Tyre Pressure"
+                        content="Manual log of your PSI. Keep these within recommended limits for safety and efficiency."
+                    />
                 </div>
             </div>
 

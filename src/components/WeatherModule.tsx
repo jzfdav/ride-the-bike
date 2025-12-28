@@ -35,16 +35,14 @@ export function WeatherModule() {
             className="grid grid-cols-2 gap-4"
         >
             <section className="relative bg-oled-gray-50/50 rounded-2xl p-5 border border-white/5 backdrop-blur-sm">
-                <div className="absolute top-5 right-5 z-10">
-                    <InfoTooltip
-                        title="Weather Insight"
-                        content="Real-time condition & rain probability. Essential for deciding on gear."
-                    />
-                </div>
                 <div className="flex justify-between items-center mb-4">
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                         <Wind className="w-3.5 h-3.5 text-pulsar-blue" /> Condition
                     </span>
+                    <InfoTooltip
+                        title="Weather Insight"
+                        content="Real-time condition & rain probability. Essential for deciding on gear."
+                    />
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -68,21 +66,21 @@ export function WeatherModule() {
             </section>
 
             <section className="relative bg-oled-gray-50/50 rounded-2xl p-5 border border-white/5 backdrop-blur-sm">
-                <div className="absolute top-5 right-5 z-10">
-                    <InfoTooltip
-                        title="Air Quality"
-                        content="Displays the US AQI index. Stay safe in high pollution zones."
-                    />
-                </div>
                 <div className="flex justify-between items-center mb-4">
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                         <AlertCircle className="w-3.5 h-3.5 text-pulsar-blue" /> Air Quality
                     </span>
-                    <div className={`px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest ${aqi.label === 'Good' ? 'bg-emerald-500/20 text-emerald-500' :
-                        aqi.label === 'Fair' ? 'bg-amber-500/20 text-amber-500' :
-                            'bg-red-500/20 text-red-500 animate-pulse'
-                        }`}>
-                        {aqi.label}
+                    <div className="flex items-center gap-2">
+                        <div className={`px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest ${aqi.label === 'Good' ? 'bg-emerald-500/20 text-emerald-500' :
+                            aqi.label === 'Fair' ? 'bg-amber-500/20 text-amber-500' :
+                                'bg-red-500/20 text-red-500 animate-pulse'
+                            }`}>
+                            {aqi.label}
+                        </div>
+                        <InfoTooltip
+                            title="Air Quality"
+                            content="Displays the US AQI index. Stay safe in high pollution zones."
+                        />
                     </div>
                 </div>
 

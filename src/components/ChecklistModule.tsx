@@ -17,12 +17,6 @@ export function ChecklistModule() {
                 : 'bg-oled-gray-50/50 border-white/5'
                 }`}
         >
-            <div className="absolute top-6 right-6 z-10 flex items-center gap-2">
-                <InfoTooltip
-                    title="Safety Checklist"
-                    content="Ensure all critical checks are performed before your ride. Reset daily for a safe start."
-                />
-            </div>
             <div className="flex justify-between items-center mb-5">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <ShieldCheck className={`w-3.5 h-3.5 ${isFullyComplete ? 'text-emerald-500' : 'text-pulsar-blue'}`} /> Pre-Ride Safety
@@ -40,6 +34,10 @@ export function ChecklistModule() {
                     >
                         <RotateCcw className="w-3 h-3" />
                     </button>
+                    <InfoTooltip
+                        title="Safety Checklist"
+                        content="Ensure all critical checks are performed before your ride. Reset daily for a safe start."
+                    />
                 </div>
             </div>
 

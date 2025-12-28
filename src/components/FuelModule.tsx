@@ -17,24 +17,24 @@ export function FuelModule() {
             animate={{ opacity: 1, y: 0 }}
             className="relative bg-oled-gray-50/50 rounded-2xl p-6 border border-white/5 backdrop-blur-sm"
         >
-            <div className="absolute top-6 right-6 z-10">
-                <InfoTooltip
-                    title="Fuel Tracking"
-                    content="12-bar gauge inspired by Pulsar 180. Avg Efficiency requires at least 2 refuel logs to calculate accurately."
-                />
-            </div>
             <div className="flex justify-between items-center mb-6">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <Fuel className="w-3.5 h-3.5 text-pulsar-blue" /> Fuel Level
                 </span>
-                {isReserve && (
-                    <div className={cn(
-                        "px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest flex items-center gap-1",
-                        isLowFuel ? "bg-red-500/20 text-red-500 animate-pulse" : "bg-amber-500/20 text-amber-500"
-                    )}>
-                        <AlertTriangle className="w-2.5 h-2.5" /> RES
-                    </div>
-                )}
+                <div className="flex items-center gap-3">
+                    {isReserve && (
+                        <div className={cn(
+                            "px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest flex items-center gap-1",
+                            isLowFuel ? "bg-red-500/20 text-red-500 animate-pulse" : "bg-amber-500/20 text-amber-500"
+                        )}>
+                            <AlertTriangle className="w-2.5 h-2.5" /> RES
+                        </div>
+                    )}
+                    <InfoTooltip
+                        title="Fuel Tracking"
+                        content="12-bar gauge inspired by Pulsar 180. Avg Efficiency requires at least 2 refuel logs to calculate accurately."
+                    />
+                </div>
             </div>
 
             {/* Pulsar 12-Bar Gauge */}
