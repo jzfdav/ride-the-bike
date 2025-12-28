@@ -74,7 +74,7 @@ export function App() {
 				)}
 			</AnimatePresence>
 
-			<div className="max-w-md mx-auto space-y-6">
+			<div className="max-w-5xl mx-auto space-y-6">
 				<DashboardHeader
 					showInsights={showInsights}
 					onToggleInsights={() => setShowInsights(!showInsights)}
@@ -104,14 +104,16 @@ export function App() {
 							<WeatherModule />
 
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-								<MainMetricCard
-									currentOdo={currentOdo}
-									baseOdo={baseOdo}
-									targetOdo={targetOdo}
-									progress={progress}
-								/>
+								<div className="md:col-span-2">
+									<MainMetricCard
+										currentOdo={currentOdo}
+										baseOdo={baseOdo}
+										targetOdo={targetOdo}
+										progress={progress}
+									/>
+								</div>
 
-								<div className="grid grid-cols-2 gap-6">
+								<div className="grid grid-cols-2 md:grid-cols-1 gap-6 md:col-span-1">
 									{/* Battery Health */}
 									<section className="relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5">
 										<div className="flex justify-between items-center mb-3">

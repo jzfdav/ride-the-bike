@@ -66,7 +66,7 @@ export function WeatherModule() {
 	const Icon = info.icon;
 
 	return (
-		<div className="grid grid-cols-2 gap-4">
+		<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 			<section className="relative bg-oled-gray-50/50 rounded-2xl p-5 border border-white/5 backdrop-blur-sm">
 				<div className="flex justify-between items-center mb-4">
 					<div className="flex flex-col gap-1">

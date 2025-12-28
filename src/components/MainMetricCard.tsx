@@ -16,7 +16,7 @@ export function MainMetricCard({
 	progress,
 }: MainMetricCardProps) {
 	return (
-		<section className="relative bg-oled-gray-100 rounded-[2.5rem] p-8 border border-white/5 overflow-hidden group">
+		<section className="relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5 overflow-hidden group">
 			<div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
 				<Milestone className="w-24 h-24 text-white" />
 			</div>
