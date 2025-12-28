@@ -14,15 +14,17 @@ export function MaintenanceModule() {
             <motion.section
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-oled-gray-50/50 rounded-2xl p-5 border border-white/5 backdrop-blur-sm"
+                className="bg-oled-gray-50/50 rounded-2xl p-5 border border-white/5 backdrop-blur-sm relative"
             >
+                <div className="absolute top-5 right-5 z-10">
+                    <InfoTooltip
+                        title="Chain Maintenance"
+                        content="Tracks health based on mileage. Lube recommended every 500km for optimal performance."
+                    />
+                </div>
                 <div className="flex justify-between items-center mb-4">
                     <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
                         <Droplets className="w-3 h-3 text-pulsar-blue" /> Chain Lube
-                        <InfoTooltip
-                            title="Chain Maintenance"
-                            content="Tracks health based on mileage. Lube recommended every 500km for optimal performance."
-                        />
                     </span>
                     <span className={clsx(
                         "text-[10px] font-bold px-2 py-0.5 rounded-full border",

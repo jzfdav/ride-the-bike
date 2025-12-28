@@ -12,18 +12,20 @@ export function ChecklistModule() {
         <motion.section
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className={`rounded-2xl p-6 border transition-colors duration-500 ${isFullyComplete
+            className={`relative rounded-2xl p-6 border transition-colors duration-500 ${isFullyComplete
                 ? 'bg-emerald-500/5 border-emerald-500/20'
                 : 'bg-oled-gray-50/50 border-white/5'
                 }`}
         >
+            <div className="absolute top-6 right-6 z-10 flex items-center gap-2">
+                <InfoTooltip
+                    title="Safety Checklist"
+                    content="Ensure all critical checks are performed before your ride. Reset daily for a safe start."
+                />
+            </div>
             <div className="flex justify-between items-center mb-5">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <ShieldCheck className={`w-3.5 h-3.5 ${isFullyComplete ? 'text-emerald-500' : 'text-pulsar-blue'}`} /> Pre-Ride Safety
-                    <InfoTooltip
-                        title="Safety Checklist"
-                        content="Ensure all critical checks are performed before your ride. Reset daily for a safe start."
-                    />
                 </span>
                 <div className="flex items-center gap-3">
                     <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${isFullyComplete ? 'text-emerald-500' : 'text-white/20'}`}>

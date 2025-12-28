@@ -20,15 +20,17 @@ export function FuelModule() {
         <motion.section
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-oled-gray-50/50 rounded-2xl p-6 border border-white/5 backdrop-blur-sm"
+            className="relative bg-oled-gray-50/50 rounded-2xl p-6 border border-white/5 backdrop-blur-sm"
         >
+            <div className="absolute top-6 right-6 z-10">
+                <InfoTooltip
+                    title="Fuel Tracking"
+                    content="12-bar gauge inspired by Pulsar 180. Avg Efficiency requires at least 2 refuel logs to calculate accurately."
+                />
+            </div>
             <div className="flex justify-between items-center mb-6">
                 <span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
                     <Fuel className="w-3.5 h-3.5 text-pulsar-blue" /> Fuel Level
-                    <InfoTooltip
-                        title="Fuel Tracking"
-                        content="12-bar gauge inspired by Pulsar 180. Avg Efficiency requires at least 2 refuel logs to calculate accurately."
-                    />
                 </span>
                 {isReserve && (
                     <div className={cn(
