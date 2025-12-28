@@ -19,3 +19,12 @@ Record significant decisions made during development.
    - **Decision:** Allow users to set a specific "Service Due Date" instead of a fixed 90-day window.
    - **Rationale:** Provides better utility as users can sync the app with their actual service schedule.
    - **Alternatives:** Fixed 30/60/90 day increments.
+4. **Singleton Help System**
+   - **Date:** Dec 2025
+   - **Decision:** Implement a global `activeHelp` state for a single, shared help modal.
+   - **Rationale:** Prevents "modal stacking" and ensures high-contrast z-index management, keeping the UI clean and scannable.
+
+5. **Configurable Dashboard (Hardening)**
+   - **Date:** Dec 2025
+   - **Decision:** Make Fuel, Tyre, Lube, and Checklist modules toggleable in Settings.
+   - **Rationale:** Empowers the user to streamline their instrument cluster based on their own bike's hardware and maintenance habits.

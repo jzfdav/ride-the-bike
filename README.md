@@ -76,4 +76,6 @@ ride-the-bike/
 - **Maintenance:** Dedicated module for chain lubrication tracking.
 - **Rider Insights:** Live weather forecasts and Air Quality Index (AQI) via Open-Meteo API.
 - **Pre-ride Checklist:** Essential safety gear and bike health checks before every ride.
+- **Configurable Dashboard:** Toggle visibility for Fuel, Tyre, Lube, and Checklist modules in Settings.
+- **Success Indicators:** Real-time visual feedback (toasts) for all logging actions.
 - **OLED Theme:** True black background with Pulsar Neon Blue accents for maximum battery efficiency and aesthetics.
