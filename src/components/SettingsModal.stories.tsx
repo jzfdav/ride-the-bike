@@ -23,7 +23,9 @@ type Story = StoryObj<typeof SettingsModalUI>;
 export const Default: Story = {
 	args: {
 		isOpen: true,
-		onClose: () => {},
+		onClose: () => {
+			/* no-op */
+		},
 		onSave: (data: any) => console.log("Save:", data),
 		initialData: {
 			serviceDueDate: new Date().toISOString(),
@@ -42,7 +44,9 @@ export const Default: Story = {
 export const MinimalWidgets: Story = {
 	args: {
 		isOpen: true,
-		onClose: () => {},
+		onClose: () => {
+			/* no-op */
+		},
 		onSave: (data: any) => console.log("Save:", data),
 		initialData: {
 			serviceDueDate: new Date().toISOString(),
