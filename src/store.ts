@@ -165,6 +165,10 @@ export const useStore = create<BikeStore>()(
 						distance: safeDistance,
 						odometer: state.currentOdo,
 					});
+					// Sort by date descending and slice
+					state.rides.sort(
+						(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+					);
 					state.rides = state.rides.slice(0, MAINTENANCE_CONFIG.RIDE_LOG_LIMIT);
 				});
 			},
@@ -186,6 +190,10 @@ export const useStore = create<BikeStore>()(
 						liters: safeLiters,
 						cost: safeCost,
 					});
+					// Sort by date descending and slice
+					state.fuelLog.sort(
+						(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+					);
 					state.fuelLog = state.fuelLog.slice(
 						0,
 						MAINTENANCE_CONFIG.FUEL_LOG_LIMIT,
@@ -234,7 +242,7 @@ export const useStore = create<BikeStore>()(
 				const lastRide = new Date(lastRideDate);
 				lastRide.setHours(0, 0, 0, 0);
 
-				if (lastRide.getTime() === today.getTime()) return 100;
+				if (lastRide.getTime() >= today.getTime()) return 100;
 
 				const daysSince = Math.floor(
 					(today.getTime() - lastRide.getTime()) / (1000 * 60 * 60 * 24),

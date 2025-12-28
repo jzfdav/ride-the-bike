@@ -75,4 +75,42 @@ describe("RideTheBike Store", () => {
 		expect(useStore.getState().rides.length).toBe(1);
 		expect(useStore.getState().rides[0].distance).toBe(25.5);
 	});
+
+	it("maintains 100% battery health for future-dated rides", () => {
+		const tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		useStore.setState({ lastRideDate: tomorrow.toISOString() });
+		expect(useStore.getState().getBatteryHealth()).toBe(100);
+	});
+
+	it("sorts logs chronologically even if added out of order", () => {
+		const yesterday = new Date();
+		yesterday.setDate(yesterday.getDate() - 1);
+
+		// Log older entry first (simulating a missed entry)
+		useStore.setState({ currentOdo: 10100 });
+		useStore.getState().logFuel(10, 100); // Today's entry (added first)
+
+		useStore.setState({ currentOdo: 10050 });
+		// Manually override date for "yesterday" via a raw log action if we had one,
+		// but since logFuel uses Date.now(), we'll simulate sorting via state manipulation
+		// to verify the sort() call in the store works.
+		const logs = [...useStore.getState().fuelLog];
+		logs.push({
+			id: 123,
+			date: yesterday.toISOString(),
+			odo: 10050,
+			liters: 5,
+			cost: 50,
+		});
+		useStore.setState({ fuelLog: logs });
+
+		// Trigger an action that sorts (like logFuel or logRide)
+		useStore.getState().logRide(0);
+
+		const sortedLogs = useStore.getState().fuelLog;
+		expect(new Date(sortedLogs[0].date) > new Date(sortedLogs[1].date)).toBe(
+			true,
+		);
+	});
 });

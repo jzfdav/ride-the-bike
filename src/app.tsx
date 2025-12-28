@@ -57,7 +57,9 @@ export function App() {
 
 	const daysRemaining = getDaysRemaining();
 	const dailyTarget =
-		daysRemaining > 0 ? (targetOdo - currentOdo) / daysRemaining : 0;
+		daysRemaining > 0
+			? Math.max(0, (targetOdo - currentOdo) / daysRemaining)
+			: 0;
 
 	const totalRidesThisWeek = rides.filter((ride) => {
 		const rideDate = new Date(ride.date);

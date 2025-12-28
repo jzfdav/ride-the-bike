@@ -25,9 +25,9 @@ export function ActivityHistory({
 			</div>
 
 			<div className="space-y-3">
-				{rides.slice(0, 3).map((ride) => (
+				{rides.slice(0, 3).map((ride, idx) => (
 					<div
-						key={ride.id}
+						key={`${ride.id}-${idx}`}
 						className="flex items-center justify-between p-4 bg-white/[0.02] rounded-2xl border border-white/5"
 					>
 						<div className="flex items-center gap-4">
