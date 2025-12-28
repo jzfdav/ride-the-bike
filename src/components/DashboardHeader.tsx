@@ -1,4 +1,5 @@
 import { LayoutGrid, LineChart, Settings, Zap } from "lucide-react";
+import { useStore } from "../store";
 import { cn } from "../utils";
 
 interface DashboardHeaderProps {
@@ -12,6 +13,8 @@ export function DashboardHeader({
 	onToggleInsights,
 	onOpenSettings,
 }: DashboardHeaderProps) {
+	const bikeModel = useStore((state) => state.bikeModel);
+
 	return (
 		<header className="flex items-center justify-between mb-8">
 			<div className="flex justify-between items-center w-full mb-10">
@@ -21,7 +24,7 @@ export function DashboardHeader({
 					</div>
 					<div>
 						<h1 className="text-xl font-black tracking-tighter text-white uppercase italic leading-none">
-							Pulsar NS200
+							{bikeModel}
 						</h1>
 						<div className="flex items-center gap-2 mt-0.5">
 							<span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />

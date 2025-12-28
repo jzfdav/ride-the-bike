@@ -35,6 +35,7 @@ export const BikeStoreStateSchema = z.object({
 	currentOdo: z.number(),
 	baseOdo: z.number(),
 	targetOdo: z.number(),
+	bikeModel: z.string(),
 	serviceDueDate: z.string().nullable(),
 	lastRideDate: z.string().nullable(),
 	rides: z.array(RideSchema),
@@ -70,6 +71,7 @@ export interface BikeStoreActions {
 	setCurrentOdo: (odo: number) => void;
 	setBaseOdo: (odo: number) => void;
 	setTargetOdo: (odo: number) => void;
+	setBikeModel: (model: string) => void;
 	setServiceDueDate: (date: string | null) => void;
 	setHasSeenWelcome: (val: boolean) => void;
 	logRide: (distance: number) => void;
@@ -99,6 +101,7 @@ export const useStore = create<BikeStore>()(
 			currentOdo: 10000,
 			baseOdo: 10000,
 			targetOdo: 13000,
+			bikeModel: "My Bike",
 			serviceDueDate: null,
 			lastRideDate: null,
 			rides: [],
@@ -136,6 +139,10 @@ export const useStore = create<BikeStore>()(
 			setTargetOdo: (target) =>
 				set((state) => {
 					state.targetOdo = Math.max(0, target);
+				}),
+			setBikeModel: (model) =>
+				set((state) => {
+					state.bikeModel = model.trim() || "My Bike";
 				}),
 			setServiceDueDate: (date) =>
 				set((state) => {

@@ -20,6 +20,8 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 		setBaseOdo,
 		targetOdo,
 		setTargetOdo,
+		bikeModel,
+		setBikeModel,
 		showLubeTracker,
 		setShowLubeTracker,
 	} = useStore();
@@ -32,6 +34,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 	const [tempOdo, setTempOdo] = useState(currentOdo.toString());
 	const [tempBase, setTempBase] = useState(baseOdo.toString());
 	const [tempTarget, setTempTarget] = useState(targetOdo.toString());
+	const [tempModel, setTempModel] = useState(bikeModel);
 	const [tempShowLube, setTempShowLube] = useState(showLubeTracker);
 
 	const handleSave = () => {
@@ -49,6 +52,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 		const target = parseFloat(tempTarget);
 		if (!isNaN(target)) setTargetOdo(target);
 
+		setBikeModel(tempModel);
 		setShowLubeTracker(tempShowLube);
 
 		onClose();
@@ -147,6 +151,25 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 												className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors"
 												placeholder="e.g. 10450"
 											/>
+										</div>
+
+										{/* Bike Profile */}
+										<div className="space-y-4 pt-4 border-t border-white/5">
+											<h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 px-1">
+												Bike Profile
+											</h3>
+											<div className="space-y-3">
+												<label className="text-[10px] font-black uppercase tracking-widest text-pulsar-blue">
+													Bike Model
+												</label>
+												<input
+													type="text"
+													value={tempModel}
+													onChange={(e) => setTempModel(e.target.value)}
+													placeholder="e.g. Pulsar NS200"
+													className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-sm font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors"
+												/>
+											</div>
 										</div>
 
 										{/* Feature Toggles */}

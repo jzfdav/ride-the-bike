@@ -7,12 +7,24 @@ import {
 	TrendingUp,
 	Zap,
 } from "lucide-react";
+import { useState } from "react";
+import { useStore } from "../store";
 
 interface WelcomeOverlayProps {
 	onComplete: () => void;
 }
 
 export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
+	const [model, setModel] = useState("");
+	const setBikeModel = useStore((state) => state.setBikeModel);
+
+	const handleComplete = () => {
+		if (model.trim()) {
+			setBikeModel(model);
+		}
+		onComplete();
+	};
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -38,18 +50,22 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 				RideTheBike
 			</motion.h1>
 
-			<motion.p
+			<motion.div
 				initial={{ y: 20, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ delay: 0.5 }}
-				className="text-oled-gray-400 text-sm leading-relaxed mb-12 max-w-[280px]"
+				className="w-full max-w-[280px] mb-8"
 			>
-				Keep your machine alive. Gamify{" "}
-				<span className="text-white font-semibold">mechanical sympathy</span>{" "}
-				and reach your riding target through consistent, healthy riding.
-			</motion.p>
+				<input
+					type="text"
+					placeholder="Enter Bike Model (e.g. Pulsar NS200)"
+					value={model}
+					onChange={(e) => setModel(e.target.value)}
+					className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-center focus:border-pulsar-blue focus:ring-1 focus:ring-pulsar-blue placeholder:text-white/20 outline-none transition-all"
+				/>
+			</motion.div>
 
-			<div className="space-y-6 w-full max-w-[280px] mb-12">
+			<div className="space-y-4 w-full max-w-[280px] mb-12">
 				{[
 					{
 						icon: Zap,
@@ -91,7 +107,7 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 				initial={{ y: 20, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ delay: 1.1 }}
-				onClick={onComplete}
+				onClick={handleComplete}
 				className="w-full max-w-[240px] bg-pulsar-blue text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 group hover:gap-4 transition-all"
 			>
 				START RIDING <ArrowRight className="w-5 h-5" />
