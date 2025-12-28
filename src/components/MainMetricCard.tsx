@@ -17,11 +17,11 @@ export function MainMetricCard({
 }: MainMetricCardProps) {
 	return (
 		<section className="relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5 overflow-hidden group">
-			<div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-				<Milestone className="w-24 h-24 text-white" />
+			<div className="absolute -right-4 -top-4 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity pointer-events-none">
+				<Milestone className="w-48 h-48 text-white rotate-12" />
 			</div>
 
-			<div className="flex justify-between items-center mb-10">
+			<div className="relative z-10 flex justify-between items-center mb-10">
 				<span className="text-[10px] font-black uppercase tracking-[0.2em] text-oled-gray-400 flex items-center gap-2">
 					<div className="w-1.5 h-1.5 rounded-full bg-pulsar-blue" />
 					Active Odometer
