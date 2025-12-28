@@ -1,0 +1,64 @@
+import { LayoutGrid, LineChart, Settings, Zap } from "lucide-react";
+import { cn } from "../utils";
+
+interface DashboardHeaderProps {
+	showInsights: boolean;
+	onToggleInsights: () => void;
+	onOpenSettings: () => void;
+}
+
+export function DashboardHeader({
+	showInsights,
+	onToggleInsights,
+	onOpenSettings,
+}: DashboardHeaderProps) {
+	return (
+		<header className="flex items-center justify-between mb-8">
+			<div className="flex justify-between items-center w-full mb-10">
+				<div className="flex items-center gap-4">
+					<div className="w-12 h-12 rounded-[1.25rem] bg-gradient-to-br from-pulsar-blue to-pulsar-blue/40 flex items-center justify-center shadow-lg shadow-pulsar-blue/20">
+						<Zap className="w-6 h-6 text-black fill-white" />
+					</div>
+					<div>
+						<h1 className="text-xl font-black tracking-tighter text-white uppercase italic leading-none">
+							Pulsar NS200
+						</h1>
+						<div className="flex items-center gap-2 mt-0.5">
+							<span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+							<span className="text-[9px] font-black tracking-widest text-emerald-500 uppercase">
+								System Ready
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div className="flex items-center gap-2">
+					<button
+						type="button"
+						onClick={onToggleInsights}
+						className={cn(
+							"w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300",
+							showInsights
+								? "bg-pulsar-blue text-black"
+								: "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white",
+						)}
+						title={showInsights ? "Show Cluster" : "Show Insights"}
+					>
+						{showInsights ? (
+							<LayoutGrid className="w-5 h-5" />
+						) : (
+							<LineChart className="w-5 h-5" />
+						)}
+					</button>
+					<button
+						type="button"
+						onClick={onOpenSettings}
+						className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-all border border-white/5 active:scale-90"
+					>
+						<Settings className="w-5 h-5 text-white/40" />
+					</button>
+				</div>
+			</div>
+		</header>
+	);
+}
