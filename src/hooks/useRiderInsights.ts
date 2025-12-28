@@ -14,7 +14,6 @@ export function useRiderInsights() {
 			return;
 		}
 
-
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
 				setCoords({ lat: pos.coords.latitude, lon: pos.coords.longitude });
