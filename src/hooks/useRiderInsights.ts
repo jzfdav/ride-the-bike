@@ -14,28 +14,23 @@ export function useRiderInsights() {
 			return;
 		}
 
-		const timeout = setTimeout(() => {
-			if (!coords && !geoError) {
-				setGeoError("Location request timed out");
-			}
-		}, 10000);
 
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
-				clearTimeout(timeout);
 				setCoords({ lat: pos.coords.latitude, lon: pos.coords.longitude });
 			},
 			(err) => {
-				clearTimeout(timeout);
 				setGeoError(
 					err.code === 1 ? "Location access denied" : "Location unavailable",
 				);
 				console.warn("Geolocation Error:", err);
 			},
-			{ timeout: 8000 },
+			{
+				enableHighAccuracy: true,
+				timeout: 15000,
+				maximumAge: 1000 * 60 * 5, // 5 minutes cache
+			},
 		);
-
-		return () => clearTimeout(timeout);
 	}, []);
 
 	const query = useQuery<RiderInsights>({
