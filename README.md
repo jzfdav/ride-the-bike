@@ -87,5 +87,7 @@ ride-the-bike/
 - **Rider Insights:** Live weather forecasts and Air Quality Index (AQI) via Open-Meteo API.
 - **Pre-ride Checklist:** Essential safety gear and bike health checks before every ride.
 - **Configurable Dashboard:** Toggle visibility for Fuel, Tyre, Lube, and Checklist modules in Settings.
+- **Theme Switcher:** Choose from Blue, Red (OnePlus), or Green (Emerald) accent colors.
+- **Fullscreen Mobile:** Dynamic viewport units (dvh/dvw) for seamless mobile experience.
 - **Success Indicators:** Real-time visual feedback (toasts) for all logging actions.
 - **Material 3 Theme:** Expressive Dark theme with dynamic semantic colors (`primary`, `tertiary`, `error`) for optimal readability and aesthetics.
