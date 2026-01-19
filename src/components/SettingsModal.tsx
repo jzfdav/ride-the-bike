@@ -226,11 +226,10 @@ export function SettingsModalUI({
 										<CollapsibleSection
 											title="Dashboard Widgets"
 											icon={<Activity className="w-3.5 h-3.5" />}
-											peek={`${
-												[tempShowFuel, tempShowTyre, tempShowChecklist].filter(
-													Boolean,
-												).length
-											} Active`}
+											peek={`${[tempShowFuel, tempShowTyre, tempShowChecklist].filter(
+												Boolean,
+											).length
+												} Active`}
 										>
 											<div className="space-y-3 pt-2">
 												{/* Fuel Tracker */}
@@ -306,7 +305,7 @@ export function SettingsModalUI({
 										<button
 											type="button"
 											onClick={handleSave}
-											className="w-full bg-primary text-on-primary font-bold py-5 rounded-[1.5rem] flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+											className="w-full bg-primary text-primary-on font-bold py-5 rounded-[1.5rem] flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
 										>
 											<Save className="w-5 h-5" /> SAVE SETTINGS
 										</button>
