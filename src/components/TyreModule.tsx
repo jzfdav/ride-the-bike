@@ -22,14 +22,14 @@ export function TyreModule() {
 		<motion.section
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="relative bg-oled-gray-50/50 rounded-2xl p-6 border border-white/5 backdrop-blur-sm"
+			className="relative bg-surface-container-low rounded-[2rem] p-6 shadow-sm border border-outline-variant/10"
 		>
 			<div className="flex justify-between items-center mb-6">
-				<span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
-					<CircleDot className="w-3.5 h-3.5 text-pulsar-blue" /> Tyre Pressure
+				<span className="text-[10px] text-surface-on-variant uppercase tracking-widest font-black flex items-center gap-1.5 opacity-80">
+					<CircleDot className="w-3.5 h-3.5 text-primary" /> Tyre Pressure
 				</span>
 				<div className="flex items-center gap-3">
-					<div className="flex items-center gap-1.5 text-[9px] text-white/20 font-bold uppercase tracking-widest">
+					<div className="flex items-center gap-1.5 text-[9px] text-surface-on-variant/50 font-bold uppercase tracking-widest">
 						<Clock className="w-2.5 h-2.5" />{" "}
 						{getTimeAgo(tyrePressure.lastUpdated)}
 					</div>
@@ -42,29 +42,33 @@ export function TyreModule() {
 
 			<div className="grid grid-cols-2 gap-8 relative">
 				{/* Vertical Divider */}
-				<div className="absolute left-1/2 top-1 bottom-1 w-[1px] bg-white/5" />
+				<div className="absolute left-1/2 top-1 bottom-1 w-[1px] bg-outline-variant/10" />
 
 				<div className="space-y-1 text-center">
-					<div className="text-[9px] text-oled-gray-400 uppercase tracking-widest font-bold">
+					<div className="text-[9px] text-surface-on-variant uppercase tracking-widest font-bold opacity-70">
 						Front
 					</div>
 					<div className="flex items-baseline justify-center gap-1">
-						<div className="text-3xl font-black tracking-tighter text-glow-pulsar">
+						<div className="text-3xl font-black tracking-tighter text-primary">
 							{tyrePressure.front ?? "--"}
 						</div>
-						<div className="text-[10px] font-black text-oled-gray-400">PSI</div>
+						<div className="text-[10px] font-black text-surface-on-variant/60">
+							PSI
+						</div>
 					</div>
 				</div>
 
 				<div className="space-y-1 text-center">
-					<div className="text-[9px] text-oled-gray-400 uppercase tracking-widest font-bold">
+					<div className="text-[9px] text-surface-on-variant uppercase tracking-widest font-bold opacity-70">
 						Rear
 					</div>
 					<div className="flex items-baseline justify-center gap-1">
-						<div className="text-3xl font-black tracking-tighter text-glow-pulsar">
+						<div className="text-3xl font-black tracking-tighter text-primary">
 							{tyrePressure.rear ?? "--"}
 						</div>
-						<div className="text-[10px] font-black text-oled-gray-400">PSI</div>
+						<div className="text-[10px] font-black text-surface-on-variant/60">
+							PSI
+						</div>
 					</div>
 				</div>
 			</div>

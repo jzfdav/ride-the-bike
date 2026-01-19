@@ -46,11 +46,11 @@ export function FuelModuleUI({
 		<motion.section
 			initial={{ opacity: 0, y: 10 }}
 			animate={{ opacity: 1, y: 0 }}
-			className="relative bg-oled-gray-50/50 rounded-2xl p-6 border border-white/5 backdrop-blur-sm"
+			className="relative bg-surface-container-low rounded-[2rem] p-6 shadow-sm border border-outline-variant/10"
 		>
 			<div className="flex justify-between items-center mb-6">
-				<span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
-					<Fuel className="w-3.5 h-3.5 text-pulsar-blue" /> Fuel Level
+				<span className="text-[10px] text-surface-on-variant uppercase tracking-widest font-black flex items-center gap-1.5 opacity-80">
+					<Fuel className="w-3.5 h-3.5 text-primary" /> Fuel Level
 				</span>
 				<div className="flex items-center gap-3">
 					{isReserve && (
@@ -58,8 +58,8 @@ export function FuelModuleUI({
 							className={cn(
 								"px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest flex items-center gap-1",
 								isLowFuel
-									? "bg-red-500/20 text-red-500 animate-pulse"
-									: "bg-amber-500/20 text-amber-500",
+									? "bg-error/10 text-error animate-pulse"
+									: "bg-tertiary/10 text-tertiary",
 							)}
 						>
 							<AlertTriangle className="w-2.5 h-2.5" /> RES
@@ -84,9 +84,9 @@ export function FuelModuleUI({
 								"flex-1 rounded-sm shadow-sm transition-all duration-500",
 								isActive
 									? barIndex <= 1
-										? "bg-red-500 h-8 shadow-[0_0_10px_rgba(239,68,68,0.4)]"
-										: "bg-pulsar-blue h-8 shadow-[0_0_10px_rgba(0,82,204,0.4)]"
-									: "bg-white/5 h-4",
+										? "bg-error h-8 shadow-[0_0_8px_rgba(var(--error),0.4)]"
+										: "bg-primary h-8 shadow-[0_0_8px_rgba(var(--primary),0.4)]"
+									: "bg-surface-on/5 h-4",
 							)}
 						/>
 					);
@@ -95,21 +95,21 @@ export function FuelModuleUI({
 
 			<div className="flex justify-between items-end">
 				<div className="space-y-1">
-					<div className="text-[9px] text-oled-gray-400 uppercase tracking-widest font-bold">
+					<div className="text-[9px] text-surface-on-variant uppercase tracking-widest font-bold opacity-70">
 						Average efficiency
 					</div>
 					<div className="flex items-baseline gap-2">
-						<div className="text-2xl font-black tracking-tighter text-glow-pulsar">
+						<div className="text-2xl font-black tracking-tighter text-primary">
 							{avgFE}
 						</div>
-						<div className="text-[10px] font-black text-oled-gray-400">
+						<div className="text-[10px] font-black text-surface-on-variant/60">
 							KM/L
 						</div>
 					</div>
 				</div>
 
 				{fuelLogCount < 2 && fuelLogCount > 0 && (
-					<div className="text-[8px] text-white/20 font-bold uppercase tracking-widest max-w-[100px] text-right mb-1 leading-tight">
+					<div className="text-[8px] text-surface-on-variant/50 font-bold uppercase tracking-widest max-w-[100px] text-right mb-1 leading-tight">
 						Log one more refuel to see average
 					</div>
 				)}
