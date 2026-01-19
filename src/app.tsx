@@ -69,7 +69,7 @@ export function App() {
 	}).length;
 
 	return (
-		<div className="min-h-screen bg-oled-black text-white font-dashboard selection:bg-pulsar-blue/30 p-4 pb-32">
+		<div className="min-h-screen bg-surface text-surface-on font-sans selection:bg-primary/30 p-4 pb-32">
 			<AnimatePresence>
 				{!hasSeenWelcome && (
 					<WelcomeOverlay onComplete={() => setHasSeenWelcome(true)} />
@@ -114,10 +114,10 @@ export function App() {
 
 								<div className="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-6">
 									{/* Battery Health */}
-									<section className="col-span-1 md:col-span-2 relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5">
+									<section className="col-span-1 md:col-span-2 relative bg-surface-container-low rounded-[2.5rem] p-6 border border-outline-variant/10">
 										<div className="flex justify-between items-center mb-3">
-											<span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2">
-												<TrendingDown className="w-3.5 h-3.5 text-warning-orange" />{" "}
+											<span className="text-[10px] text-surface-on-variant uppercase tracking-[0.2em] font-black flex items-center gap-2 opacity-80">
+												<TrendingDown className="w-3.5 h-3.5 text-error" />{" "}
 												Battery
 											</span>
 											<InfoTooltip
@@ -129,23 +129,23 @@ export function App() {
 											className={cn(
 												"text-3xl font-bold tracking-tighter mt-1",
 												batteryHealth > 50
-													? "text-pulsar-blue text-glow-pulsar"
-													: "text-warning-orange text-glow-warning",
+													? "text-primary text-glow-pulsar"
+													: "text-error text-glow-warning",
 											)}
 										>
 											{batteryHealth}%
 										</div>
 										<LiquidBattery health={batteryHealth} className="mt-3" />
-										<div className="text-[9px] text-white/20 font-bold mt-2 uppercase tracking-tight">
+										<div className="text-[9px] text-surface-on-variant/50 font-bold mt-2 uppercase tracking-tight">
 											{batteryMessage}
 										</div>
 									</section>
 
 									{/* Run Rate */}
-									<section className="col-span-1 md:col-span-2 relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5">
+									<section className="col-span-1 md:col-span-2 relative bg-surface-container-low rounded-[2.5rem] p-6 border border-outline-variant/10">
 										<div className="flex justify-between items-center mb-3">
-											<span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2">
-												<ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" />{" "}
+											<span className="text-[10px] text-surface-on-variant uppercase tracking-[0.2em] font-black flex items-center gap-2 opacity-80">
+												<ChevronRight className="w-3.5 h-3.5 text-primary" />{" "}
 												Run-Rate
 											</span>
 											<InfoTooltip
@@ -153,13 +153,13 @@ export function App() {
 												content="The average daily distance required to hit your target odometer by the service deadline."
 											/>
 										</div>
-										<div className="text-3xl font-bold tracking-tighter text-pulsar-blue text-glow-pulsar">
+										<div className="text-3xl font-bold tracking-tighter text-primary text-glow-pulsar">
 											{dailyTarget > 0 ? dailyTarget.toFixed(1) : "0"}{" "}
 											<span className="text-sm font-medium opacity-40">
 												KM/D
 											</span>
 										</div>
-										<div className="text-[9px] text-white/20 font-bold mt-2 uppercase tracking-tight">
+										<div className="text-[9px] text-surface-on-variant/50 font-bold mt-2 uppercase tracking-tight">
 											Target: {daysRemaining} days left
 										</div>
 									</section>
