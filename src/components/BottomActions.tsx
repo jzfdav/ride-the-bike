@@ -1,5 +1,14 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Bike, CircleDot, Fuel, Plus, Settings, X } from "lucide-react";
+import {
+	Bike,
+	CircleDot,
+	Fuel,
+	LayoutGrid,
+	LineChart,
+	Plus,
+	Settings,
+	X,
+} from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../store";
 import { cn } from "../utils";
@@ -8,8 +17,12 @@ type FormType = "ride" | "fuel" | "bars" | "tyre" | null;
 
 export function BottomActions({
 	onOpenSettings,
+	showInsights,
+	onToggleInsights,
 }: {
 	onOpenSettings: () => void;
+	showInsights: boolean;
+	onToggleInsights: () => void;
 }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [activeForm, setActiveForm] = useState<FormType>(null);
@@ -173,116 +186,127 @@ export function BottomActions({
 								))}
 						</motion.div>
 					)}
+				</AnimatePresence>
 
-					{activeForm && (
-						<motion.div
-							initial={{ opacity: 0, y: 100 }}
-							animate={{ opacity: 1, y: 0 }}
-							exit={{ opacity: 0, y: 100 }}
-							className="absolute bottom-0 left-0 right-0 bg-oled-gray-100 p-6 rounded-3xl border border-pulsar-blue/30 shadow-2xl"
-						>
-							<div className="flex justify-between items-center mb-4">
-								<h3 className="text-xs font-bold uppercase tracking-widest text-oled-gray-400">
-									Log {activeForm}
-								</h3>
-								<button onClick={closeForm}>
-									<X className="w-5 h-5 text-oled-gray-400" />
-								</button>
-							</div>
+				{activeForm && (
+					<motion.div
+						initial={{ opacity: 0, y: 100 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 100 }}
+						className="absolute bottom-0 left-0 right-0 bg-oled-gray-100 p-6 rounded-3xl border border-pulsar-blue/30 shadow-2xl"
+					>
+						<div className="flex justify-between items-center mb-4">
+							<h3 className="text-xs font-bold uppercase tracking-widest text-oled-gray-400">
+								Log {activeForm}
+							</h3>
+							<button onClick={closeForm}>
+								<X className="w-5 h-5 text-oled-gray-400" />
+							</button>
+						</div>
 
-							<div className="space-y-4">
-								{activeForm === "fuel" && (
-									<div className="relative">
-										<input
-											type="number"
-											value={val3}
-											onChange={(e) => onFuelValChange("price", e.target.value)}
-											className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-amber-500 focus:outline-none focus:border-amber-500/50"
-											placeholder="Price per Litre"
-											min={0}
-										/>
-										<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
-											₹/L
-										</span>
-									</div>
-								)}
-
+						<div className="space-y-4">
+							{activeForm === "fuel" && (
 								<div className="relative">
 									<input
 										type="number"
-										value={val1}
+										value={val3}
+										onChange={(e) => onFuelValChange("price", e.target.value)}
+										className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-amber-500 focus:outline-none focus:border-amber-500/50"
+										placeholder="Price per Litre"
+										min={0}
+									/>
+									<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
+										₹/L
+									</span>
+								</div>
+							)}
+
+							<div className="relative">
+								<input
+									type="number"
+									value={val1}
+									onChange={(e) =>
+										activeForm === "fuel"
+											? onFuelValChange("liters", e.target.value)
+											: setVal1(e.target.value)
+									}
+									className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
+									placeholder={
+										activeForm === "ride"
+											? "Distance"
+											: activeForm === "fuel"
+												? "Liters"
+												: activeForm === "bars"
+													? "Remaining Bars (0-12)"
+													: "Front PSI"
+									}
+									autoFocus
+									min={0}
+									max={activeForm === "bars" ? 12 : undefined}
+								/>
+								<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
+									{activeForm === "ride"
+										? "KM"
+										: activeForm === "fuel"
+											? "L"
+											: activeForm === "bars"
+												? "/12"
+												: "F"}
+								</span>
+							</div>
+
+							{(activeForm === "fuel" || activeForm === "tyre") && (
+								<div className="relative">
+									<input
+										type="number"
+										value={val2}
 										onChange={(e) =>
 											activeForm === "fuel"
-												? onFuelValChange("liters", e.target.value)
-												: setVal1(e.target.value)
+												? onFuelValChange("cost", e.target.value)
+												: setVal2(e.target.value)
 										}
 										className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
 										placeholder={
-											activeForm === "ride"
-												? "Distance"
-												: activeForm === "fuel"
-													? "Liters"
-													: activeForm === "bars"
-														? "Remaining Bars (0-12)"
-														: "Front PSI"
+											activeForm === "fuel" ? "Total Cost" : "Rear PSI"
 										}
-										autoFocus
-										min={0}
-										max={activeForm === "bars" ? 12 : undefined}
 									/>
 									<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
-										{activeForm === "ride"
-											? "KM"
-											: activeForm === "fuel"
-												? "L"
-												: activeForm === "bars"
-													? "/12"
-													: "F"}
+										{activeForm === "fuel" ? "₹" : "R"}
 									</span>
 								</div>
+							)}
 
-								{(activeForm === "fuel" || activeForm === "tyre") && (
-									<div className="relative">
-										<input
-											type="number"
-											value={val2}
-											onChange={(e) =>
-												activeForm === "fuel"
-													? onFuelValChange("cost", e.target.value)
-													: setVal2(e.target.value)
-											}
-											className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
-											placeholder={
-												activeForm === "fuel" ? "Total Cost" : "Rear PSI"
-											}
-										/>
-										<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
-											{activeForm === "fuel" ? "₹" : "R"}
-										</span>
-									</div>
-								)}
-
-								<button
-									onClick={handleSubmit}
-									className="w-full bg-pulsar-blue text-white font-bold py-4 rounded-2xl shadow-lg"
-								>
-									CONFIRM
-								</button>
-							</div>
-						</motion.div>
-					)}
-				</AnimatePresence>
+							<button
+								onClick={handleSubmit}
+								className="w-full bg-pulsar-blue text-white font-bold py-4 rounded-2xl shadow-lg"
+							>
+								CONFIRM
+							</button>
+						</div>
+					</motion.div>
+				)}
 
 				{!activeForm && (
 					<div className="flex items-center gap-4">
+						{/* Left: Stats/Insights Button */}
 						<motion.button
 							whileTap={{ scale: 0.95 }}
-							onClick={onOpenSettings}
-							className="w-16 h-16 rounded-2xl bg-oled-gray-100 flex items-center justify-center border border-white/10 shadow-lg"
+							onClick={onToggleInsights}
+							className={cn(
+								"w-16 h-16 rounded-2xl flex items-center justify-center border shadow-lg transition-colors",
+								showInsights
+									? "bg-pulsar-blue border-pulsar-blue text-white"
+									: "bg-oled-gray-100 border-white/10 text-white/40",
+							)}
 						>
-							<Settings className="w-6 h-6 text-white/40" />
+							{showInsights ? (
+								<LayoutGrid className="w-6 h-6" />
+							) : (
+								<LineChart className="w-6 h-6" />
+							)}
 						</motion.button>
 
+						{/* Center: Main Action Button */}
 						<motion.button
 							whileTap={{ scale: 0.95 }}
 							onClick={() => setIsOpen(!isOpen)}
@@ -304,6 +328,15 @@ export function BottomActions({
 									)}
 								/>
 							</motion.div>
+						</motion.button>
+
+						{/* Right: Settings Button */}
+						<motion.button
+							whileTap={{ scale: 0.95 }}
+							onClick={onOpenSettings}
+							className="w-16 h-16 rounded-2xl bg-oled-gray-100 flex items-center justify-center border border-white/10 shadow-lg text-white/40"
+						>
+							<Settings className="w-6 h-6" />
 						</motion.button>
 					</div>
 				)}

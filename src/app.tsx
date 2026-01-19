@@ -186,7 +186,11 @@ export function App() {
 				</AnimatePresence>
 			</div>
 
-			<BottomActions onOpenSettings={() => setIsSettingsOpen(true)} />
+			<BottomActions
+				onOpenSettings={() => setIsSettingsOpen(true)}
+				showInsights={showInsights}
+				onToggleInsights={() => setShowInsights(!showInsights)}
+			/>
 
 			<SettingsModal
 				isOpen={isSettingsOpen}

@@ -21,7 +21,7 @@ export function MainMetricCard({
 				<Milestone className="w-48 h-48 text-white rotate-12" />
 			</div>
 
-			<div className="relative z-10 flex justify-between items-center mb-10">
+			<div className="relative z-10 flex justify-between items-center mb-4">
 				<span className="text-[10px] font-black uppercase tracking-[0.2em] text-oled-gray-400 flex items-center gap-2">
 					<div className="w-1.5 h-1.5 rounded-full bg-pulsar-blue" />
 					Active Odometer
@@ -47,7 +47,7 @@ export function MainMetricCard({
 				</div>
 			</div>
 
-			<div className="mt-10 space-y-4">
+			<div className="mt-6 space-y-4">
 				<div className="w-full bg-white/[0.03] rounded-full h-1.5 overflow-hidden">
 					<motion.div
 						initial={{ width: 0 }}

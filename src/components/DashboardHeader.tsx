@@ -32,26 +32,6 @@ export function DashboardHeader({
 						</div>
 					</div>
 				</div>
-
-				<div className="flex items-center gap-2">
-					<button
-						type="button"
-						onClick={onToggleInsights}
-						className={cn(
-							"w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300",
-							showInsights
-								? "bg-pulsar-blue text-black"
-								: "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white",
-						)}
-						title={showInsights ? "Show Cluster" : "Show Insights"}
-					>
-						{showInsights ? (
-							<LayoutGrid className="w-5 h-5" />
-						) : (
-							<LineChart className="w-5 h-5" />
-						)}
-					</button>
-				</div>
 			</div>
 		</header>
 	);
