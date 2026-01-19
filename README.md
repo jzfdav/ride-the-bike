@@ -21,7 +21,7 @@ See `/docs/00-vision.md` for the full project vision.
 ## Tech Stack
 
 - **Framework:** React 18 (with Vite)
-- **Styling:** Tailwind CSS (OLED True Black theme)
+- **Styling:** Tailwind CSS (Material 3 Expressive Design)
 - **Deployment:** GitHub Pages
 - **State:** LocalStorage (Offline-first approach)
 - **PWA:** vite-plugin-pwa
@@ -72,7 +72,7 @@ ride-the-bike/
 ├── docs/                # Project documentation
 ├── ai/                  # AI context and rules
 ├── vite.config.js       # Vite configuration
-├── tailwind.config.js   # Tailwind with OLED theme
+├── tailwind.config.js   # Tailwind with M3 Tokens
 └── package.json
 ```
 
@@ -88,4 +88,4 @@ ride-the-bike/
 - **Pre-ride Checklist:** Essential safety gear and bike health checks before every ride.
 - **Configurable Dashboard:** Toggle visibility for Fuel, Tyre, Lube, and Checklist modules in Settings.
 - **Success Indicators:** Real-time visual feedback (toasts) for all logging actions.
-- **OLED Theme:** True black background with Pulsar Neon Blue accents for maximum battery efficiency and aesthetics.
+- **Material 3 Theme:** Expressive Dark theme with dynamic semantic colors (`primary`, `tertiary`, `error`) for optimal readability and aesthetics.
