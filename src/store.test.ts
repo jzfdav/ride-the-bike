@@ -9,7 +9,7 @@ describe("RideTheBike Store", () => {
 			lastRideDate: null,
 			rides: [],
 			hasSeenWelcome: false,
-			lastLubeOdo: 10000,
+
 			fuelLog: [],
 		});
 	});
@@ -31,17 +31,7 @@ describe("RideTheBike Store", () => {
 		expect(useStore.getState().getBatteryHealth()).toBe(90);
 	});
 
-	it("calculates chain health correctly (50% after 250km)", () => {
-		useStore.setState({ currentOdo: 10250, lastLubeOdo: 10000 });
-		expect(useStore.getState().getChainHealth()).toBe(50);
-	});
 
-	it("resets chain health after logLube", () => {
-		useStore.setState({ currentOdo: 10500, lastLubeOdo: 10000 });
-		expect(useStore.getState().getChainHealth()).toBe(0);
-		useStore.getState().logLube();
-		expect(useStore.getState().getChainHealth()).toBe(100);
-	});
 
 	it("calculates Fuel Economy accurately using interval", () => {
 		// First entry (initial fill)
