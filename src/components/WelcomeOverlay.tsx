@@ -1,12 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	ArrowRight,
-	Bike,
-	ShieldCheck,
-	Target,
-	TrendingUp,
-	Zap,
-} from "lucide-react";
+import { ArrowRight, Bike, Target, TrendingUp, Zap } from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../store";
 
@@ -72,11 +65,7 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 						text: "Battery health decays 5% daily",
 						color: "text-pulsar-blue",
 					},
-					{
-						icon: ShieldCheck,
-						text: "Track chain lube & service",
-						color: "text-pulsar-blue",
-					},
+
 					{
 						icon: TrendingUp,
 						text: "Daily 'Run-Rate' target",

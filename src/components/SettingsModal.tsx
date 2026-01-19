@@ -1,14 +1,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	Activity,
-	Calendar,
-	Droplets,
-	Fuel,
-	Save,
-	Target,
-	X,
-} from "lucide-react";
+import { Activity, Calendar, Fuel, Save, Target, X } from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../store";
 import { cn } from "../utils";
@@ -27,7 +19,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 		baseOdo: number;
 		targetOdo: number;
 		bikeModel: string;
-		showLubeTracker: boolean;
+
 		showFuelTracker: boolean;
 		showTyreTracker: boolean;
 		showChecklist: boolean;
@@ -37,7 +29,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 		store.setBaseOdo(data.baseOdo);
 		store.setTargetOdo(data.targetOdo);
 		store.setBikeModel(data.bikeModel);
-		store.setShowLubeTracker(data.showLubeTracker);
+
 		store.setShowFuelTracker(data.showFuelTracker);
 		store.setShowTyreTracker(data.showTyreTracker);
 		store.setShowChecklist(data.showChecklist);
@@ -55,7 +47,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 				baseOdo: store.baseOdo,
 				targetOdo: store.targetOdo,
 				bikeModel: store.bikeModel,
-				showLubeTracker: store.showLubeTracker,
+
 				showFuelTracker: store.showFuelTracker,
 				showTyreTracker: store.showTyreTracker,
 				showChecklist: store.showChecklist,
@@ -88,7 +80,7 @@ export function SettingsModalUI({
 		initialData.targetOdo.toString(),
 	);
 	const [tempModel, setTempModel] = useState(initialData.bikeModel);
-	const [tempShowLube, setTempShowLube] = useState(initialData.showLubeTracker);
+
 	const [tempShowFuel, setTempShowFuel] = useState(initialData.showFuelTracker);
 	const [tempShowTyre, setTempShowTyre] = useState(initialData.showTyreTracker);
 	const [tempShowChecklist, setTempShowChecklist] = useState(
@@ -102,7 +94,7 @@ export function SettingsModalUI({
 			baseOdo: parseFloat(tempBase),
 			targetOdo: parseFloat(tempTarget),
 			bikeModel: tempModel,
-			showLubeTracker: tempShowLube,
+
 			showFuelTracker: tempShowFuel,
 			showTyreTracker: tempShowTyre,
 			showChecklist: tempShowChecklist,
@@ -232,38 +224,14 @@ export function SettingsModalUI({
 
 										<CollapsibleSection
 											title="Dashboard Widgets"
-											icon={<Droplets className="w-3.5 h-3.5" />}
+											icon={<Activity className="w-3.5 h-3.5" />}
 											peek={`${
-												[
-													tempShowLube,
-													tempShowFuel,
-													tempShowTyre,
-													tempShowChecklist,
-												].filter(Boolean).length
+												[tempShowFuel, tempShowTyre, tempShowChecklist].filter(
+													Boolean,
+												).length
 											} Active`}
 										>
 											<div className="space-y-3 pt-2">
-												{/* Lube Tracker */}
-												<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
-													<div className="flex items-center gap-3">
-														<div className="p-2 bg-pulsar-blue/10 rounded-xl">
-															<Droplets className="w-5 h-5 text-pulsar-blue" />
-														</div>
-														<div>
-															<div className="text-xs font-bold text-white">
-																Chain Lube
-															</div>
-															<div className="text-[9px] text-oled-gray-400 font-medium">
-																Maintenance alerts
-															</div>
-														</div>
-													</div>
-													<ToggleSwitch
-														enabled={tempShowLube}
-														onChange={setTempShowLube}
-													/>
-												</div>
-
 												{/* Fuel Tracker */}
 												<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
 													<div className="flex items-center gap-3">

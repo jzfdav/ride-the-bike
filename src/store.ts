@@ -6,7 +6,6 @@ import { immer } from "zustand/middleware/immer";
 // --- Constants ---
 
 export const MAINTENANCE_CONFIG = {
-	CHAIN_LUBE_THRESHOLD: 500, // KM
 	BATTERY_DRAIN_PER_DAY: 5, // %
 	FUEL_LOG_LIMIT: 50,
 	RIDE_LOG_LIMIT: 50,
@@ -40,7 +39,6 @@ export const BikeStoreStateSchema = z.object({
 	lastRideDate: z.string().nullable(),
 	rides: z.array(RideSchema),
 	hasSeenWelcome: z.boolean(),
-	lastLubeOdo: z.number(),
 	fuelLog: z.array(FuelEntrySchema),
 	fuelBars: z.number().min(0).max(12),
 	tyrePressure: z.object({
@@ -55,7 +53,6 @@ export const BikeStoreStateSchema = z.object({
 			checked: z.boolean(),
 		}),
 	),
-	showLubeTracker: z.boolean(),
 	showFuelTracker: z.boolean(),
 	showTyreTracker: z.boolean(),
 	showChecklist: z.boolean(),
@@ -71,7 +68,6 @@ export const BikeStoreStateSchema = z.object({
 export type BikeStoreState = z.infer<typeof BikeStoreStateSchema>;
 
 export interface BikeStoreActions {
-	setShowLubeTracker: (show: boolean) => void;
 	setShowFuelTracker: (show: boolean) => void;
 	setShowTyreTracker: (show: boolean) => void;
 	setShowChecklist: (show: boolean) => void;
@@ -84,7 +80,6 @@ export interface BikeStoreActions {
 	setServiceDueDate: (date: string | null) => void;
 	setHasSeenWelcome: (val: boolean) => void;
 	logRide: (distance: number) => void;
-	logLube: () => void;
 	logFuel: (liters: number, cost: number) => void;
 	setFuelBars: (bars: number) => void;
 	setTyrePressure: (front: number | null, rear: number | null) => void;
@@ -95,7 +90,6 @@ export interface BikeStoreActions {
 export interface BikeStoreSelectors {
 	getBatteryHealth: () => number;
 	getBatteryMessage: () => string;
-	getChainHealth: () => number;
 	getDaysRemaining: () => number;
 	getAverageFE: () => string | number;
 }
@@ -114,7 +108,6 @@ export const useStore = create<BikeStore>()(
 			lastRideDate: null,
 			rides: [],
 			hasSeenWelcome: false,
-			lastLubeOdo: 10000,
 			fuelLog: [],
 			fuelBars: 12,
 			tyrePressure: {
@@ -128,7 +121,6 @@ export const useStore = create<BikeStore>()(
 				{ id: "chain", text: "Chain Tension & Slack", checked: false },
 				{ id: "lights", text: "Headlight & Indicators", checked: false },
 			],
-			showLubeTracker: true,
 			showFuelTracker: true,
 			showTyreTracker: true,
 			showChecklist: true,
@@ -185,12 +177,6 @@ export const useStore = create<BikeStore>()(
 				});
 			},
 
-			logLube: () => {
-				set((state) => {
-					state.lastLubeOdo = state.currentOdo;
-				});
-			},
-
 			logFuel: (liters, cost) => {
 				const safeLiters = Math.max(0.1, liters);
 				const safeCost = Math.max(0, cost);
@@ -239,10 +225,6 @@ export const useStore = create<BikeStore>()(
 					}
 				}),
 
-			setShowLubeTracker: (show) =>
-				set((state) => {
-					state.showLubeTracker = show;
-				}),
 			setShowFuelTracker: (show) =>
 				set((state) => {
 					state.showFuelTracker = show;
@@ -295,18 +277,6 @@ export const useStore = create<BikeStore>()(
 				);
 				if (daysSince === 0) return "Optimal (Rode today)";
 				return `${daysSince} day${daysSince > 1 ? "s" : ""} idle`;
-			},
-
-			getChainHealth: () => {
-				const { currentOdo, lastLubeOdo } = get();
-				const kmSinceLube = currentOdo - lastLubeOdo;
-				return Math.max(
-					0,
-					Math.min(
-						100,
-						100 - (kmSinceLube / MAINTENANCE_CONFIG.CHAIN_LUBE_THRESHOLD) * 100,
-					),
-				);
 			},
 
 			getDaysRemaining: () => {

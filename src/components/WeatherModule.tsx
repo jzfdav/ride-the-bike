@@ -142,12 +142,13 @@ export function WeatherModule() {
 						</span>
 						<div className="flex items-center gap-2">
 							<div
-								className={`px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest ${aqi.label === "Good"
+								className={`px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest ${
+									aqi.label === "Good"
 										? "bg-emerald-500/20 text-emerald-500"
 										: aqi.label === "Fair"
 											? "bg-amber-500/20 text-amber-500"
 											: "bg-red-500/20 text-red-500 animate-pulse"
-									}`}
+								}`}
 							>
 								{aqi.label}
 							</div>
@@ -169,12 +170,13 @@ export function WeatherModule() {
 						<motion.div
 							initial={{ width: 0 }}
 							animate={{ width: `${Math.min(100, (aqi.value || 0) / 2)}%` }}
-							className={`h-full rounded-full ${aqi.label === "Good"
+							className={`h-full rounded-full ${
+								aqi.label === "Good"
 									? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"
 									: aqi.label === "Fair"
 										? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]"
 										: "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]"
-								}`}
+							}`}
 						/>
 					</div>
 				</section>

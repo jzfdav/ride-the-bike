@@ -1,18 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
-import {
-	Bike,
-	CircleDot,
-	Droplets,
-	Fuel,
-	Plus,
-	Settings,
-	X,
-} from "lucide-react";
+import { Bike, CircleDot, Fuel, Plus, Settings, X } from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../store";
 import { cn } from "../utils";
 
-type FormType = "ride" | "fuel" | "lube" | "bars" | "tyre" | null;
+type FormType = "ride" | "fuel" | "bars" | "tyre" | null;
 
 export function BottomActions({
 	onOpenSettings,
@@ -29,10 +21,8 @@ export function BottomActions({
 	const {
 		logRide,
 		logFuel,
-		logLube,
 		setFuelBars,
 		setTyrePressure,
-		showLubeTracker,
 		lastFuelPrice,
 		setLastFuelPrice,
 	} = useStore();
@@ -43,12 +33,6 @@ export function BottomActions({
 	};
 
 	const handleAction = (type: FormType) => {
-		if (type === "lube") {
-			logLube();
-			triggerSuccess("Chain Lube Logged!");
-			setIsOpen(false);
-			return;
-		}
 		if (type === "fuel" && lastFuelPrice) {
 			setVal3(lastFuelPrice.toString());
 		}
@@ -169,13 +153,6 @@ export function BottomActions({
 									icon: CircleDot,
 									color: "bg-rose-500",
 									show: true,
-								},
-								{
-									id: "lube" as const,
-									label: "Lube",
-									icon: Droplets,
-									color: "bg-indigo-600",
-									show: showLubeTracker,
 								},
 							]
 								.filter((btn) => btn.show)
