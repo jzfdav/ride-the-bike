@@ -11,7 +11,7 @@ import { InfoTooltip } from "./components/InfoTooltip";
 import { InsightsModule } from "./components/InsightsModule";
 import { LiquidBattery } from "./components/LiquidBattery";
 import { MainMetricCard } from "./components/MainMetricCard";
-import { MaintenanceModule } from "./components/MaintenanceModule";
+
 import { SettingsModal } from "./components/SettingsModal";
 import { TyreModule } from "./components/TyreModule";
 import { WeatherModule } from "./components/WeatherModule";
@@ -175,7 +175,6 @@ export function App() {
 								<TyreModule />
 							</div>
 
-							<MaintenanceModule />
 							<ChecklistModule />
 
 							<ActivityHistory
