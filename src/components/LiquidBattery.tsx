@@ -7,12 +7,17 @@ interface LiquidBatteryProps {
 }
 
 export function LiquidBattery({ health, className }: LiquidBatteryProps) {
-	const color = health > 50 ? "#0052cc" : health > 20 ? "#ff6b35" : "#ef4444";
+	const colorClass =
+		health > 50
+			? "bg-primary shadow-[0_0_15px_rgba(var(--primary),0.6)]"
+			: health > 20
+				? "bg-tertiary shadow-[0_0_15px_rgba(var(--tertiary),0.6)]"
+				: "bg-error shadow-[0_0_15px_rgba(var(--error),0.6)]";
 
 	return (
 		<div
 			className={cn(
-				"relative w-full h-1.5 bg-white/5 rounded-full overflow-hidden shadow-inner",
+				"relative w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden shadow-inner",
 				className,
 			)}
 		>
@@ -21,8 +26,7 @@ export function LiquidBattery({ health, className }: LiquidBatteryProps) {
 				initial={{ width: 0 }}
 				animate={{ width: `${health}%` }}
 				transition={{ duration: 1.5, ease: "circOut" }}
-				style={{ backgroundColor: color }}
-				className="h-full rounded-full relative"
+				className={cn("h-full rounded-full relative", colorClass)}
 			>
 				{/* Liquid wave effect */}
 				<motion.div
@@ -35,7 +39,7 @@ export function LiquidBattery({ health, className }: LiquidBatteryProps) {
 						repeat: Infinity,
 						ease: "easeInOut",
 					}}
-					className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
+					className="absolute inset-0 bg-gradient-to-r from-transparent via-surface-on/40 to-transparent skew-x-12"
 				/>
 
 				{/* Particle glow */}
@@ -48,10 +52,7 @@ export function LiquidBattery({ health, className }: LiquidBatteryProps) {
 						repeat: Infinity,
 						ease: "easeInOut",
 					}}
-					style={{
-						boxShadow: `0 0 15px ${color}`,
-					}}
-					className="absolute right-0 top-0 bottom-0 w-1 rounded-full"
+					className="absolute right-0 top-0 bottom-0 w-1 rounded-full bg-surface-on"
 				/>
 			</motion.div>
 		</div>

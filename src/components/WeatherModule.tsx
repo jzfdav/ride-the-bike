@@ -6,24 +6,28 @@ import { InfoTooltip } from "./InfoTooltip";
 
 const getWeatherInfo = (code: number | null) => {
 	if (code === null)
-		return { text: "Loading...", icon: Sun, color: "text-pulsar-blue" };
+		return { text: "Loading...", icon: Sun, color: "text-primary" };
 
 	// WMO Weather interpretation codes (WW)
 	if (code === 0)
-		return { text: "Clear Sky", icon: Sun, color: "text-amber-400" };
+		return { text: "Clear Sky", icon: Sun, color: "text-tertiary" };
 	if (code <= 3)
-		return { text: "Partly Cloudy", icon: Cloud, color: "text-oled-gray-400" };
+		return {
+			text: "Partly Cloudy",
+			icon: Cloud,
+			color: "text-surface-on-variant",
+		};
 	if (code <= 48)
-		return { text: "Foggy", icon: Cloud, color: "text-oled-gray-500" };
+		return { text: "Foggy", icon: Cloud, color: "text-surface-on-variant" };
 	if (code <= 55)
-		return { text: "Drizzle", icon: CloudRain, color: "text-pulsar-blue" };
+		return { text: "Drizzle", icon: CloudRain, color: "text-primary" };
 	if (code <= 65)
-		return { text: "Raining", icon: CloudRain, color: "text-pulsar-blue" };
+		return { text: "Raining", icon: CloudRain, color: "text-primary" };
 	if (code <= 77)
-		return { text: "Snowing", icon: CloudRain, color: "text-white" };
+		return { text: "Snowing", icon: CloudRain, color: "text-surface-on" };
 	if (code <= 82)
-		return { text: "Rain Showers", icon: CloudRain, color: "text-pulsar-blue" };
-	return { text: "Cloudy", icon: Cloud, color: "text-oled-gray-400" };
+		return { text: "Rain Showers", icon: CloudRain, color: "text-primary" };
+	return { text: "Cloudy", icon: Cloud, color: "text-surface-on-variant" };
 };
 
 export function WeatherModule() {
@@ -80,12 +84,12 @@ export function WeatherModule() {
 		<div className="space-y-4">
 			<div className="flex items-center justify-between px-2">
 				<div className="flex items-center gap-2">
-					<div className="w-2 h-2 rounded-full bg-pulsar-blue animate-pulse shadow-[0_0_8px_rgba(0,229,255,0.4)]" />
-					<h2 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] flex items-center gap-2">
-						Riding in <span className="text-white">{location.city}</span>
+					<div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(var(--primary),0.4)]" />
+					<h2 className="text-[10px] font-black text-surface-on-variant uppercase tracking-[0.2em] flex items-center gap-2">
+						Riding in <span className="text-surface-on">{location.city}</span>
 					</h2>
 				</div>
-				<span className="text-[8px] text-white/20 font-bold tracking-widest uppercase">
+				<span className="text-[8px] text-surface-on-variant/50 font-bold tracking-widest uppercase">
 					Updated{" "}
 					{new Date(lastUpdated).toLocaleTimeString([], {
 						hour: "2-digit",
@@ -95,13 +99,13 @@ export function WeatherModule() {
 			</div>
 
 			<div className="grid grid-cols-2 gap-4">
-				<section className="relative bg-oled-gray-50/50 rounded-2xl p-4 border border-white/5 backdrop-blur-sm">
+				<section className="relative bg-surface-container-low rounded-[2rem] p-4 shadow-sm border border-outline-base/10">
 					<div className="flex justify-between items-center mb-4">
-						<span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-1.5">
-							<Thermometer className="w-3 h-3 text-pulsar-blue" /> Condition
+						<span className="text-[10px] text-surface-on-variant uppercase tracking-[0.2em] font-black flex items-center gap-1.5 opacity-80">
+							<Thermometer className="w-3 h-3 text-primary" /> Condition
 						</span>
 						<div className="flex items-center gap-3">
-							<span className="text-[10px] font-bold px-2 py-0.5 rounded-full border border-pulsar-blue/30 text-pulsar-blue bg-pulsar-blue/5">
+							<span className="text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/30 text-primary bg-primary/5">
 								READY
 							</span>
 							<InfoTooltip
@@ -112,22 +116,22 @@ export function WeatherModule() {
 					</div>
 
 					<div className="flex items-center gap-3">
-						<Icon className={`w-8 h-8 ${info.color}`} />
+						<Icon className={cn("w-8 h-8", info.color)} />
 						<div className="space-y-0.5">
-							<div className="text-lg font-black tracking-tight text-white leading-none">
+							<div className="text-lg font-black tracking-tight text-surface-on leading-none">
 								{weather.temp}°
 								<span className="text-[10px] opacity-30 ml-0.5">C</span>
 							</div>
-							<div className="text-[9px] font-bold text-oled-gray-400 uppercase tracking-tight truncate max-w-[120px]">
+							<div className="text-[9px] font-bold text-surface-on-variant uppercase tracking-tight truncate max-w-[120px]">
 								{info.text}
 							</div>
 						</div>
 					</div>
 
-					<div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+					<div className="mt-4 pt-3 border-t border-outline-variant/10 flex items-center justify-between">
 						<div className="flex items-center gap-1">
-							<CloudRain className="w-2.5 h-2.5 text-pulsar-blue/60" />
-							<span className="text-[9px] font-black text-white/40">
+							<CloudRain className="w-2.5 h-2.5 text-primary/60" />
+							<span className="text-[9px] font-black text-surface-on-variant/40">
 								{weather.rainProb}%{" "}
 								<span className="text-[8px] opacity-50 ml-0.5">RAIN</span>
 							</span>
@@ -135,20 +139,21 @@ export function WeatherModule() {
 					</div>
 				</section>
 
-				<section className="relative bg-oled-gray-50/50 rounded-2xl p-4 border border-white/5 backdrop-blur-sm">
+				<section className="relative bg-surface-container-low rounded-[2rem] p-4 shadow-sm border border-outline-base/10">
 					<div className="flex justify-between items-center mb-4">
-						<span className="text-[10px] text-oled-gray-400 uppercase tracking-widest font-black flex items-center gap-1.5">
-							<Wind className="w-3.5 h-3.5 text-pulsar-blue" /> Air Quality
+						<span className="text-[10px] text-surface-on-variant uppercase tracking-[0.2em] font-black flex items-center gap-1.5 opacity-80">
+							<Wind className="w-3.5 h-3.5 text-primary" /> Air Quality
 						</span>
 						<div className="flex items-center gap-2">
 							<div
-								className={`px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest ${
+								className={cn(
+									"px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest",
 									aqi.label === "Good"
-										? "bg-emerald-500/20 text-emerald-500"
+										? "bg-emerald-500/10 text-emerald-500"
 										: aqi.label === "Fair"
-											? "bg-amber-500/20 text-amber-500"
-											: "bg-red-500/20 text-red-500 animate-pulse"
-								}`}
+											? "bg-amber-500/10 text-amber-500"
+											: "bg-error/10 text-error animate-pulse",
+								)}
 							>
 								{aqi.label}
 							</div>
@@ -159,24 +164,25 @@ export function WeatherModule() {
 						</div>
 					</div>
 
-					<div className="text-3xl font-black tracking-tighter text-glow-pulsar mb-1">
+					<div className="text-3xl font-black tracking-tighter text-surface-on mb-1">
 						{aqi.value}
 					</div>
-					<div className="text-[9px] font-bold text-oled-gray-400 uppercase tracking-widest">
+					<div className="text-[9px] font-bold text-surface-on-variant uppercase tracking-widest opacity-80">
 						AIR QUALITY INDEX
 					</div>
 
-					<div className="mt-3 overflow-hidden bg-white/5 rounded-full h-1 w-full">
+					<div className="mt-3 overflow-hidden bg-surface-container-highest rounded-full h-1 w-full">
 						<motion.div
 							initial={{ width: 0 }}
 							animate={{ width: `${Math.min(100, (aqi.value || 0) / 2)}%` }}
-							className={`h-full rounded-full ${
+							className={cn(
+								"h-full rounded-full",
 								aqi.label === "Good"
 									? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"
 									: aqi.label === "Fair"
 										? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]"
-										: "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]"
-							}`}
+										: "bg-error shadow-[0_0_8px_rgba(var(--error),0.4)]",
+							)}
 						/>
 					</div>
 				</section>
