@@ -1,24 +1,42 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight, TrendingDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ActivityHistory } from "./components/ActivityHistory";
 import { BottomActions } from "./components/BottomActions";
 import { ChecklistModule } from "./components/ChecklistModule";
 import { DashboardHeader } from "./components/DashboardHeader";
 import { FuelModule } from "./components/FuelModule";
-import { GlobalHelpModal } from "./components/GlobalHelpModal";
 import { InfoTooltip } from "./components/InfoTooltip";
-import { InsightsModule } from "./components/InsightsModule";
 import { LiquidBattery } from "./components/LiquidBattery";
+import { LoadingSkeleton } from "./components/LoadingSkeleton";
 import { MainMetricCard } from "./components/MainMetricCard";
-
-import { SettingsModal } from "./components/SettingsModal";
 import { TyreModule } from "./components/TyreModule";
 import { WeatherModule } from "./components/WeatherModule";
-import { WelcomeOverlay } from "./components/WelcomeOverlay";
 import { useStore } from "./store";
 import { applyTheme } from "./themes";
 import { cn } from "./utils";
+
+// Lazy load heavy components for better initial bundle size
+const SettingsModal = lazy(() =>
+	import("./components/SettingsModal").then((m) => ({
+		default: m.SettingsModal,
+	})),
+);
+const GlobalHelpModal = lazy(() =>
+	import("./components/GlobalHelpModal").then((m) => ({
+		default: m.GlobalHelpModal,
+	})),
+);
+const InsightsModule = lazy(() =>
+	import("./components/InsightsModule").then((m) => ({
+		default: m.InsightsModule,
+	})),
+);
+const WelcomeOverlay = lazy(() =>
+	import("./components/WelcomeOverlay").then((m) => ({
+		default: m.WelcomeOverlay,
+	})),
+);
 
 export function App() {
 	const {
@@ -79,7 +97,9 @@ export function App() {
 		<div className="h-[100dvh] overflow-y-auto bg-surface text-surface-on font-sans selection:bg-primary/30 p-4 pb-32">
 			<AnimatePresence>
 				{!hasSeenWelcome && (
-					<WelcomeOverlay onComplete={() => setHasSeenWelcome(true)} />
+					<Suspense fallback={<LoadingSkeleton variant="overlay" />}>
+						<WelcomeOverlay onComplete={() => setHasSeenWelcome(true)} />
+					</Suspense>
 				)}
 			</AnimatePresence>
 
@@ -98,7 +118,9 @@ export function App() {
 							exit={{ opacity: 0, x: -20 }}
 							transition={{ duration: 0.3 }}
 						>
-							<InsightsModule />
+							<Suspense fallback={<LoadingSkeleton variant="module" />}>
+								<InsightsModule />
+							</Suspense>
 						</motion.div>
 					) : (
 						<motion.div
@@ -199,12 +221,16 @@ export function App() {
 				onToggleInsights={() => setShowInsights(!showInsights)}
 			/>
 
-			<SettingsModal
-				isOpen={isSettingsOpen}
-				onClose={() => setIsSettingsOpen(false)}
-			/>
+			<Suspense fallback={<LoadingSkeleton variant="modal" />}>
+				<SettingsModal
+					isOpen={isSettingsOpen}
+					onClose={() => setIsSettingsOpen(false)}
+				/>
+			</Suspense>
 
-			<GlobalHelpModal />
+			<Suspense fallback={<LoadingSkeleton variant="modal" />}>
+				<GlobalHelpModal />
+			</Suspense>
 		</div>
 	);
 }
