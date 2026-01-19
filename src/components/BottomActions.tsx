@@ -143,28 +143,28 @@ export function BottomActions({
 									id: "ride" as const,
 									label: "Ride",
 									icon: Bike,
-									color: "bg-pulsar-blue",
+									color: "bg-primary",
 									show: true,
 								},
 								{
 									id: "fuel" as const,
 									label: "Refuel",
 									icon: Fuel,
-									color: "bg-amber-600",
+									color: "bg-tertiary",
 									show: true,
 								},
 								{
 									id: "bars" as const,
 									label: "Fuel Bars",
 									icon: Fuel,
-									color: "bg-emerald-600",
+									color: "bg-secondary",
 									show: true,
 								},
 								{
 									id: "tyre" as const,
 									label: "Tyre PSI",
 									icon: CircleDot,
-									color: "bg-rose-500",
+									color: "bg-error",
 									show: true,
 								},
 							]
@@ -175,11 +175,11 @@ export function BottomActions({
 										onClick={() => handleAction(btn.id)}
 										className={cn(
 											btn.color,
-											"p-4 rounded-2xl flex flex-col items-center gap-2 shadow-xl border border-white/10",
+											"p-4 rounded-2xl flex flex-col items-center gap-2 shadow-xl border border-white/10 text-white",
 										)}
 									>
-										<btn.icon className="w-6 h-6 text-white" />
-										<span className="text-[10px] font-bold uppercase tracking-wider text-white/90">
+										<btn.icon className="w-6 h-6" />
+										<span className="text-[10px] font-bold uppercase tracking-wider">
 											{btn.label}
 										</span>
 									</button>
@@ -193,14 +193,14 @@ export function BottomActions({
 						initial={{ opacity: 0, y: 100 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: 100 }}
-						className="absolute bottom-0 left-0 right-0 bg-oled-gray-100 p-6 rounded-3xl border border-pulsar-blue/30 shadow-2xl"
+						className="absolute bottom-0 left-0 right-0 bg-surface-container-high p-6 rounded-3xl border border-outline-base/20 shadow-2xl"
 					>
 						<div className="flex justify-between items-center mb-4">
-							<h3 className="text-xs font-bold uppercase tracking-widest text-oled-gray-400">
+							<h3 className="text-xs font-bold uppercase tracking-widest text-surface-on-variant">
 								Log {activeForm}
 							</h3>
 							<button onClick={closeForm}>
-								<X className="w-5 h-5 text-oled-gray-400" />
+								<X className="w-5 h-5 text-surface-on-variant hover:text-surface-on" />
 							</button>
 						</div>
 
@@ -211,11 +211,11 @@ export function BottomActions({
 										type="number"
 										value={val3}
 										onChange={(e) => onFuelValChange("price", e.target.value)}
-										className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-amber-500 focus:outline-none focus:border-amber-500/50"
+										className="w-full bg-surface-container-highest border-2 border-transparent focus:border-tertiary rounded-2xl px-5 py-4 text-2xl font-bold text-tertiary focus:outline-none transition-colors placeholder:text-surface-on-variant/30"
 										placeholder="Price per Litre"
 										min={0}
 									/>
-									<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
+									<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-surface-on-variant/50">
 										₹/L
 									</span>
 								</div>
@@ -230,7 +230,12 @@ export function BottomActions({
 											? onFuelValChange("liters", e.target.value)
 											: setVal1(e.target.value)
 									}
-									className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
+									className={cn(
+										"w-full bg-surface-container-highest border-2 border-transparent rounded-2xl px-5 py-4 text-2xl font-bold focus:outline-none transition-colors placeholder:text-surface-on-variant/30",
+										activeForm === "fuel"
+											? "text-tertiary focus:border-tertiary"
+											: "text-primary focus:border-primary",
+									)}
 									placeholder={
 										activeForm === "ride"
 											? "Distance"
@@ -244,7 +249,7 @@ export function BottomActions({
 									min={0}
 									max={activeForm === "bars" ? 12 : undefined}
 								/>
-								<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
+								<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-surface-on-variant/50">
 									{activeForm === "ride"
 										? "KM"
 										: activeForm === "fuel"
@@ -265,12 +270,17 @@ export function BottomActions({
 												? onFuelValChange("cost", e.target.value)
 												: setVal2(e.target.value)
 										}
-										className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-2xl font-bold text-pulsar-blue focus:outline-none focus:border-pulsar-blue/50"
+										className={cn(
+											"w-full bg-surface-container-highest border-2 border-transparent rounded-2xl px-5 py-4 text-2xl font-bold focus:outline-none transition-colors placeholder:text-surface-on-variant/30",
+											activeForm === "fuel"
+												? "text-tertiary focus:border-tertiary"
+												: "text-primary focus:border-primary",
+										)}
 										placeholder={
 											activeForm === "fuel" ? "Total Cost" : "Rear PSI"
 										}
 									/>
-									<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-white/20">
+									<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-surface-on-variant/50">
 										{activeForm === "fuel" ? "₹" : "R"}
 									</span>
 								</div>
@@ -278,7 +288,12 @@ export function BottomActions({
 
 							<button
 								onClick={handleSubmit}
-								className="w-full bg-pulsar-blue text-white font-bold py-4 rounded-2xl shadow-lg"
+								className={cn(
+									"w-full text-surface-on font-bold py-4 rounded-2xl shadow-lg transition-transform active:scale-[0.98]",
+									activeForm === "fuel"
+										? "bg-tertiary"
+										: "bg-primary text-primary-on",
+								)}
 							>
 								CONFIRM
 							</button>
@@ -289,7 +304,7 @@ export function BottomActions({
 				{!activeForm && (
 					<div className="relative">
 						{/* Blurred Backdrop Dock */}
-						<div className="absolute -inset-x-4 -inset-y-3 bg-oled-black/80 backdrop-blur-xl rounded-[2rem] border border-white/5 shadow-2xl z-0" />
+						<div className="absolute -inset-x-4 -inset-y-3 bg-surface-container/90 backdrop-blur-xl rounded-[2rem] border border-outline-base/10 shadow-2xl z-0" />
 
 						<div className="relative z-10 flex items-center gap-4">
 							{/* Left: Stats/Insights Button */}
@@ -297,10 +312,10 @@ export function BottomActions({
 								whileTap={{ scale: 0.95 }}
 								onClick={onToggleInsights}
 								className={cn(
-									"w-16 h-16 rounded-2xl flex items-center justify-center border shadow-lg transition-colors",
+									"w-16 h-16 rounded-2xl flex items-center justify-center border shadow-lg transition-colors duration-medium2",
 									showInsights
-										? "bg-pulsar-blue border-pulsar-blue text-white"
-										: "bg-oled-gray-100 border-white/10 text-white/40",
+										? "bg-primary border-primary text-primary-on"
+										: "bg-surface-container-high border-white/5 text-surface-on-variant hover:text-surface-on",
 								)}
 							>
 								{showInsights ? (
@@ -315,10 +330,10 @@ export function BottomActions({
 								whileTap={{ scale: 0.95 }}
 								onClick={() => setIsOpen(!isOpen)}
 								className={cn(
-									"flex-1 h-16 rounded-2xl flex items-center justify-center shadow-2xl border transition-all duration-300",
+									"flex-1 h-16 rounded-2xl flex items-center justify-center shadow-2xl border transition-all duration-medium2",
 									isOpen
-										? "bg-oled-gray-100 border-white/10"
-										: "bg-pulsar-blue border-pulsar-blue shadow-pulsar-blue/20",
+										? "bg-surface-container-high border-white/5"
+										: "bg-primary border-primary shadow-primary/20",
 								)}
 							>
 								<motion.div
@@ -328,7 +343,7 @@ export function BottomActions({
 									<Plus
 										className={cn(
 											"w-8 h-8",
-											isOpen ? "text-oled-gray-400" : "text-white",
+											isOpen ? "text-surface-on-variant" : "text-primary-on",
 										)}
 									/>
 								</motion.div>
@@ -338,7 +353,7 @@ export function BottomActions({
 							<motion.button
 								whileTap={{ scale: 0.95 }}
 								onClick={onOpenSettings}
-								className="w-16 h-16 rounded-2xl bg-oled-gray-100 flex items-center justify-center border border-white/10 shadow-lg text-white/40"
+								className="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center border border-white/5 shadow-lg text-surface-on-variant hover:text-surface-on transition-colors duration-medium2"
 							>
 								<Settings className="w-6 h-6" />
 							</motion.button>
@@ -353,15 +368,15 @@ export function BottomActions({
 							initial={{ opacity: 0, y: 20, scale: 0.9 }}
 							animate={{ opacity: 1, y: 0, scale: 1 }}
 							exit={{ opacity: 0, y: 20, scale: 0.9 }}
-							className="absolute bottom-20 left-4 right-4 bg-emerald-500 text-white font-black text-[10px] uppercase tracking-[0.2em] py-4 px-6 rounded-2xl shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-3 z-50 overflow-hidden"
+							className="absolute bottom-20 left-4 right-4 bg-primary text-primary-on font-black text-[10px] uppercase tracking-[0.2em] py-4 px-6 rounded-2xl shadow-[0_0_20px_rgba(var(--primary),0.4)] flex items-center justify-center gap-3 z-50 overflow-hidden"
 						>
 							<motion.div
 								initial={{ x: -20 }}
 								animate={{ x: 0 }}
-								className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"
+								className="w-1.5 h-1.5 rounded-full bg-primary-on animate-pulse"
 							/>
 							{showSuccess}
-							<div className="absolute bottom-0 left-0 h-1 bg-white/20 animate-progress" />
+							<div className="absolute bottom-0 left-0 h-1 bg-primary-on/20 animate-progress" />
 						</motion.div>
 					)}
 				</AnimatePresence>

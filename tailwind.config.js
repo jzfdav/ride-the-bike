@@ -42,7 +42,7 @@ export default {
 					dim: "#141218", // Surface Dim
 					bright: "#3B383E", // Surface Bright
 				},
-				outline: "#938F99",
+				"outline-base": "#938F99",
 				"outline-variant": "#49454F",
 
 				// Preserving existing functionality
