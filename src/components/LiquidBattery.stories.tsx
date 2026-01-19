@@ -8,7 +8,7 @@ const meta: Meta<typeof LiquidBattery> = {
 		layout: "centered",
 	},
 	decorators: [
-		(Story) => (
+		(Story: React.ComponentType) => (
 			<div className="w-[300px] p-8 bg-black">
 				<Story />
 			</div>

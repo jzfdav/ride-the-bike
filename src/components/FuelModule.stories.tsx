@@ -8,7 +8,7 @@ const meta: Meta<typeof FuelModuleUI> = {
 		layout: "centered",
 	},
 	decorators: [
-		(Story) => (
+		(Story: React.ComponentType) => (
 			<div className="w-[350px] p-8 bg-black">
 				<Story />
 			</div>
