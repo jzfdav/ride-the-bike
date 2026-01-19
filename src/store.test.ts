@@ -31,8 +31,6 @@ describe("RideTheBike Store", () => {
 		expect(useStore.getState().getBatteryHealth()).toBe(90);
 	});
 
-
-
 	it("calculates Fuel Economy accurately using interval", () => {
 		// First entry (initial fill)
 		useStore.getState().logFuel(10, 100);
