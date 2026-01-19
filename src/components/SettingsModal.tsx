@@ -4,6 +4,7 @@ import { Activity, Calendar, Fuel, Save, Target, X } from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../store";
 import { cn } from "../utils";
+import { ThemeSelector } from "./ThemeSelector";
 
 interface SettingsModalProps {
 	isOpen: boolean;
@@ -297,6 +298,9 @@ export function SettingsModalUI({
 											</div>
 										</CollapsibleSection>
 									</div>
+
+									{/* Theme Selector */}
+									<ThemeSelector />
 
 									<div className="pt-6 flex-shrink-0">
 										<button

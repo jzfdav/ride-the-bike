@@ -1,6 +1,14 @@
 @import "@fontsource/roboto-flex";
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
 
+/* Default Theme Variables (Blue) */
+:root {
+	--theme-primary: #b0c6ff;
+	--theme-primary-on: #002d6f;
+	--theme-primary-container: #004398;
+	--theme-primary-on-container: #d8e2ff;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -17,6 +17,7 @@ import { TyreModule } from "./components/TyreModule";
 import { WeatherModule } from "./components/WeatherModule";
 import { WelcomeOverlay } from "./components/WelcomeOverlay";
 import { useStore } from "./store";
+import { applyTheme } from "./themes";
 import { cn } from "./utils";
 
 export function App() {
@@ -31,6 +32,7 @@ export function App() {
 		getBatteryHealth,
 		getBatteryMessage,
 		getDaysRemaining,
+		theme,
 	} = useStore();
 
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -48,6 +50,11 @@ export function App() {
 		}, 60000);
 		return () => clearInterval(interval);
 	}, [getBatteryHealth, getBatteryMessage, lastRideDate]);
+
+	// Apply theme on mount and when theme changes
+	useEffect(() => {
+		applyTheme(theme);
+	}, [theme]);
 
 	const denominator = targetOdo - baseOdo;
 	const progress =

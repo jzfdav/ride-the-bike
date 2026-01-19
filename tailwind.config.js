@@ -4,12 +4,12 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				// M3 Semantic Colors (Ocean Blue Config)
+				// M3 Semantic Colors (Dynamic via CSS variables)
 				primary: {
-					DEFAULT: "#B0C6FF", // Blue 80
-					on: "#002D6F", // Blue 20
-					container: "#004398", // Blue 30
-					onContainer: "#D8E2FF", // Blue 90
+					DEFAULT: "var(--theme-primary, #B0C6FF)",
+					on: "var(--theme-primary-on, #002D6F)",
+					container: "var(--theme-primary-container, #004398)",
+					onContainer: "var(--theme-primary-on-container, #D8E2FF)",
 				},
 				secondary: {
 					DEFAULT: "#C0C6DC", // Blue/Gray 80

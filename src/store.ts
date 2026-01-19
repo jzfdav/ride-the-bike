@@ -63,6 +63,7 @@ export const BikeStoreStateSchema = z.object({
 			content: z.string(),
 		})
 		.nullable(),
+	theme: z.enum(["blue", "red", "green"]),
 });
 
 export type BikeStoreState = z.infer<typeof BikeStoreStateSchema>;
@@ -85,6 +86,7 @@ export interface BikeStoreActions {
 	setTyrePressure: (front: number | null, rear: number | null) => void;
 	toggleChecklistItem: (id: string) => void;
 	resetChecklist: () => void;
+	setTheme: (theme: "blue" | "red" | "green") => void;
 }
 
 export interface BikeStoreSelectors {
@@ -126,6 +128,7 @@ export const useStore = create<BikeStore>()(
 			showChecklist: true,
 			lastFuelPrice: null,
 			activeHelp: null,
+			theme: "blue",
 
 			// Actions
 			setActiveHelp: (help) =>
@@ -240,6 +243,10 @@ export const useStore = create<BikeStore>()(
 			setLastFuelPrice: (price) =>
 				set((state) => {
 					state.lastFuelPrice = price;
+				}),
+			setTheme: (theme) =>
+				set((state) => {
+					state.theme = theme;
 				}),
 
 			// Selectors
