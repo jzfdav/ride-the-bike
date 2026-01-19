@@ -76,7 +76,7 @@ export function App() {
 	}).length;
 
 	return (
-		<div className="min-h-screen bg-surface text-surface-on font-sans selection:bg-primary/30 p-4 pb-32">
+		<div className="h-[100dvh] overflow-y-auto bg-surface text-surface-on font-sans selection:bg-primary/30 p-4 pb-32">
 			<AnimatePresence>
 				{!hasSeenWelcome && (
 					<WelcomeOverlay onComplete={() => setHasSeenWelcome(true)} />
