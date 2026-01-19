@@ -4,46 +4,50 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				// M3 Semantic Colors
+				// M3 Semantic Colors (Ocean Blue Config)
 				primary: {
-					DEFAULT: "#D0BCFF", // Example Primary (Purple 80) for Dark Mode
-					on: "#381E72", // On Primary
-					container: "#4F378B", // Primary Container
-					onContainer: "#EADDFF", // On Primary Container
+					DEFAULT: "#B0C6FF", // Blue 80
+					on: "#002D6F", // Blue 20
+					container: "#004398", // Blue 30
+					onContainer: "#D8E2FF", // Blue 90
 				},
 				secondary: {
-					DEFAULT: "#CCC2DC", // Secondary
-					on: "#332D41", // On Secondary
-					container: "#4A4458", // Secondary Container
-					onContainer: "#E8DEF8", // On Secondary Container
+					DEFAULT: "#C0C6DC", // Blue/Gray 80
+					on: "#2A3042", // Blue/Gray 20
+					container: "#404659", // Blue/Gray 30
+					onContainer: "#DCE2F9", // Blue/Gray 90
 				},
 				tertiary: {
-					DEFAULT: "#EFB8C8", // Tertiary
-					on: "#492532", // On Tertiary
-					container: "#633B48", // Tertiary Container
-					onContainer: "#FFD8E4", // On Tertiary Container
+					DEFAULT: "#E0BBDD", // Harmony (Pink/Purple) 80
+					on: "#412741", // Harmony 20
+					container: "#5A3D59", // Harmony 30
+					onContainer: "#FDD7FA", // Harmony 90
 				},
 				error: {
-					DEFAULT: "#F2B8B5", // Error
-					on: "#601410", // On Error
-					container: "#8C1D18", // Error Container
-					onContainer: "#F9DEDC", // On Error Container
+					DEFAULT: "#FFB4AB", // Error 80
+					on: "#690005", // Error 20
+					container: "#93000A", // Error 30
+					onContainer: "#FFDAD6", // Error 90
 				},
 				surface: {
-					DEFAULT: "#141218", // Surface
-					on: "#E6E1E5", // On Surface
-					variant: "#49454F", // Surface Variant
-					onVariant: "#CAC4D0", // On Surface Variant
-					container: "#141218", // Surface Container (base)
-					"container-high": "#2B2930", // Surface Container High
-					"container-highest": "#36343B", // Surface Container Highest
-					"container-low": "#1D1B20", // Surface Container Low
-					"container-lowest": "#0F0D13", // Surface Container Lowest
-					dim: "#141218", // Surface Dim
-					bright: "#3B383E", // Surface Bright
+					DEFAULT: "#111318", // Surface (Blue Tint)
+					on: "#E2E2E9", // On Surface
+					variant: "#44474F", // Surface Variant
+					onVariant: "#C4C6D0", // On Surface Variant
+					container: "#111318", // Surface Container
+					"container-high": "#2B2D33", // Surface Container High
+					"container-highest": "#36383E", // Surface Container Highest
+					"container-low": "#191B20", // Surface Container Low
+					"container-lowest": "#0C0E13", // Surface Container Lowest
+					dim: "#111318", // Surface Dim
+					bright: "#37393E", // Surface Bright
 				},
-				"outline-base": "#938F99",
-				"outline-variant": "#49454F",
+				m3outline: {
+					DEFAULT: "#938F99", // Outline Base
+					variant: "#49454F", // Outline Variant
+				},
+				"outline-base": "#938F99", // For backward compatibility
+				"outline-variant": "#49454F", // For backward compatibility
 
 				// Preserving existing functionality
 				"oled-black": "#000000",
@@ -144,6 +148,10 @@ export default {
 				oled: "#000000",
 				pulsar: "#0052cc",
 				warning: "#ff6b35",
+			},
+			borderColor: {
+				"m3-outline": "#938F99",
+				"m3-outline-variant": "#49454F",
 			},
 		},
 	},
