@@ -100,19 +100,17 @@ export function WeatherModule() {
 
 			<div className="grid grid-cols-2 gap-4">
 				<section className="relative bg-surface-container-low rounded-[2rem] p-4 shadow-sm border border-outline-base/10">
-					<div className="flex justify-between items-center mb-4">
-						<span className="text-[10px] text-surface-on-variant uppercase tracking-[0.2em] font-black flex items-center gap-1.5 opacity-80">
-							<Thermometer className="w-3 h-3 text-primary" /> Condition
-						</span>
-						<div className="flex items-center gap-3">
+					<div className="flex items-center justify-between mb-4">
+						<div className="flex items-center gap-2">
+							<Thermometer className="w-3.5 h-3.5 text-primary" />
 							<span className="text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/30 text-primary bg-primary/5">
 								READY
 							</span>
-							<InfoTooltip
-								title="Weather Stats"
-								content="Real-time weather data for your current location. Updated every 15 minutes."
-							/>
 						</div>
+						<InfoTooltip
+							title="Weather Stats"
+							content="Real-time weather data for your current location. Updated every 15 minutes."
+						/>
 					</div>
 
 					<div className="flex items-center gap-3">
@@ -140,11 +138,9 @@ export function WeatherModule() {
 				</section>
 
 				<section className="relative bg-surface-container-low rounded-[2rem] p-4 shadow-sm border border-outline-base/10">
-					<div className="flex justify-between items-center mb-4">
-						<span className="text-[10px] text-surface-on-variant uppercase tracking-[0.2em] font-black flex items-center gap-1.5 opacity-80">
-							<Wind className="w-3.5 h-3.5 text-primary" /> Air Quality
-						</span>
+					<div className="flex items-center justify-between mb-4">
 						<div className="flex items-center gap-2">
+							<Wind className="w-3.5 h-3.5 text-primary" />
 							<div
 								className={cn(
 									"px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest",
@@ -157,11 +153,11 @@ export function WeatherModule() {
 							>
 								{aqi.label}
 							</div>
-							<InfoTooltip
-								title="Air Quality"
-								content="Measures pollutants like PM2.5 and PM10 using the international EPA standard. Higher values indicate poorer air quality."
-							/>
 						</div>
+						<InfoTooltip
+							title="Air Quality"
+							content="Measures pollutants like PM2.5 and PM10 using the international EPA standard. Higher values indicate poorer air quality."
+						/>
 					</div>
 
 					<div className="text-3xl font-black tracking-tighter text-surface-on mb-1">
