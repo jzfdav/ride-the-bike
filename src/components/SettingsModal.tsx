@@ -112,7 +112,7 @@ export function SettingsModalUI({
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
-								className="fixed inset-0 bg-oled-black z-[60]"
+								className="fixed inset-0 bg-surface z-[60]"
 							/>
 						</Dialog.Overlay>
 						<Dialog.Content asChild>
@@ -120,20 +120,20 @@ export function SettingsModalUI({
 								initial={{ opacity: 0, y: 100, scale: 0.95 }}
 								animate={{ opacity: 1, y: 0, scale: 1 }}
 								exit={{ opacity: 0, y: 100, scale: 0.95 }}
-								className="fixed inset-0 z-[70] bg-oled-black overflow-y-auto"
+								className="fixed inset-0 z-[70] bg-surface overflow-y-auto"
 							>
 								<div className="min-h-full p-6 flex flex-col max-w-2xl mx-auto">
-									<div className="flex justify-between items-center mb-8 flex-shrink-0 sticky top-0 bg-oled-black z-10 py-4">
-										<Dialog.Title className="text-xl font-black uppercase tracking-tighter text-white italic">
+									<div className="flex justify-between items-center mb-8 flex-shrink-0 sticky top-0 bg-surface z-10 py-4">
+										<Dialog.Title className="text-xl font-black uppercase tracking-tighter text-surface-on italic">
 											Settings
 										</Dialog.Title>
 										<Dialog.Close asChild>
 											<button
 												type="button"
-												className="p-3 bg-oled-gray-100 rounded-full hover:bg-white/10 transition-colors border border-white/10"
+												className="p-3 bg-surface-container-high rounded-full hover:bg-surface-on/10 transition-colors border border-outline-variant/10"
 												aria-label="Close"
 											>
-												<X className="w-6 h-6 text-white" />
+												<X className="w-6 h-6 text-surface-on" />
 											</button>
 										</Dialog.Close>
 									</div>
@@ -148,7 +148,7 @@ export function SettingsModalUI({
 											<div className="space-y-6 pt-2">
 												{/* Challenge Start Date */}
 												<div className="space-y-3">
-													<label className="text-[10px] font-black uppercase tracking-widest text-pulsar-blue flex items-center gap-2">
+													<label className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
 														<Calendar className="w-3.5 h-3.5" /> Service Due
 														Date (Deadline)
 													</label>
@@ -156,39 +156,39 @@ export function SettingsModalUI({
 														type="date"
 														value={tempDate}
 														onChange={(e) => setTempDate(e.target.value)}
-														className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors color-scheme-dark"
+														className="w-full bg-surface-container-high border-2 border-outline-variant/10 rounded-2xl px-5 py-4 text-lg font-bold text-surface-on focus:outline-none focus:border-primary/50 transition-colors color-scheme-dark"
 													/>
 												</div>
 
 												{/* Odometers */}
 												<div className="grid grid-cols-2 gap-4">
 													<div className="space-y-3">
-														<label className="text-[10px] font-black uppercase tracking-widest text-pulsar-blue flex items-center gap-2">
+														<label className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
 															<Activity className="w-3.5 h-3.5" /> Base (KM)
 														</label>
 														<input
 															type="number"
 															value={tempBase}
 															onChange={(e) => setTempBase(e.target.value)}
-															className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors"
+															className="w-full bg-surface-container-high border-2 border-outline-variant/10 rounded-2xl px-5 py-4 text-lg font-bold text-surface-on focus:outline-none focus:border-primary/50 transition-colors"
 														/>
 													</div>
 													<div className="space-y-3">
-														<label className="text-[10px] font-black uppercase tracking-widest text-pulsar-blue flex items-center gap-2">
+														<label className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
 															<Target className="w-3.5 h-3.5" /> Target (KM)
 														</label>
 														<input
 															type="number"
 															value={tempTarget}
 															onChange={(e) => setTempTarget(e.target.value)}
-															className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors"
+															className="w-full bg-surface-container-high border-2 border-outline-variant/10 rounded-2xl px-5 py-4 text-lg font-bold text-surface-on focus:outline-none focus:border-primary/50 transition-colors"
 														/>
 													</div>
 												</div>
 
 												{/* Current Odometer */}
 												<div className="space-y-3">
-													<label className="text-[10px] font-black uppercase tracking-widest text-pulsar-blue flex items-center gap-2">
+													<label className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
 														<Activity className="w-3.5 h-3.5" /> Current
 														Odometer (KM)
 													</label>
@@ -196,7 +196,7 @@ export function SettingsModalUI({
 														type="number"
 														value={tempOdo}
 														onChange={(e) => setTempOdo(e.target.value)}
-														className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors"
+														className="w-full bg-surface-container-high border-2 border-outline-variant/10 rounded-2xl px-5 py-4 text-lg font-bold text-surface-on focus:outline-none focus:border-primary/50 transition-colors"
 														placeholder="e.g. 10450"
 													/>
 												</div>
@@ -209,7 +209,7 @@ export function SettingsModalUI({
 											peek={tempModel}
 										>
 											<div className="space-y-3 pt-2">
-												<label className="text-[10px] font-black uppercase tracking-widest text-pulsar-blue">
+												<label className="text-[10px] font-black uppercase tracking-widest text-primary">
 													Bike Model
 												</label>
 												<input
@@ -217,7 +217,7 @@ export function SettingsModalUI({
 													value={tempModel}
 													onChange={(e) => setTempModel(e.target.value)}
 													placeholder="e.g. Pulsar NS200"
-													className="w-full bg-oled-black border-2 border-white/5 rounded-2xl px-5 py-4 text-sm font-bold text-white focus:outline-none focus:border-pulsar-blue/50 transition-colors"
+													className="w-full bg-surface-container-high border-2 border-outline-variant/10 rounded-2xl px-5 py-4 text-sm font-bold text-surface-on focus:outline-none focus:border-primary/50 transition-colors"
 												/>
 											</div>
 										</CollapsibleSection>
@@ -233,16 +233,16 @@ export function SettingsModalUI({
 										>
 											<div className="space-y-3 pt-2">
 												{/* Fuel Tracker */}
-												<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
+												<div className="flex items-center justify-between p-4 bg-surface-container-high/50 rounded-2xl border border-outline-variant/10">
 													<div className="flex items-center gap-3">
 														<div className="p-2 bg-amber-500/10 rounded-xl">
 															<Fuel className="w-5 h-5 text-amber-500" />
 														</div>
 														<div>
-															<div className="text-xs font-bold text-white">
+															<div className="text-xs font-bold text-surface-on">
 																Fuel Tracker
 															</div>
-															<div className="text-[9px] text-oled-gray-400 font-medium">
+															<div className="text-[9px] text-surface-on-variant font-medium">
 																Efficiency metrics
 															</div>
 														</div>
@@ -254,16 +254,16 @@ export function SettingsModalUI({
 												</div>
 
 												{/* Tyre Tracker */}
-												<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
+												<div className="flex items-center justify-between p-4 bg-surface-container-high/50 rounded-2xl border border-outline-variant/10">
 													<div className="flex items-center gap-3">
 														<div className="p-2 bg-rose-500/10 rounded-xl">
 															<Activity className="w-5 h-5 text-rose-500" />
 														</div>
 														<div>
-															<div className="text-xs font-bold text-white">
+															<div className="text-xs font-bold text-surface-on">
 																Tyre PSI
 															</div>
-															<div className="text-[9px] text-oled-gray-400 font-medium">
+															<div className="text-[9px] text-surface-on-variant font-medium">
 																Pressure monitor
 															</div>
 														</div>
@@ -275,16 +275,16 @@ export function SettingsModalUI({
 												</div>
 
 												{/* Checklist Tracker */}
-												<div className="flex items-center justify-between p-4 bg-oled-black/40 rounded-2xl border border-white/5">
+												<div className="flex items-center justify-between p-4 bg-surface-container-high/50 rounded-2xl border border-outline-variant/10">
 													<div className="flex items-center gap-3">
 														<div className="p-2 bg-emerald-500/10 rounded-xl">
 															<Save className="w-5 h-5 text-emerald-500" />
 														</div>
 														<div>
-															<div className="text-xs font-bold text-white">
+															<div className="text-xs font-bold text-surface-on">
 																Checklist
 															</div>
-															<div className="text-[9px] text-oled-gray-400 font-medium">
+															<div className="text-[9px] text-surface-on-variant font-medium">
 																Safety inspections
 															</div>
 														</div>
@@ -302,7 +302,7 @@ export function SettingsModalUI({
 										<button
 											type="button"
 											onClick={handleSave}
-											className="w-full bg-pulsar-blue text-white font-bold py-5 rounded-3xl flex items-center justify-center gap-2 shadow-lg shadow-pulsar-blue/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+											className="w-full bg-primary text-on-primary font-bold py-5 rounded-[1.5rem] flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
 										>
 											<Save className="w-5 h-5" /> SAVE SETTINGS
 										</button>
@@ -333,25 +333,25 @@ function CollapsibleSection({
 	const [isOpen, setIsOpen] = useState(defaultOpen);
 
 	return (
-		<div className="space-y-4 py-4 border-t border-white/5 first:border-t-0 first:pt-0">
+		<div className="space-y-4 py-4 border-t border-outline-variant/10 first:border-t-0 first:pt-0">
 			<button
 				type="button"
 				onClick={() => setIsOpen(!isOpen)}
 				className="w-full flex items-center justify-between group"
 			>
 				<div className="flex items-center gap-3">
-					<div className="text-pulsar-blue opacity-50 transition-opacity group-hover:opacity-100">
+					<div className="text-primary opacity-50 transition-opacity group-hover:opacity-100">
 						{icon}
 					</div>
 					<div className="text-left">
-						<h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 group-hover:text-white/50 transition-colors">
+						<h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-surface-on-variant group-hover:text-surface-on-variant/80 transition-colors">
 							{title}
 						</h3>
 						{!isOpen && (
 							<motion.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
-								className="text-[10px] font-bold text-pulsar-blue mt-0.5"
+								className="text-[10px] font-bold text-primary mt-0.5"
 							>
 								{peek}
 							</motion.div>
@@ -360,7 +360,7 @@ function CollapsibleSection({
 				</div>
 				<motion.div
 					animate={{ rotate: isOpen ? 180 : 0 }}
-					className="text-white/10 group-hover:text-white/30"
+					className="text-surface-on-variant/40 group-hover:text-surface-on-variant/60"
 				>
 					<svg
 						className="w-4 h-4"
@@ -407,7 +407,7 @@ function ToggleSwitch({
 			onClick={() => onChange(!enabled)}
 			className={cn(
 				"w-12 h-6 rounded-full transition-all duration-300 relative",
-				enabled ? "bg-pulsar-blue" : "bg-white/10",
+				enabled ? "bg-primary" : "bg-surface-container-highest",
 			)}
 		>
 			<motion.div
