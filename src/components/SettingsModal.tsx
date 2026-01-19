@@ -114,12 +114,13 @@ export function SettingsModalUI({
 			<AnimatePresence>
 				{isOpen && (
 					<Dialog.Portal forceMount>
+						{/* Overlay removed for full screen feel, but kept for a11y if needed (invisible) */}
 						<Dialog.Overlay asChild>
 							<motion.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								exit={{ opacity: 0 }}
-								className="fixed inset-0 bg-oled-black/80 backdrop-blur-sm z-[60]"
+								className="fixed inset-0 bg-oled-black z-[60]"
 							/>
 						</Dialog.Overlay>
 						<Dialog.Content asChild>
@@ -127,20 +128,20 @@ export function SettingsModalUI({
 								initial={{ opacity: 0, y: 100, scale: 0.95 }}
 								animate={{ opacity: 1, y: 0, scale: 1 }}
 								exit={{ opacity: 0, y: 100, scale: 0.95 }}
-								className="fixed bottom-0 left-0 right-0 z-[70] p-6 max-w-md mx-auto outline-none"
+								className="fixed inset-0 z-[70] bg-oled-black overflow-y-auto"
 							>
-								<div className="bg-oled-gray-100 rounded-[2.5rem] border border-white/10 p-8 shadow-2xl flex flex-col max-h-[85vh]">
-									<div className="flex justify-between items-center mb-6 flex-shrink-0">
-										<Dialog.Title className="text-sm font-black uppercase tracking-[0.2em] text-oled-gray-400">
-											Challenge Settings
+								<div className="min-h-full p-6 flex flex-col max-w-2xl mx-auto">
+									<div className="flex justify-between items-center mb-8 flex-shrink-0 sticky top-0 bg-oled-black z-10 py-4">
+										<Dialog.Title className="text-xl font-black uppercase tracking-tighter text-white italic">
+											Settings
 										</Dialog.Title>
 										<Dialog.Close asChild>
 											<button
 												type="button"
-												className="p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors"
+												className="p-3 bg-oled-gray-100 rounded-full hover:bg-white/10 transition-colors border border-white/10"
 												aria-label="Close"
 											>
-												<X className="w-5 h-5 text-oled-gray-400" />
+												<X className="w-6 h-6 text-white" />
 											</button>
 										</Dialog.Close>
 									</div>

@@ -1,12 +1,24 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Bike, CircleDot, Droplets, Fuel, Plus, X } from "lucide-react";
+import {
+	Bike,
+	CircleDot,
+	Droplets,
+	Fuel,
+	Plus,
+	Settings,
+	X,
+} from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../store";
 import { cn } from "../utils";
 
 type FormType = "ride" | "fuel" | "lube" | "bars" | "tyre" | null;
 
-export function BottomActions() {
+export function BottomActions({
+	onOpenSettings,
+}: {
+	onOpenSettings: () => void;
+}) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [activeForm, setActiveForm] = useState<FormType>(null);
 	const [val1, setVal1] = useState(""); // distance or liters
@@ -285,28 +297,38 @@ export function BottomActions() {
 				</AnimatePresence>
 
 				{!activeForm && (
-					<motion.button
-						whileTap={{ scale: 0.95 }}
-						onClick={() => setIsOpen(!isOpen)}
-						className={cn(
-							"w-full h-16 rounded-2xl flex items-center justify-center shadow-2xl border transition-all duration-300",
-							isOpen
-								? "bg-oled-gray-100 border-white/10"
-								: "bg-pulsar-blue border-pulsar-blue shadow-pulsar-blue/20",
-						)}
-					>
-						<motion.div
-							animate={{ rotate: isOpen ? 45 : 0 }}
-							transition={{ type: "spring", damping: 10, stiffness: 200 }}
+					<div className="flex items-center gap-4">
+						<motion.button
+							whileTap={{ scale: 0.95 }}
+							onClick={onOpenSettings}
+							className="w-16 h-16 rounded-2xl bg-oled-gray-100 flex items-center justify-center border border-white/10 shadow-lg"
 						>
-							<Plus
-								className={cn(
-									"w-8 h-8",
-									isOpen ? "text-oled-gray-400" : "text-white",
-								)}
-							/>
-						</motion.div>
-					</motion.button>
+							<Settings className="w-6 h-6 text-white/40" />
+						</motion.button>
+
+						<motion.button
+							whileTap={{ scale: 0.95 }}
+							onClick={() => setIsOpen(!isOpen)}
+							className={cn(
+								"flex-1 h-16 rounded-2xl flex items-center justify-center shadow-2xl border transition-all duration-300",
+								isOpen
+									? "bg-oled-gray-100 border-white/10"
+									: "bg-pulsar-blue border-pulsar-blue shadow-pulsar-blue/20",
+							)}
+						>
+							<motion.div
+								animate={{ rotate: isOpen ? 45 : 0 }}
+								transition={{ type: "spring", damping: 10, stiffness: 200 }}
+							>
+								<Plus
+									className={cn(
+										"w-8 h-8",
+										isOpen ? "text-oled-gray-400" : "text-white",
+									)}
+								/>
+							</motion.div>
+						</motion.button>
+					</div>
 				)}
 
 				{/* Success Toast Overlay */}

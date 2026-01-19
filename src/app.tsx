@@ -80,7 +80,6 @@ export function App() {
 				<DashboardHeader
 					showInsights={showInsights}
 					onToggleInsights={() => setShowInsights(!showInsights)}
-					onOpenSettings={() => setIsSettingsOpen(true)}
 				/>
 
 				<AnimatePresence mode="wait">
@@ -186,7 +185,7 @@ export function App() {
 				</AnimatePresence>
 			</div>
 
-			<BottomActions />
+			<BottomActions onOpenSettings={() => setIsSettingsOpen(true)} />
 
 			<SettingsModal
 				isOpen={isSettingsOpen}

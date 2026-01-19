@@ -5,13 +5,11 @@ import { cn } from "../utils";
 interface DashboardHeaderProps {
 	showInsights: boolean;
 	onToggleInsights: () => void;
-	onOpenSettings: () => void;
 }
 
 export function DashboardHeader({
 	showInsights,
 	onToggleInsights,
-	onOpenSettings,
 }: DashboardHeaderProps) {
 	const bikeModel = useStore((state) => state.bikeModel);
 
@@ -52,13 +50,6 @@ export function DashboardHeader({
 						) : (
 							<LineChart className="w-5 h-5" />
 						)}
-					</button>
-					<button
-						type="button"
-						onClick={onOpenSettings}
-						className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-all border border-white/5 active:scale-90"
-					>
-						<Settings className="w-5 h-5 text-white/40" />
 					</button>
 				</div>
 			</div>
