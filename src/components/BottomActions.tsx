@@ -287,57 +287,62 @@ export function BottomActions({
 				)}
 
 				{!activeForm && (
-					<div className="flex items-center gap-4">
-						{/* Left: Stats/Insights Button */}
-						<motion.button
-							whileTap={{ scale: 0.95 }}
-							onClick={onToggleInsights}
-							className={cn(
-								"w-16 h-16 rounded-2xl flex items-center justify-center border shadow-lg transition-colors",
-								showInsights
-									? "bg-pulsar-blue border-pulsar-blue text-white"
-									: "bg-oled-gray-100 border-white/10 text-white/40",
-							)}
-						>
-							{showInsights ? (
-								<LayoutGrid className="w-6 h-6" />
-							) : (
-								<LineChart className="w-6 h-6" />
-							)}
-						</motion.button>
+					<div className="relative">
+						{/* Blurred Backdrop Dock */}
+						<div className="absolute -inset-x-4 -inset-y-3 bg-oled-black/80 backdrop-blur-xl rounded-[2rem] border border-white/5 shadow-2xl z-0" />
 
-						{/* Center: Main Action Button */}
-						<motion.button
-							whileTap={{ scale: 0.95 }}
-							onClick={() => setIsOpen(!isOpen)}
-							className={cn(
-								"flex-1 h-16 rounded-2xl flex items-center justify-center shadow-2xl border transition-all duration-300",
-								isOpen
-									? "bg-oled-gray-100 border-white/10"
-									: "bg-pulsar-blue border-pulsar-blue shadow-pulsar-blue/20",
-							)}
-						>
-							<motion.div
-								animate={{ rotate: isOpen ? 45 : 0 }}
-								transition={{ type: "spring", damping: 10, stiffness: 200 }}
+						<div className="relative z-10 flex items-center gap-4">
+							{/* Left: Stats/Insights Button */}
+							<motion.button
+								whileTap={{ scale: 0.95 }}
+								onClick={onToggleInsights}
+								className={cn(
+									"w-16 h-16 rounded-2xl flex items-center justify-center border shadow-lg transition-colors",
+									showInsights
+										? "bg-pulsar-blue border-pulsar-blue text-white"
+										: "bg-oled-gray-100 border-white/10 text-white/40",
+								)}
 							>
-								<Plus
-									className={cn(
-										"w-8 h-8",
-										isOpen ? "text-oled-gray-400" : "text-white",
-									)}
-								/>
-							</motion.div>
-						</motion.button>
+								{showInsights ? (
+									<LayoutGrid className="w-6 h-6" />
+								) : (
+									<LineChart className="w-6 h-6" />
+								)}
+							</motion.button>
 
-						{/* Right: Settings Button */}
-						<motion.button
-							whileTap={{ scale: 0.95 }}
-							onClick={onOpenSettings}
-							className="w-16 h-16 rounded-2xl bg-oled-gray-100 flex items-center justify-center border border-white/10 shadow-lg text-white/40"
-						>
-							<Settings className="w-6 h-6" />
-						</motion.button>
+							{/* Center: Main Action Button */}
+							<motion.button
+								whileTap={{ scale: 0.95 }}
+								onClick={() => setIsOpen(!isOpen)}
+								className={cn(
+									"flex-1 h-16 rounded-2xl flex items-center justify-center shadow-2xl border transition-all duration-300",
+									isOpen
+										? "bg-oled-gray-100 border-white/10"
+										: "bg-pulsar-blue border-pulsar-blue shadow-pulsar-blue/20",
+								)}
+							>
+								<motion.div
+									animate={{ rotate: isOpen ? 45 : 0 }}
+									transition={{ type: "spring", damping: 10, stiffness: 200 }}
+								>
+									<Plus
+										className={cn(
+											"w-8 h-8",
+											isOpen ? "text-oled-gray-400" : "text-white",
+										)}
+									/>
+								</motion.div>
+							</motion.button>
+
+							{/* Right: Settings Button */}
+							<motion.button
+								whileTap={{ scale: 0.95 }}
+								onClick={onOpenSettings}
+								className="w-16 h-16 rounded-2xl bg-oled-gray-100 flex items-center justify-center border border-white/10 shadow-lg text-white/40"
+							>
+								<Settings className="w-6 h-6" />
+							</motion.button>
+						</div>
 					</div>
 				)}
 
