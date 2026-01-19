@@ -16,10 +16,10 @@ export function ActivityHistory({
 	return (
 		<section className="space-y-4">
 			<div className="flex items-center justify-between px-2">
-				<h2 className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] flex items-center gap-2">
+				<h2 className="text-[10px] font-black text-surface-on-variant uppercase tracking-[0.2em] flex items-center gap-2 opacity-80">
 					<History className="w-4 h-4" /> Activity
 				</h2>
-				<span className="text-[10px] font-black text-pulsar-blue uppercase tracking-widest">
+				<span className="text-[10px] font-black text-primary uppercase tracking-widest">
 					{totalRidesThisWeek}/3 WEEKLY RIDES
 				</span>
 			</div>
@@ -28,15 +28,17 @@ export function ActivityHistory({
 				{rides.slice(0, 3).map((ride, idx) => (
 					<div
 						key={`${ride.id}-${idx}`}
-						className="flex items-center justify-between p-4 bg-white/[0.02] rounded-2xl border border-white/5"
+						className="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/10 shadow-sm"
 					>
 						<div className="flex items-center gap-4">
-							<div className="p-2 bg-pulsar-blue/10 rounded-xl">
-								<MapPin className="w-4 h-4 text-pulsar-blue" />
+							<div className="p-2 bg-primary/10 rounded-xl">
+								<MapPin className="w-4 h-4 text-primary" />
 							</div>
 							<div>
-								<div className="text-sm font-bold">Ride Logged</div>
-								<div className="text-[10px] text-white/30 font-bold uppercase tracking-widest">
+								<div className="text-sm font-bold text-surface-on">
+									Ride Logged
+								</div>
+								<div className="text-[10px] text-surface-on-variant/60 font-bold uppercase tracking-widest">
 									{new Date(ride.date).toLocaleDateString(undefined, {
 										month: "short",
 										day: "numeric",
@@ -45,10 +47,10 @@ export function ActivityHistory({
 							</div>
 						</div>
 						<div className="text-right">
-							<div className="text-sm font-bold text-pulsar-blue">
+							<div className="text-sm font-bold text-primary">
 								+{ride.distance} km
 							</div>
-							<div className="text-[10px] text-white/20 font-bold tracking-tighter">
+							<div className="text-[10px] text-surface-on-variant/50 font-bold tracking-tighter">
 								{ride.odometer.toLocaleString()} total
 							</div>
 						</div>
