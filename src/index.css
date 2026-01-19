@@ -7,7 +7,7 @@
 
 @layer base {
 	* {
-		@apply border-outline-base/20;
+		@apply border-outline-base border-opacity-20;
 	}
 
 	body {
