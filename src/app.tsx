@@ -102,10 +102,8 @@ export function App() {
 							transition={{ duration: 0.3 }}
 							className="space-y-6"
 						>
-							<WeatherModule />
-
 							<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-								<div className="md:col-span-2">
+								<div className="md:col-span-3">
 									<MainMetricCard
 										currentOdo={currentOdo}
 										baseOdo={baseOdo}
@@ -114,9 +112,9 @@ export function App() {
 									/>
 								</div>
 
-								<div className="grid grid-cols-2 md:grid-cols-1 gap-6 md:col-span-1">
+								<div className="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-6">
 									{/* Battery Health */}
-									<section className="relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5">
+									<section className="col-span-1 md:col-span-2 relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5">
 										<div className="flex justify-between items-center mb-3">
 											<span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2">
 												<TrendingDown className="w-3.5 h-3.5 text-warning-orange" />{" "}
@@ -144,7 +142,7 @@ export function App() {
 									</section>
 
 									{/* Run Rate */}
-									<section className="relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5">
+									<section className="col-span-1 md:col-span-2 relative bg-oled-gray-100 rounded-[2.5rem] p-6 border border-white/5">
 										<div className="flex justify-between items-center mb-3">
 											<span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-black flex items-center gap-2">
 												<ChevronRight className="w-3.5 h-3.5 text-pulsar-blue" />{" "}
@@ -165,6 +163,10 @@ export function App() {
 											Target: {daysRemaining} days left
 										</div>
 									</section>
+								</div>
+
+								<div className="md:col-span-3">
+									<WeatherModule />
 								</div>
 							</div>
 
