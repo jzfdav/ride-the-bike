@@ -146,7 +146,7 @@ export function WeatherModule() {
 									"px-1.5 py-0.5 rounded-[4px] text-[7px] font-black uppercase tracking-widest",
 									aqi.label === "Good"
 										? "bg-emerald-500/10 text-emerald-500"
-										: aqi.label === "Fair"
+										: aqi.label === "Moderate"
 											? "bg-amber-500/10 text-amber-500"
 											: "bg-error/10 text-error animate-pulse",
 								)}
@@ -175,7 +175,7 @@ export function WeatherModule() {
 								"h-full rounded-full",
 								aqi.label === "Good"
 									? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"
-									: aqi.label === "Fair"
+									: aqi.label === "Moderate"
 										? "bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)]"
 										: "bg-error shadow-[0_0_8px_rgba(var(--error),0.4)]",
 							)}

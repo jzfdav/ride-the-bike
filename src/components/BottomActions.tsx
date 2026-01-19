@@ -98,7 +98,7 @@ export function BottomActions({
 			if (l > 0 && c > 0) {
 				logFuel(l, c);
 				if (!isNaN(p)) setLastFuelPrice(p);
-				setFuelBars(12); // Always reset to full on top-up
+				// Note: logFuel already resets fuelBars to 12 in the store
 				triggerSuccess(`Fuel Refilled!`);
 			}
 		} else if (activeForm === "bars") {
@@ -111,9 +111,15 @@ export function BottomActions({
 		} else if (activeForm === "tyre") {
 			const f = parseFloat(val1);
 			const r = parseFloat(val2);
-			if (!isNaN(f) && !isNaN(r) && f >= 0 && r >= 0) {
+			const hasValidFront = !isNaN(f) && f >= 0;
+			const hasValidRear = !isNaN(r) && r >= 0;
+			if (hasValidFront && hasValidRear) {
 				setTyrePressure(f, r);
 				triggerSuccess(`Tyre Pressure Logged!`);
+			} else if (hasValidFront || hasValidRear) {
+				// Partial data - prompt user
+				triggerSuccess(`Please enter both Front and Rear PSI`);
+				return; // Don't close form
 			}
 		}
 		closeForm();
@@ -248,6 +254,7 @@ export function BottomActions({
 									autoFocus
 									min={0}
 									max={activeForm === "bars" ? 12 : undefined}
+									step={activeForm === "bars" ? 1 : undefined}
 								/>
 								<span className="absolute right-5 top-1/2 -translate-y-1/2 font-bold text-surface-on-variant/50">
 									{activeForm === "ride"

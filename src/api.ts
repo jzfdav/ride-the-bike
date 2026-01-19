@@ -37,8 +37,14 @@ export async function fetchRiderInsights(
 			),
 		]);
 
-		if (!wRes.ok || !aRes.ok || !lRes.ok) {
-			throw new Error("One or more APIs are currently unreachable.");
+		const failedApis = [];
+		if (!wRes.ok) failedApis.push("Weather");
+		if (!aRes.ok) failedApis.push("Air Quality");
+		if (!lRes.ok) failedApis.push("Location");
+		if (failedApis.length > 0) {
+			throw new Error(
+				`${failedApis.join(", ")} API${failedApis.length > 1 ? "s" : ""} unreachable.`,
+			);
 		}
 
 		const wData = await wRes.json();

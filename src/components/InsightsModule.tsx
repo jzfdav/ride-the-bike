@@ -44,10 +44,13 @@ export function InsightsModule() {
 		})
 		.filter((d) => d.fe > 0);
 
-	const progressPercent = Math.min(
-		100,
-		((currentOdo - baseOdo) / (targetOdo - baseOdo)) * 100,
-	);
+	const denominator = targetOdo - baseOdo;
+	const progressPercent =
+		denominator > 0
+			? Math.min(100, ((currentOdo - baseOdo) / denominator) * 100)
+			: currentOdo >= targetOdo
+				? 100
+				: 0;
 
 	return (
 		<motion.div

@@ -29,9 +29,9 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 				initial={{ scale: 0.8, opacity: 0 }}
 				animate={{ scale: 1, opacity: 1 }}
 				transition={{ delay: 0.2, type: "spring" }}
-				className="mb-8 p-4 bg-pulsar-blue/10 rounded-3xl border border-pulsar-blue/20"
+				className="mb-8 p-4 bg-primary/10 rounded-3xl border border-primary/20"
 			>
-				<Bike className="w-16 h-16 text-pulsar-blue" />
+				<Bike className="w-16 h-16 text-primary" />
 			</motion.div>
 
 			<motion.h1
@@ -54,7 +54,7 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 					placeholder="Enter Bike Model (e.g. Pulsar NS200)"
 					value={model}
 					onChange={(e) => setModel(e.target.value)}
-					className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-center focus:border-pulsar-blue focus:ring-1 focus:ring-pulsar-blue placeholder:text-white/20 outline-none transition-all"
+					className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-center focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-white/20 outline-none transition-all"
 				/>
 			</motion.div>
 
@@ -63,18 +63,18 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 					{
 						icon: Zap,
 						text: "Battery health decays 5% daily",
-						color: "text-pulsar-blue",
+						color: "text-primary",
 					},
 
 					{
 						icon: TrendingUp,
 						text: "Daily 'Run-Rate' target",
-						color: "text-pulsar-blue",
+						color: "text-primary",
 					},
 					{
 						icon: Target,
 						text: "Reach your riding milestone",
-						color: "text-pulsar-blue",
+						color: "text-primary",
 					},
 				].map((item, i) => (
 					<motion.div
@@ -97,7 +97,7 @@ export function WelcomeOverlay({ onComplete }: WelcomeOverlayProps) {
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ delay: 1.1 }}
 				onClick={handleComplete}
-				className="w-full max-w-[240px] bg-pulsar-blue text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 group hover:gap-4 transition-all"
+				className="w-full max-w-[240px] bg-primary text-primary-on font-bold py-4 rounded-2xl flex items-center justify-center gap-2 group hover:gap-4 transition-all"
 			>
 				START RIDING <ArrowRight className="w-5 h-5" />
 			</motion.button>

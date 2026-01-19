@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, Fuel, TrendingUp } from "lucide-react";
+import { AlertTriangle, Fuel } from "lucide-react";
 import { useStore } from "../store";
 import { cn } from "../utils";
 import { InfoTooltip } from "./InfoTooltip";

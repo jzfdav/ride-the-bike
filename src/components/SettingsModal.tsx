@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { Activity, Calendar, Fuel, Save, Target, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "../store";
 import { cn } from "../utils";
 import { ThemeSelector } from "./ThemeSelector";
@@ -88,12 +88,35 @@ export function SettingsModalUI({
 		initialData.showChecklist,
 	);
 
+	// Sync state when modal opens (fixes stale state on reopen)
+	useEffect(() => {
+		if (isOpen) {
+			setTempDate(
+				initialData.serviceDueDate
+					? initialData.serviceDueDate.split("T")[0]
+					: new Date().toISOString().split("T")[0],
+			);
+			setTempOdo(initialData.currentOdo.toString());
+			setTempBase(initialData.baseOdo.toString());
+			setTempTarget(initialData.targetOdo.toString());
+			setTempModel(initialData.bikeModel);
+			setTempShowFuel(initialData.showFuelTracker);
+			setTempShowTyre(initialData.showTyreTracker);
+			setTempShowChecklist(initialData.showChecklist);
+		}
+	}, [isOpen, initialData]);
+
 	const handleSave = () => {
+		const odo = parseFloat(tempOdo);
+		const base = parseFloat(tempBase);
+		const target = parseFloat(tempTarget);
+
+		// Validate numeric fields - use current store values if invalid
 		onSave({
-			serviceDueDate: new Date(tempDate).toISOString(),
-			currentOdo: parseFloat(tempOdo),
-			baseOdo: parseFloat(tempBase),
-			targetOdo: parseFloat(tempTarget),
+			serviceDueDate: tempDate ? new Date(tempDate).toISOString() : null,
+			currentOdo: isNaN(odo) ? initialData.currentOdo : odo,
+			baseOdo: isNaN(base) ? initialData.baseOdo : base,
+			targetOdo: isNaN(target) ? initialData.targetOdo : target,
 			bikeModel: tempModel,
 
 			showFuelTracker: tempShowFuel,
@@ -226,10 +249,11 @@ export function SettingsModalUI({
 										<CollapsibleSection
 											title="Dashboard Widgets"
 											icon={<Activity className="w-3.5 h-3.5" />}
-											peek={`${[tempShowFuel, tempShowTyre, tempShowChecklist].filter(
-												Boolean,
-											).length
-												} Active`}
+											peek={`${
+												[tempShowFuel, tempShowTyre, tempShowChecklist].filter(
+													Boolean,
+												).length
+											} Active`}
 										>
 											<div className="space-y-3 pt-2">
 												{/* Fuel Tracker */}
